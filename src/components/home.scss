@@ -1,0 +1,48 @@
+@import "../index.scss";
+
+.home {
+  height: 100vh;
+  overflow: hidden;
+  .nav-bar {
+    width: 100vw;
+    display: flex;
+    background: #444444;
+    a {
+      margin: 0 auto;
+      font-size: 1.4em;
+      font-weight: bold;
+      // background: -webkit-linear-gradient(45deg, #46d0f7, #7d2ae8);
+      background: -webkit-linear-gradient(275deg, white, $grayed);
+      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text;
+    }
+  }
+  .revisar {
+    .revHeader {
+      display: flex;
+      justify-content: space-around;
+      margin: 1em 0;
+      align-items: center;
+    }
+  }
+  .contenido {
+    height: calc(100vh - 93px);
+    display: grid;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.home2 {
+  overflow: scroll !important;
+  background-color: white;
+}
+
+@media print {
+  .home {
+    .nav-bar,
+    .revHeader {
+      display: none !important;
+      height: 0px;
+    }
+  }
+}

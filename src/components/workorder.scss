@@ -96,8 +96,8 @@
         border-right: none;
         span,
         b {
-          border-bottom: 1px solid;
-          border-right: 1px solid;
+          border-bottom: 1px solid black;
+          border-right: 1px solid black;
         }
         .periododeserv {
           font-weight: bold;
@@ -131,7 +131,6 @@
         .descCompleta {
           background-color: lightgray;
           text-align: center;
-          border-top: 1px solid black;
         }
         .descripcion {
           border-bottom: none;
@@ -311,7 +310,7 @@
         background-color: lightgray;
         text-align: center;
         border-top: 1px solid black;
-        font-size: 0.718em;
+        font-size: 0.65em;
       }
     }
   }
@@ -319,14 +318,15 @@
 
 @media print {
   .workorder {
-    font-size: 2.7vw;
+    font-size: 2.6vw;
     .rows {
+      margin-top: 0;
       .row3 {
         line-height: 2.8vw;
       }
     }
   }
-  //   @page {
-  //     margin: 6cm;
-  //   }
+  @page {
+    margin-bottom: 1cm;
+  }
 }

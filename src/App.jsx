@@ -1,14 +1,11 @@
 import React from "react";
 import "./App.scss";
-import WorkOrder from "./components/WorkOrder";
-import Capacitacion from "./components/Capacitacion";
+import Home from "./components/Home";
 
 function App() {
   return (
     <div className="App">
-      <WorkOrder />
-      <div className="saltodepag"></div>
-      <Capacitacion />
+      <Home />
     </div>
   );
 }
