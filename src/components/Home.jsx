@@ -28,7 +28,8 @@ function Home() {
   return (
     <div className={activeStep === 6 ? "home home2 " : "home"}>
       <div className="nav-bar">
-        <a href="/">GE Smart WO</a>
+        <div className="logo"></div>
+        <a href="/">Smart WO</a>
       </div>
       {activeStep === 6 ? (
         <div className="revisar">
@@ -73,13 +74,20 @@ function Home() {
             variant="progress"
             activeStep={activeStep}
             nextButton={
-              <Button size="small" onClick={handleNext}>
+              <Button
+                size="small"
+                variant="contained"
+                color="primary"
+                onClick={handleNext}
+              >
                 {activeStep === 5 ? "Finish" : "Next >"}
               </Button>
             }
             backButton={
               <Button
                 size="small"
+                variant="contained"
+                color="primary"
                 onClick={handleBack}
                 disabled={activeStep === 0}
               >

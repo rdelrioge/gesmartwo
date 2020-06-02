@@ -1,13 +1,28 @@
 import React from "react";
-import "./App.scss";
+
+// Import Material theme provider
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+
+import variables from "./index.scss";
 import Home from "./components/Home";
 
 function App() {
   return (
-    <div className="App">
+    <MuiThemeProvider theme={theme}>
       <Home />
-    </div>
+    </MuiThemeProvider>
   );
 }
+
+// Theme config
+const theme = createMuiTheme({
+  palette: {
+    primary: { main: variables.primary, contrastText: "#ffffff" },
+    secondary: { main: variables.secondary },
+  },
+  typography: {
+    useNextVariants: true,
+  },
+});
 
 export default App;
