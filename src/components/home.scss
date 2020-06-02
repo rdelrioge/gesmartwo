@@ -36,16 +36,17 @@
 .home2 {
   overflow: scroll !important;
   background-color: white;
+  height: auto;
 }
 // To skeletor
-// .skeletorRows {
-//   height: calc(100vh - 93px);
-//   grid-template-rows: repeat(9, auto);
-//   .MuiSkeleton-root {
-//     height: auto;
-//     margin: 1em;
-//   }
-// }
+.skeletorRows {
+  height: calc(100vh - 93px);
+  grid-template-rows: repeat(9, auto);
+  .MuiSkeleton-root {
+    height: auto;
+    margin: 1em;
+  }
+}
 
 @media print {
   .home {

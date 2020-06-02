@@ -12,13 +12,13 @@ function Home() {
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    // if (activeStep === 5) {
-    //   setLoading(true);
-    //   const timer = setTimeout(() => {
-    //     setLoading(false);
-    //   }, 2500);
-    //   return () => clearTimeout(timer);
-    // }
+    if (activeStep === 5) {
+      setLoading(true);
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 2500);
+      return () => clearTimeout(timer);
+    }
   };
 
   const handleBack = () => {
