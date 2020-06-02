@@ -4,12 +4,21 @@ import SwipeableViews from "react-swipeable-views";
 
 import "./home.scss";
 import Print from "./Print";
+import SkeletorWO from "./SkeletorWO";
 
 function Home() {
   const [activeStep, setActiveStep] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    // if (activeStep === 5) {
+    //   setLoading(true);
+    //   const timer = setTimeout(() => {
+    //     setLoading(false);
+    //   }, 2500);
+    //   return () => clearTimeout(timer);
+    // }
   };
 
   const handleBack = () => {
@@ -40,11 +49,16 @@ function Home() {
               Print
             </Button>
           </div>
-          <Print />
+          {loading ? (
+            <>
+              <SkeletorWO />
+            </>
+          ) : (
+            <Print />
+          )}
         </div>
       ) : (
         <>
-          {/* <div className="contenido">{getStepContent(activeStep)}</div> */}
           <SwipeableViews index={activeStep}>
             <h1>slide n°1</h1>
             <h1>slide n°2</h1>

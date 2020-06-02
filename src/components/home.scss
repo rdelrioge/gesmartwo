@@ -32,10 +32,20 @@
     justify-content: center;
   }
 }
+// To scroll in preview
 .home2 {
   overflow: scroll !important;
   background-color: white;
 }
+// To skeletor
+// .skeletorRows {
+//   height: calc(100vh - 93px);
+//   grid-template-rows: repeat(9, auto);
+//   .MuiSkeleton-root {
+//     height: auto;
+//     margin: 1em;
+//   }
+// }
 
 @media print {
   .home {
