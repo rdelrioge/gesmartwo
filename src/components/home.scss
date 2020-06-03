@@ -6,7 +6,6 @@
   .nav-bar {
     width: 100vw;
     display: flex;
-    // background: #2f3133;
     background-color: #000000;
     .logo {
       background-image: url("../assets/images/icons/icon-384x384.png");
@@ -23,11 +22,45 @@
       margin: 0 auto;
       font-size: 1.4em;
       font-weight: bold;
-      // background: -webkit-linear-gradient(45deg, #46d0f7, #7d2ae8);
-      background: -webkit-linear-gradient(275deg, white, $grayed);
+      background: -webkit-linear-gradient(275deg, white, $secondary);
       -webkit-text-fill-color: transparent;
       -webkit-background-clip: text;
       background-clip: text;
+    }
+  }
+  .views {
+    height: calc(100vh - 93px);
+  }
+  .view1,
+  .view2 {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+  .view2 {
+    .btnSID {
+      margin-top: 1em;
+    }
+    .info {
+      text-align: center;
+      height: auto;
+      max-height: 22em;
+      opacity: 1;
+      background-color: lightgray;
+      border-radius: 8px;
+      padding: 0.5em;
+      margin-top: 0.5em;
+      transition: max-height 1.5s ease-in-out, opacity 1.5s ease-in-out;
+    }
+    .hideinfo {
+      max-height: 0;
+      opacity: 0;
+      // transition: opacity 0.5s ease-in-out, max-height 1.5s ease-in-out;
+    }
+    .nada {
+      height: 22em;
+      width: 75vw;
     }
   }
   .revisar {
@@ -37,12 +70,6 @@
       margin: 1em 0;
       align-items: center;
     }
-  }
-  .contenido {
-    height: calc(100vh - 93px);
-    display: grid;
-    align-items: center;
-    justify-content: center;
   }
 }
 // To scroll in preview
