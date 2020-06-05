@@ -147,7 +147,7 @@ function WorkOrder() {
             <b className="descripcion">
               Se realiza mantenimiento preventivo segun especificaciones
               técnicas del fabricante asi como pruebas de funcionamiento
-              satisfactorias
+              satisfactorias. El equipo se encuentra operando correctamente.
             </b>
           </div>
           <div className="row3R">
