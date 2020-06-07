@@ -1,7 +1,9 @@
 import React from "react";
 import "./workorder.scss";
 
-function WorkOrder() {
+function WorkOrder(props) {
+  console.log(props.data);
+  
   return (
     <div className="workorder">
       <div className="rows">

@@ -84,6 +84,70 @@
       justify-items: center;
     }
   }
+  .view4,
+  .view5,
+  .view6 {
+    display: grid;
+    text-align: center;
+    margin: 0 1em;
+    grid-auto-rows: max-content;
+    .herrXagregar > *,
+    .refXAgregar > * {
+      margin: 0.5em 0;
+    }
+    .agregartiempo,
+    .herrXagregar,
+    .refXAgregar {
+      display: grid;
+      grid-auto-rows: max-content;
+      .timers {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        .inicio,
+        .final {
+          margin: 0.5em;
+        }
+      }
+    }
+    .tiemposagregados,
+    .herrAgregadas,
+    .refAgregadas {
+      display: grid;
+      grid-auto-rows: max-content;
+      .ultime {
+        grid-template-columns: repeat(5, 2fr) 1fr;
+      }
+      .ulherr {
+        grid-template-columns: 2fr 2fr 4fr 1fr;
+      }
+      .ulref {
+        grid-template-columns: 2fr 4fr 2fr 1fr;
+      }
+      ul {
+        list-style: none;
+        display: grid;
+        padding: 0;
+        font-size: 0.7em;
+        align-items: center;
+        li {
+          list-style: none;
+          .btnDeleteTime {
+            color: white;
+            background-color: #e53935;
+            padding: 2px;
+            display: block;
+            margin: 0 8px;
+            border-radius: 2px;
+          }
+        }
+      }
+    }
+  }
+  .view7{
+    .inputPhoto{
+      display: none;
+    }
+  }
   .revisar {
     .revHeader {
       display: flex;
@@ -94,7 +158,7 @@
   }
 }
 // To scroll in preview
-.home2 {
+.scrollHome {
   overflow: scroll !important;
   background-color: white;
   height: auto;

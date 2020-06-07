@@ -4,12 +4,14 @@ import "./print.scss";
 import WorkOrder from "./WorkOrder";
 import Capacitacion from "./Capacitacion";
 
-function Print() {
+function Print(props) {
+  console.log(props);
+  
   return (
     <div className="printable">
-      <WorkOrder />
+      <WorkOrder data={props.data} />
       <div className="saltodepag"></div>
-      <Capacitacion />
+      <Capacitacion data={props.data} />
     </div>
   );
 }
