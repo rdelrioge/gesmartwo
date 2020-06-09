@@ -31,26 +31,29 @@
   .views {
     height: calc(100vh - 93px);
   }
-  .view1,
-  .view2 {
+  .view1 {
     justify-content: center;
     align-items: center;
     display: flex;
     flex-direction: column;
   }
   .view2 {
-    .btnSID {
-      margin-top: 1em;
-    }
+    justify-content: center;
+    align-items: center;
+    display: grid;
+    flex-direction: column;
+    grid-gap: 1em;
+    text-align: center;
     .info {
       text-align: center;
+      font-size: 0.8em;
       height: auto;
+      min-width: 23em;
       max-height: 22em;
       opacity: 1;
       background-color: lightgray;
       border-radius: 8px;
       padding: 0.5em;
-      margin-top: 0.5em;
       transition: max-height 1.5s ease-in-out, opacity 1.5s ease-in-out;
     }
     .hideinfo {
@@ -143,8 +146,28 @@
       }
     }
   }
-  .view7{
-    .inputPhoto{
+  .view7 {
+    display: grid;
+    text-align: center;
+    grid-template-rows: auto 1fr 1fr 1fr;
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      .cell {
+        margin: 1em;
+        align-self: center;
+        position: relative;
+        .btnDelete {
+          background-color: #f44336;
+          padding: 0 1em;
+          border-radius: 4px;
+          color: white;
+          position: absolute;
+          right: 0;
+        }
+      }
+    }
+    .inputPhoto {
       display: none;
     }
   }

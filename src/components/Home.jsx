@@ -29,22 +29,25 @@ import { db } from "../index";
 moment.locale("es");
 function Home() {
   // homeLayout
-  const [activeStep, setActiveStep] = useState(5);
+  const [activeStep, setActiveStep] = useState(0);
   const [nextDisabled, setNextDisabled] = useState(true);
   // view1
   const [sso, setSSO] = useState("");
   const [inge, setInge] = useState("Ricardo Del Rio");
   // view2
   const [sid, setSID] = useState("");
+  const [caso, setCaso] = useState("");
+  const [wo, setWO] = useState("");
   const [equipo, setEquipo] = useState(null);
   // view3
   const [tipoDeServicio, setTipoDeServicio] = useState("");
+  const [tipoDeContrato, setTipoDeContrato] = useState("");
   const [sintoma, setSintoma] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [apto, setApto] = useState(true);
   const [funcionando, setFuncionando] = useState(true);
   const [observaciones, setObservaciones] = useState("");
-  const [condiciones, setCondiciones] = useState(true);
+  const [condiciones, setCondiciones] = useState("Funcionando");
   // view 4
   const [tiempos, setTiempos] = useState([]);
   const [tipoDeTrabajo, setTipoDeTrabajo] = useState("");
@@ -63,7 +66,12 @@ function Home() {
   const [descripcionParte, setDescripcionParte] = useState("");
   const [orden, setOrden] = useState("");
   //view 7
-  const [foto, setFoto] = useState(null);
+  const [fotoAntes1, setFotoAntes1] = useState(null);
+  const [fotoAntes2, setFotoAntes2] = useState(null);
+  const [fotoDurante1, setFotoDurante1] = useState(null);
+  const [fotoDurante2, setFotoDurante2] = useState(null);
+  const [fotoDespues1, setFotoDespues1] = useState(null);
+  const [fotoDespues2, setFotoDespues2] = useState(null);
 
   // print
   const [hideInfo, setHideInfo] = useState(true);
@@ -120,7 +128,7 @@ function Home() {
             console.log(eq);
             setEquipo(eq);
             setHideInfo(false);
-            setNextDisabled(false);
+            // setNextDisabled(false);
           });
         }
       })
@@ -131,11 +139,9 @@ function Home() {
 
   const changeTipoDeServicio = (tds) => {
     setTipoDeServicio(tds);
-    if (tds === "PM") {
+    if (tds === "PM (Mantenimiento Preventivo)") {
       setDescripcion(
-        `Se realiza mantenimiento preventivo segun especificaciones técnicas 
-        del fabricante asi como pruebas de funcionamiento satisfactorias. El 
-        equipo se encuentra operando correctamente.`
+        `Se realiza mantenimiento preventivo segun especificaciones técnicas del fabricante asi como pruebas de funcionamiento satisfactorias. El equipo se encuentra operando correctamente.`
       );
     } else {
       setDescripcion("");
@@ -189,11 +195,43 @@ function Home() {
     setRefacciones(arrTemp);
   };
 
-  const subirfoto = (e) => {
+  const subirFotoAntes1 = (e) => {
     let photo = new Image();
     photo.src = URL.createObjectURL(e.target.files[0]);
-    setFoto(photo.src);
+    setFotoAntes1(photo.src);
+    // URL.revokeObjectURL(photo.src);
   };
+  const subirFotoAntes2 = (e) => {
+    let photo = new Image();
+    photo.src = URL.createObjectURL(e.target.files[0]);
+    setFotoAntes2(photo.src);
+    // URL.revokeObjectURL(photo.src);
+  };
+  const subirFotoDurante1 = (e) => {
+    let photo = new Image();
+    photo.src = URL.createObjectURL(e.target.files[0]);
+    setFotoDurante1(photo.src);
+    // URL.revokeObjectURL(photo.src);
+  };
+  const subirFotoDurante2 = (e) => {
+    let photo = new Image();
+    photo.src = URL.createObjectURL(e.target.files[0]);
+    setFotoDurante2(photo.src);
+    // URL.revokeObjectURL(photo.src);
+  };
+  const subirFotoDespues1 = (e) => {
+    let photo = new Image();
+    photo.src = URL.createObjectURL(e.target.files[0]);
+    setFotoDespues1(photo.src);
+    // URL.revokeObjectURL(photo.src);
+  };
+  const subirFotoDespues2 = (e) => {
+    let photo = new Image();
+    photo.src = URL.createObjectURL(e.target.files[0]);
+    setFotoDespues2(photo.src);
+    // URL.revokeObjectURL(photo.src);
+  };
+
   useEffect(() => {
     console.log(activeStep);
     console.log(tiempos);
@@ -202,10 +240,20 @@ function Home() {
         sso ? setNextDisabled(false) : setNextDisabled(true);
         break;
       case 1:
-        equipo ? setNextDisabled(false) : setNextDisabled(true);
+        if (caso !== "" && wo !== "" && equipo) {
+          setNextDisabled(false);
+        } else {
+          setNextDisabled(true);
+        }
         break;
       case 2:
-        if (tipoDeServicio !== "" && sintoma !== "" && descripcion !== "") {
+        if (
+          tipoDeServicio !== "" &&
+          tipoDeContrato !== "" &&
+          sintoma !== "" &&
+          descripcion !== "" &&
+          condiciones !== ""
+        ) {
           setNextDisabled(false);
         } else {
           setNextDisabled(true);
@@ -223,7 +271,17 @@ function Home() {
       default:
         break;
     }
-  }, [activeStep, tipoDeServicio, sintoma, descripcion, tiempos]);
+  }, [
+    activeStep,
+    tipoDeServicio,
+    tipoDeContrato,
+    sintoma,
+    descripcion,
+    tiempos,
+    caso,
+    wo,
+    equipo,
+  ]);
 
   return (
     <div className={activeStep === 7 ? "home scrollHome " : "home"}>
@@ -253,17 +311,43 @@ function Home() {
               <Button onClick={() => validateSSO()}>Vallidate</Button>
             </div>
             <div className="views view2">
-              <h3>Ingresa el SID</h3>
+              <h3>Datos iniciales</h3>
+              <TextField
+                label="Case"
+                fullWidth
+                variant="outlined"
+                size="small"
+                inputProps={{
+                  maxLength: 8,
+                }}
+                value={caso}
+                onChange={(e) => setCaso(e.target.value.replace(/[^0-9]/g, ""))}
+              />
+              <TextField
+                label="Work Order"
+                fullWidth
+                variant="outlined"
+                inputProps={{
+                  maxLength: 11,
+                }}
+                size="small"
+                value={wo}
+                onFocus={() => {
+                  wo === "" ? setWO("WO-") : console.log();
+                }}
+                onChange={(e) => setWO(e.target.value.toUpperCase())}
+              />
               <TextField
                 label="SID"
                 required
                 color="secondary"
                 variant="outlined"
+                size="small"
                 inputProps={{
                   maxLength: 20,
                 }}
                 type="text"
-                onChange={(ev) => changeSID(ev.target.value)}
+                onChange={(ev) => changeSID(ev.target.value.toUpperCase())}
                 value={sid}
               />
               <Button
@@ -338,19 +422,46 @@ function Home() {
                       id: "selectTipoDeServ",
                     }}>
                     <option aria-label="None" value="" />
-                    <option value={"PM"}>Preventivo</option>
-                    <option value={"CM"}>Correctivo</option>
+                    <option value={"PM (Mantenimiento Preventivo)"}>
+                      Preventivo
+                    </option>
+                    <option value={"CM (Mantenimiento Correctivo)"}>
+                      Correctivo
+                    </option>
                     <option value={"FMI"}>FMI</option>
-                    <option value={"INS"}>Instalación</option>
-                    <option value={"SS"}>Otros</option>
+                    <option value={"INS (Instalación)"}>Instalación</option>
+                    <option value={"Otros"}>Otros</option>
                     <option value={"HBS"}>HBS</option>
-                    <option value={"AP"}>Aplicaciones</option>
-                    <option value={"DES"}>Desinstalación</option>
+                    <option value={"APlicaciones"}>Aplicaciones</option>
+                    <option value={"Desinstalación"}>Desinstalación</option>
                   </Select>
                 </FormControl>
               </div>
               <div className="item3">
-                {tipoDeServicio === "PM" ? (
+                <FormControl size="small" fullWidth variant="outlined">
+                  <InputLabel htmlFor="selectTipoDeContrato">
+                    Tipo de trabajo
+                  </InputLabel>
+                  <Select
+                    native
+                    value={tipoDeContrato}
+                    onChange={(e) => setTipoDeContrato(e.target.value)}
+                    label="Tipo de trabajo"
+                    inputProps={{
+                      name: "tipoDeContrato",
+                      id: "selectTipoDeContrato",
+                    }}>
+                    <option aria-label="None" value="" />
+                    <option value={"Contrato"}>Contrato</option>
+                    <option value={"Garantía"}>Garantia</option>
+                    <option value={"Facturable"}>Facturable</option>
+                    <option value={"FMI"}>FMI</option>
+                    <option value={"On demand"}>On demand</option>
+                  </Select>
+                </FormControl>
+              </div>
+              <div className="item3">
+                {tipoDeServicio === "PM (Mantenimiento Preventivo)" ? (
                   <FormControl size="small" fullWidth variant="outlined">
                     <InputLabel htmlFor="numeroPM">Síntoma</InputLabel>
                     <Select
@@ -363,10 +474,18 @@ function Home() {
                         id: "sintoma",
                       }}>
                       <option aria-label="None" value="" />
-                      <option value={"PM1"}>1er PM</option>
-                      <option value={"PM2"}>2o PM</option>
-                      <option value={"PM3"}>3er PM</option>
-                      <option value={"PM4"}>4to PM</option>
+                      <option value={"1er Mantenimiento Preventivo"}>
+                        1er PM
+                      </option>
+                      <option value={"2do Mantenimiento Preventivo"}>
+                        2do PM
+                      </option>
+                      <option value={"3er Mantenimiento Preventivo"}>
+                        3er PM
+                      </option>
+                      <option value={"4to Mantenimiento Preventivo"}>
+                        4to PM
+                      </option>
                     </Select>
                   </FormControl>
                 ) : (
@@ -420,22 +539,30 @@ function Home() {
                 />
               </div>
               <div className="item3">
-                <input
-                  type="radio"
-                  id="funcional"
-                  checked={condiciones}
-                  name="condiciones"
-                  onChange={() => setCondiciones(true)}
-                />
-                <label htmlFor="funcional">Funcionando</label>
-                <input
-                  type="radio"
-                  id="nofuncional"
-                  checked={!condiciones}
-                  name="condiciones"
-                  onChange={() => setCondiciones(false)}
-                />
-                <label htmlFor="nofuncional">No Funcionando</label>
+                <FormControl size="small" fullWidth variant="outlined">
+                  <InputLabel htmlFor="selectCondiciones">
+                    Condiciones en las que se deja el equipo
+                  </InputLabel>
+                  <Select
+                    native
+                    value={condiciones}
+                    onChange={(e) => setCondiciones(e.target.value)}
+                    label="Condiciones en las que se deja el equipo"
+                    inputProps={{
+                      name: "condiciones",
+                      id: "selectCondiciones",
+                    }}>
+                    <option aria-label="None" value="" />
+                    <option value={"Funcionando"}>Funcionando</option>
+                    <option value={"Parcialmente funcionando"}>
+                      Parcialmente funcionando
+                    </option>
+                    <option value={"No funcional"}>No funcional</option>
+                    <option value={"No localizado"}>No localizado</option>
+                    <option value={"Baja"}>Baja</option>
+                    <option value={"Reprogramado"}>Reprogramado</option>
+                  </Select>
+                </FormControl>
               </div>
             </div>
             <div className="views view4">
@@ -458,9 +585,7 @@ function Home() {
                       <option aria-label="None" value="" />
                       <option value={"Viaje"}>Viaje</option>
                       <option value={"En espera"}>En Espera</option>
-                      <option value={"Mantenimiento planificado"}>
-                        Mantenimiento planificado
-                      </option>
+                      <option value={"Preventivo"}>Preventivo</option>
                       <option value={"Reparacion"}>Reparacion</option>
                       <option value={"Instalación"}>Instalación</option>
                       <option value={"Administración"}>Administración</option>
@@ -470,9 +595,7 @@ function Home() {
                       <option value={"Instalación - Opciones"}>
                         Instalación - Opciones
                       </option>
-                      <option value={"Configuración de conectividad"}>
-                        Configuración de conectividad
-                      </option>
+                      <option value={"Conectividad"}>Conectividad</option>
                       <option value={"Monitoreo del sistema"}>
                         Monitoreo del sistema
                       </option>
@@ -481,7 +604,7 @@ function Home() {
                         Entrega de materiales, embalaje, desembalaje.
                       </option>
                       <option value={"Potencia y puesta a tierra "}>
-                        Potencia y puesta a tierra{" "}
+                        Potencia y puesta a tierra
                       </option>
                       <option
                         value={"Rcarga de helio / mantenimiento de Cryogenos"}>
@@ -553,6 +676,8 @@ function Home() {
                         showTodayButton
                         todayLabel="hoy"
                         clearable
+                        minutesStep="15"
+                        format="HH:mm"
                         clearLabel="borrar"
                         okLabel=""
                         cancelLabel=""
@@ -592,8 +717,10 @@ function Home() {
                         inputVariant="outlined"
                         autoOk
                         disableToolbar
+                        format="HH:mm"
                         ampm={false}
                         showTodayButton
+                        minutesStep="15"
                         todayLabel="hoy"
                         clearable
                         clearLabel="borrar"
@@ -636,9 +763,9 @@ function Home() {
                         <ul className="ultime" key={index}>
                           <li>{time[0]}</li>
                           <li>{moment(time[1]).format("DD/MM/YY")}</li>
-                          <li>{moment(time[2]).format("HH:MM")}</li>
+                          <li>{moment(time[2]).format("HH:mm")}</li>
                           <li>{moment(time[3]).format("DD/MM/YY")}</li>
-                          <li>{moment(time[4]).format("HH:MM")}</li>
+                          <li>{moment(time[4]).format("HH:mm")}</li>
                           <li>
                             <b
                               className="btnDeleteTime"
@@ -804,22 +931,197 @@ function Home() {
             </div>
             <div className="views view7">
               <h3>Fotos</h3>
-              <div className="btnAddRef">
-                <input
-                  accept="image/*"
-                  className="inputPhoto"
-                  id="icon-button-photo"
-                  onChange={(e) => subirfoto(e)}
-                  type="file"
-                />
-                <label htmlFor="icon-button-photo">
-                  <IconButton color="primary" component="span">
-                    <span className="material-icons">add_a_photo</span>
-                  </IconButton>
-                </label>
-                {foto ? (
-                  <img width="200" height="100" src={foto} alt="mifoto" />
-                ) : null}
+              <div className="row antes">
+                {fotoAntes1 ? (
+                  <div className="cell">
+                    <b
+                      className="btnDelete"
+                      onClick={() => setFotoAntes1(null)}>
+                      X
+                    </b>
+                    <img
+                      width="150"
+                      height="100"
+                      src={fotoAntes1}
+                      alt="antes1"
+                    />
+                  </div>
+                ) : (
+                  <div className="cell">
+                    <input
+                      accept="image/*"
+                      className="inputPhoto"
+                      id="antes1"
+                      onChange={(e) => subirFotoAntes1(e)}
+                      type="file"
+                    />
+                    <label htmlFor="antes1">
+                      Antes
+                      <IconButton color="primary" component="span">
+                        <span className="material-icons">add_a_photo</span>
+                      </IconButton>
+                    </label>
+                  </div>
+                )}
+                {fotoAntes2 ? (
+                  <div className="cell">
+                    <b
+                      className="btnDelete"
+                      onClick={() => setFotoAntes2(null)}>
+                      X
+                    </b>
+                    <img
+                      width="150"
+                      height="100"
+                      src={fotoAntes2}
+                      alt="antes2"
+                    />
+                  </div>
+                ) : (
+                  <div className="cell">
+                    <input
+                      accept="image/*"
+                      className="inputPhoto"
+                      id="antes2"
+                      onChange={(e) => subirFotoAntes2(e)}
+                      type="file"
+                    />
+                    <label htmlFor="antes2">
+                      Antes
+                      <IconButton color="primary" component="span">
+                        <span className="material-icons">add_a_photo</span>
+                      </IconButton>
+                    </label>
+                  </div>
+                )}
+              </div>
+              <div className="row durante">
+                {fotoDurante1 ? (
+                  <div className="cell">
+                    <b
+                      className="btnDelete"
+                      onClick={() => setFotoDurante1(null)}>
+                      X
+                    </b>
+                    <img
+                      width="150"
+                      height="100"
+                      src={fotoDurante1}
+                      alt="durante1"
+                    />
+                  </div>
+                ) : (
+                  <div className="cell">
+                    <input
+                      accept="image/*"
+                      className="inputPhoto"
+                      id="durante1"
+                      onChange={(e) => subirFotoDurante1(e)}
+                      type="file"
+                    />
+                    <label htmlFor="durante1">
+                      Durante
+                      <IconButton color="primary" component="span">
+                        <span className="material-icons">add_a_photo</span>
+                      </IconButton>
+                    </label>
+                  </div>
+                )}
+                {fotoDurante2 ? (
+                  <div className="cell">
+                    <b
+                      className="btnDelete"
+                      onClick={() => setFotoDurante2(null)}>
+                      X
+                    </b>
+                    <img
+                      width="150"
+                      height="100"
+                      src={fotoDurante2}
+                      alt="durante2"
+                    />
+                  </div>
+                ) : (
+                  <div className="cell">
+                    <input
+                      accept="image/*"
+                      className="inputPhoto"
+                      id="durante2"
+                      onChange={(e) => subirFotoDurante2(e)}
+                      type="file"
+                    />
+                    <label htmlFor="durante2">
+                      Durante
+                      <IconButton color="primary" component="span">
+                        <span className="material-icons">add_a_photo</span>
+                      </IconButton>
+                    </label>
+                  </div>
+                )}
+              </div>
+              <div className="row despues">
+                {fotoDespues1 ? (
+                  <div className="cell">
+                    <b
+                      className="btnDelete"
+                      onClick={() => setFotoDespues1(null)}>
+                      X
+                    </b>
+                    <img
+                      width="150"
+                      height="100"
+                      src={fotoDespues1}
+                      alt="despues1"
+                    />
+                  </div>
+                ) : (
+                  <div className="cell">
+                    <input
+                      accept="image/*"
+                      className="inputPhoto"
+                      id="despues1"
+                      onChange={(e) => subirFotoDespues1(e)}
+                      type="file"
+                    />
+                    <label htmlFor="despues1">
+                      Despues
+                      <IconButton color="primary" component="span">
+                        <span className="material-icons">add_a_photo</span>
+                      </IconButton>
+                    </label>
+                  </div>
+                )}
+                {fotoDespues2 ? (
+                  <div className="cell">
+                    <b
+                      className="btnDelete"
+                      onClick={() => setFotoDespues2(null)}>
+                      X
+                    </b>
+                    <img
+                      width="150"
+                      height="100"
+                      src={fotoDespues2}
+                      alt="despues2"
+                    />
+                  </div>
+                ) : (
+                  <div className="cell">
+                    <input
+                      accept="image/*"
+                      className="inputPhoto"
+                      id="despues2"
+                      onChange={(e) => subirFotoDespues2(e)}
+                      type="file"
+                    />
+                    <label htmlFor="despues2">
+                      Despues
+                      <IconButton color="primary" component="span">
+                        <span className="material-icons">add_a_photo</span>
+                      </IconButton>
+                    </label>
+                  </div>
+                )}
               </div>
             </div>
           </SwipeableViews>
@@ -877,8 +1179,11 @@ function Home() {
                 sso,
                 inge,
                 sid,
+                caso,
+                wo,
                 equipo,
                 tipoDeServicio,
+                tipoDeContrato,
                 sintoma,
                 descripcion,
                 apto,

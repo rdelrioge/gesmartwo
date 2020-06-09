@@ -1,9 +1,89 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import moment from "moment";
+
 import "./workorder.scss";
 
 function WorkOrder(props) {
-  console.log(props.data);
-  
+  const data = { ...props.data };
+
+  console.log(data);
+
+  const [finDelServicio, setFinDelServicio] = useState("");
+  const [folio, setFolio] = useState("");
+  const [tiempos, setTiempos] = useState(props.data.tiempos);
+
+  const calcularFolio = () => {
+    let y = moment(data.tiempos[0][1]).format("YY");
+    let h = moment(data.tiempos[0][2]).format("HH");
+    let m = moment(data.tiempos[0][2]).format("mm");
+    let t1 = Number(h) + Number(m);
+    let t2 = Number(m) / 5;
+    let t = t1 - t2;
+    let temp =
+      "RDR" +
+      moment(data.tiempos[1]).format("D") +
+      moment(data.tiempos[1]).format("M") +
+      y.substr(1) +
+      "." +
+      t;
+    setFolio(temp);
+  };
+
+  const calcularFinDeServicio = () => {
+    let fin = moment(data.tiempos[data.tiempos.length - 1][3]).format(
+      "D [de] MMMM [de] YYYY"
+    );
+    setFinDelServicio(fin);
+  };
+
+  const displayTiempos = () => {
+    let arrTemp = [...data.tiempos];
+    if (data.tiempos.length === 6) {
+      setTiempos(...data.tiempos);
+    } else {
+      switch (data.tiempos.length) {
+        case 1:
+          arrTemp.push([]);
+          arrTemp.push([]);
+          arrTemp.push([]);
+          arrTemp.push([]);
+          arrTemp.push([]);
+          setTiempos(arrTemp);
+          break;
+        case 2:
+          arrTemp.push([]);
+          arrTemp.push([]);
+          arrTemp.push([]);
+          arrTemp.push([]);
+          setTiempos(arrTemp);
+          break;
+        case 3:
+          arrTemp.push([]);
+          arrTemp.push([]);
+          arrTemp.push([]);
+          setTiempos(arrTemp);
+          break;
+        case 4:
+          arrTemp.push([]);
+          arrTemp.push([]);
+          setTiempos(arrTemp);
+          break;
+        case 5:
+          arrTemp.push([]);
+          setTiempos(arrTemp);
+          break;
+
+        default:
+          break;
+      }
+    }
+  };
+  useEffect(() => {
+    calcularFinDeServicio();
+    calcularFolio();
+    displayTiempos();
+  }, []);
+
   return (
     <div className="workorder">
       <div className="rows">
@@ -22,15 +102,15 @@ function WorkOrder(props) {
             <p>Hoja de servicio</p>
             <div>
               <span>No. De Folio</span>
-              <span className="node nodefolio">AM920.34</span>
+              <span className="node nodefolio">{folio}</span>
             </div>
             <div>
               <span>No. De CASE</span>
-              <span className="node">04441649</span>
+              <span className="node">{data.caso}</span>
             </div>
             <div>
               <span>No. De WO</span>
-              <span className="node">WO-02457864</span>
+              <span className="node">{data.wo}</span>
             </div>
           </div>
         </div>
@@ -38,19 +118,19 @@ function WorkOrder(props) {
           <div className="datoscliente">
             <div>
               <span>Razón Social:</span>
-              <span>HGSZ/MF No. 3</span>
+              <span>{data.equipo.hospital}</span>
             </div>
             <div>
               <span>Ciudad / Localidad: </span>
-              <span>CHILPANCINGO</span>
+              <span>{data.equipo.ciudad}</span>
             </div>
             <div>
               <span>Delegación:</span>
-              <span>GUERRERO</span>
+              <span>{data.equipo.delegacion}</span>
             </div>
             <div>
               <span>Dependencia:</span>
-              <span>IMSS</span>
+              <span>{data.equipo.cliente}</span>
             </div>
             <div>
               <span>Dirección:</span>
@@ -64,19 +144,19 @@ function WorkOrder(props) {
           <div className="datosequipo">
             <div className="sid">
               <span>SID:</span>
-              <b>57618</b>
+              <b>{data.equipo.sid}</b>
             </div>
             <div className="equipo">
               <span>Equipo:</span>
-              <span>Ventilador de traslado pediátrico-adulto</span>
+              <span>{data.equipo.equipo}</span>
             </div>
             <div>
               <span>Modelo:</span>
-              <span>Falcon 202 Evo</span>
+              <span>{data.equipo.modelo}</span>
             </div>
             <div>
               <span>Serie:</span>
-              <span>57618</span>
+              <span>{data.equipo.serie}</span>
             </div>
             <div className="modalidad">
               <span>Modalidad:</span>
@@ -99,79 +179,55 @@ function WorkOrder(props) {
               <b>Dia</b>
               <b>Hora</b>
             </div>
-            <div className="row3L-r">
-              <b>Viaje</b>
-              <span>04-feb-20</span>
-              <span>10:30</span>
-              <span>04-feb-20</span>
-              <span>11:00</span>
-            </div>
-            <div className="row3L-r">
-              <b>En Espera</b>
-              <span>04-feb-20</span>
-              <span>11:00</span>
-              <span>04-feb-20</span>
-              <span>11:30</span>
-            </div>
-            <div className="row3L-r">
-              <b>Preventivo</b>
-              <span>04-feb-20</span>
-              <span>11:30</span>
-              <span>04-feb-20</span>
-              <span>15:30</span>
-            </div>
-            <div className="row3L-r">
-              <b>Administrativo</b>
-              <span>04-feb-20</span>
-              <span>15:30</span>
-              <span>04-feb-20</span>
-              <span>16:00</span>
-            </div>
-            <div className="row3L-r">
-              <b>Viaje</b>
-              <span>04-feb-20</span>
-              <span>16:00</span>
-              <span>04-feb-20</span>
-              <span>16:30</span>
-            </div>
-            <div className="row3L-r">
-              <b></b>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
+            {tiempos &&
+              tiempos.map((time, index) => {
+                console.log(time);
+
+                return (
+                  <div key={index} className="row3L-r">
+                    <b>{time[0] ? time[0] : null}</b>
+                    <span>
+                      {time[1] ? moment(time[1]).format("DD/MM/YY") : null}
+                    </span>
+                    <span>
+                      {time[2] ? moment(time[2]).format("HH:mm") : null}
+                    </span>
+                    <span>
+                      {time[3] ? moment(time[3]).format("DD/MM/YY") : null}
+                    </span>
+                    <span>
+                      {time[4] ? moment(time[4]).format("HH:mm") : null}
+                    </span>
+                  </div>
+                );
+              })}
             <div className="findeservicio">
               <b>Fin de Servicio:</b>
-              <b>04 de febrero de 2020</b>
+              <b>{finDelServicio}</b>
             </div>
             <b className="descCompleta">DESCRIPCIÓN COMPLETA DEL SERVICIO</b>
-            <b className="descripcion">
-              Se realiza mantenimiento preventivo segun especificaciones
-              técnicas del fabricante asi como pruebas de funcionamiento
-              satisfactorias. El equipo se encuentra operando correctamente.
-            </b>
+            <b className="descripcion">{data.descripcion}</b>
           </div>
           <div className="row3R">
             <b className="rowtitle">Servicio</b>
             <div className="row3R-r">
               <span>Tipo de servicio:</span>
-              <b>PM (Mantenimiento Preventivo)</b>
+              <b>{data.tipoDeServicio}</b>
             </div>
             <div className="row3R-r">
               <span>Tipo de trabajo:</span>
-              <b>Contrato</b>
+              <b>{data.tipoDeContrato}</b>
             </div>
             <div className="row3R-r">
               <span>Contrato No.</span>
-              <span>19BI0127</span>
+              <span>{data.equipo.contrato}</span>
             </div>
             <div className="row3R-r">
               <span>GON de Instalación:</span>
               <span></span>
             </div>
             <b className="rowtitle">SINTOMA</b>
-            <b className="sintoma">4to MANTENIMIENTO PREVENTIVO</b>
+            <b className="sintoma">{data.sintoma}</b>
             <b className="rowtitle">HERRAMIENTA UTILIZADA (CALIBRABLE)</b>
             <div className="row3R-rh herrtitles">
               <span>Calibración sig.</span>
@@ -206,21 +262,26 @@ function WorkOrder(props) {
               EL EQUIPO QUEDA OPERATIVAMENTE APTO PARA REALIZAR EL TRABAJO PARA
               LO QUE FUE DISEÑADO
             </b>
-            <span>SI</span>
+            <span>{data.apto ? "SI" : "NO"} </span>
           </div>
           <div>
             <b>FUNCIONANDO AL 100%</b>
-            <span>SI</span>
+            <span> {data.funcionando ? "SI" : "NO"} </span>
           </div>
         </div>
         <div className="row5">
           <b className="obsTitle">Observaciones</b>
-          <span className="observaciones"></span>
+          <span className="observaciones"> {data.observaciones} </span>
           <b className="reprogTitle">Reprogramación del servicio:</b>
-          <b className="reprog">N/A</b>
+          <b className="reprog">
+            {" "}
+            {data.condiciones === "Reprogramado"
+              ? "En vista de la imposibilidad de realización del mantenimiento preventivo en el periodo designado por el manual, y tomando en consideración la solicitud del cliente, el mantenimiento previsto originalmente para el día:_____________, ahora será llevado a cabo el día:____________."
+              : "N/A"}{" "}
+          </b>
           <div className="condiciones">
             <b>Condiciones en las que se deja el equipo:</b>
-            <b>FUNCIONAL</b>
+            <b>{data.condiciones}</b>
           </div>
         </div>
         <div className="row6">
@@ -271,7 +332,7 @@ function WorkOrder(props) {
               <span></span>
               <span className="line">Nombre completo</span>
               <span></span>
-              <span></span>
+              <span>{data.inge} </span>
               <span className="line">Ingeniero de Servicio</span>
             </div>
             <div className="firmaUsuario">
