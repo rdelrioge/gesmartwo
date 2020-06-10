@@ -31,41 +31,42 @@ function Home() {
   // homeLayout
   const [activeStep, setActiveStep] = useState(0);
   const [nextDisabled, setNextDisabled] = useState(true);
-  // view1
+  // view1 SSO [0]
   const [sso, setSSO] = useState("");
   const [inge, setInge] = useState("Ricardo Del Rio");
-  // view2
+  // view2 SID CASE WO [1]
   const [sid, setSID] = useState("");
   const [caso, setCaso] = useState("");
   const [wo, setWO] = useState("");
   const [equipo, setEquipo] = useState(null);
-  // view3
+  // view3 Servicio [2]
   const [tipoDeServicio, setTipoDeServicio] = useState("");
-  const [tipoDeContrato, setTipoDeContrato] = useState("");
+  const [tipoDeContrato, setTipoDeContrato] = useState("Contrato");
   const [sintoma, setSintoma] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [apto, setApto] = useState(true);
   const [funcionando, setFuncionando] = useState(true);
   const [observaciones, setObservaciones] = useState("");
   const [condiciones, setCondiciones] = useState("Funcionando");
-  // view 4
+  // view 4 Tiempos [3]
   const [tiempos, setTiempos] = useState([]);
   const [tipoDeTrabajo, setTipoDeTrabajo] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [startTime, setStartTime] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [endTime, setEndTime] = useState(null);
-  // view 5
+  // view 5 Herramientas [4]
   const [herramientas, setHerramientas] = useState([]);
   const [calibracion, setCalibracion] = useState(null);
   const [barcode, setBarcode] = useState("");
   const [herramienta, setHerramienta] = useState("");
-  // view 6
+  // view 6 Refacciones [5]
   const [refacciones, setRefacciones] = useState([]);
+  const [cantidad, setCantidad] = useState("");
   const [parte, setParte] = useState("");
   const [descripcionParte, setDescripcionParte] = useState("");
   const [orden, setOrden] = useState("");
-  //view 7
+  //view 7 Fotos [6]
   const [fotoAntes1, setFotoAntes1] = useState(null);
   const [fotoAntes2, setFotoAntes2] = useState(null);
   const [fotoDurante1, setFotoDurante1] = useState(null);
@@ -182,7 +183,7 @@ function Home() {
 
   const addRefaccion = () => {
     let arrTemp = [...refacciones];
-    arrTemp.push([parte, descripcionParte, orden]);
+    arrTemp.push([cantidad, parte, descripcionParte, orden]);
     setRefacciones(arrTemp);
     setParte("");
     setDescripcionParte("");
@@ -296,16 +297,13 @@ function Home() {
               <h3>Ingresa tu SSO</h3>
               <TextField
                 label="SSO"
-                required
                 color="secondary"
                 variant="outlined"
+                type="tel"
                 inputProps={{
                   maxLength: 9,
                 }}
-                type="text"
-                onChange={(ev) =>
-                  changeSSO(ev.target.value.replace(/[^0-9]/g, ""))
-                }
+                onChange={(ev) => changeSSO(ev.target.value)}
                 value={sso}
               />
               <Button onClick={() => validateSSO()}>Vallidate</Button>
@@ -316,17 +314,19 @@ function Home() {
                 label="Case"
                 fullWidth
                 variant="outlined"
+                type="tel"
                 size="small"
                 inputProps={{
                   maxLength: 8,
                 }}
                 value={caso}
-                onChange={(e) => setCaso(e.target.value.replace(/[^0-9]/g, ""))}
+                onChange={(e) => setCaso(e.target.value)}
               />
               <TextField
                 label="Work Order"
                 fullWidth
                 variant="outlined"
+                type="tel"
                 inputProps={{
                   maxLength: 11,
                 }}
@@ -451,7 +451,6 @@ function Home() {
                       name: "tipoDeContrato",
                       id: "selectTipoDeContrato",
                     }}>
-                    <option aria-label="None" value="" />
                     <option value={"Contrato"}>Contrato</option>
                     <option value={"Garantía"}>Garantia</option>
                     <option value={"Facturable"}>Facturable</option>
@@ -552,7 +551,6 @@ function Home() {
                       name: "condiciones",
                       id: "selectCondiciones",
                     }}>
-                    <option aria-label="None" value="" />
                     <option value={"Funcionando"}>Funcionando</option>
                     <option value={"Parcialmente funcionando"}>
                       Parcialmente funcionando
@@ -676,7 +674,7 @@ function Home() {
                         showTodayButton
                         todayLabel="hoy"
                         clearable
-                        minutesStep="15"
+                        minutesStep={15}
                         format="HH:mm"
                         clearLabel="borrar"
                         okLabel=""
@@ -720,7 +718,7 @@ function Home() {
                         format="HH:mm"
                         ampm={false}
                         showTodayButton
-                        minutesStep="15"
+                        minutesStep={15}
                         todayLabel="hoy"
                         clearable
                         clearLabel="borrar"
@@ -865,6 +863,15 @@ function Home() {
               <h3>Refacciones</h3>
               <div className="refXAgregar">
                 <TextField
+                  label="Cantidad"
+                  fullWidth
+                  type="number"
+                  variant="outlined"
+                  size="small"
+                  value={cantidad}
+                  onChange={(e) => setCantidad(e.target.value)}
+                />
+                <TextField
                   label="# Parte / Catálogo"
                   fullWidth
                   variant="outlined"
@@ -903,18 +910,20 @@ function Home() {
                 {refacciones.length > 0 ? (
                   <>
                     <ul className="ulref">
+                      <li>Cant.</li>
                       <li># Parte / Catálogo</li>
                       <li>Descripción</li>
                       <li>No. de Orden / No. de GON</li>
                       <li>Borrar</li>
                     </ul>
 
-                    {refacciones.map((herr, index) => {
+                    {refacciones.map((refa, index) => {
                       return (
                         <ul className="ulref" key={index}>
-                          <li>{herr[0]}</li>
-                          <li>{herr[1]}</li>
-                          <li>{herr[2]}</li>
+                          <li>{refa[0]}</li>
+                          <li>{refa[1]}</li>
+                          <li>{refa[2]}</li>
+                          <li>{refa[3]}</li>
                           <li>
                             <b
                               className="btnDeleteTime"

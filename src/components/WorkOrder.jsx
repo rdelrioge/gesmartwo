@@ -11,6 +11,8 @@ function WorkOrder(props) {
   const [finDelServicio, setFinDelServicio] = useState("");
   const [folio, setFolio] = useState("");
   const [tiempos, setTiempos] = useState(props.data.tiempos);
+  const [herramientas, setHerramientas] = useState(props.data.herramientas);
+  const [refacciones, setRefacciones] = useState(props.data.refacciones);
 
   const calcularFolio = () => {
     let y = moment(data.tiempos[0][1]).format("YY");
@@ -38,50 +40,112 @@ function WorkOrder(props) {
 
   const displayTiempos = () => {
     let arrTemp = [...data.tiempos];
-    if (data.tiempos.length === 6) {
-      setTiempos(...data.tiempos);
-    } else {
-      switch (data.tiempos.length) {
-        case 1:
-          arrTemp.push([]);
-          arrTemp.push([]);
-          arrTemp.push([]);
-          arrTemp.push([]);
-          arrTemp.push([]);
-          setTiempos(arrTemp);
-          break;
-        case 2:
-          arrTemp.push([]);
-          arrTemp.push([]);
-          arrTemp.push([]);
-          arrTemp.push([]);
-          setTiempos(arrTemp);
-          break;
-        case 3:
-          arrTemp.push([]);
-          arrTemp.push([]);
-          arrTemp.push([]);
-          setTiempos(arrTemp);
-          break;
-        case 4:
-          arrTemp.push([]);
-          arrTemp.push([]);
-          setTiempos(arrTemp);
-          break;
-        case 5:
-          arrTemp.push([]);
-          setTiempos(arrTemp);
-          break;
+    switch (data.tiempos.length) {
+      case 1:
+        arrTemp.push([]);
+        arrTemp.push([]);
+        arrTemp.push([]);
+        arrTemp.push([]);
+        arrTemp.push([]);
+        setTiempos(arrTemp);
+        break;
+      case 2:
+        arrTemp.push([]);
+        arrTemp.push([]);
+        arrTemp.push([]);
+        arrTemp.push([]);
+        setTiempos(arrTemp);
+        break;
+      case 3:
+        arrTemp.push([]);
+        arrTemp.push([]);
+        arrTemp.push([]);
+        setTiempos(arrTemp);
+        break;
+      case 4:
+        arrTemp.push([]);
+        arrTemp.push([]);
+        setTiempos(arrTemp);
+        break;
+      case 5:
+        arrTemp.push([]);
+        setTiempos(arrTemp);
+        break;
+      case 6:
+        setTiempos(arrTemp);
+        break;
 
-        default:
-          break;
-      }
+      default:
+        break;
     }
   };
+
+  const displayHerramientas = () => {
+    let arrTemp = [...data.herramientas];
+    switch (data.herramientas.length) {
+      case 0:
+        arrTemp.push([]);
+        arrTemp.push([]);
+        arrTemp.push([]);
+        arrTemp.push([]);
+        setHerramientas(arrTemp);
+        break;
+      case 1:
+        arrTemp.push([]);
+        arrTemp.push([]);
+        arrTemp.push([]);
+        setHerramientas(arrTemp);
+        break;
+      case 2:
+        arrTemp.push([]);
+        arrTemp.push([]);
+        setHerramientas(arrTemp);
+        break;
+      case 3:
+        arrTemp.push([]);
+        setHerramientas(arrTemp);
+        break;
+      case 4:
+        setHerramientas(arrTemp);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const displayRefacciones = () => {
+    let arrTemp = [...data.refacciones];
+
+    switch (data.refacciones.length) {
+      case 0:
+        arrTemp.push([]);
+        arrTemp.push([]);
+        arrTemp.push([]);
+        setRefacciones(arrTemp);
+        break;
+      case 1:
+        arrTemp.push([]);
+        arrTemp.push([]);
+        setRefacciones(arrTemp);
+        break;
+      case 2:
+        arrTemp.push([]);
+        setRefacciones(arrTemp);
+        break;
+      case 3:
+        setRefacciones(arrTemp);
+        break;
+      default:
+        break;
+    }
+  };
+
   useEffect(() => {
     calcularFinDeServicio();
     calcularFolio();
     displayTiempos();
+    displayHerramientas();
+    displayRefacciones();
   }, []);
 
   return (
@@ -181,8 +245,6 @@ function WorkOrder(props) {
             </div>
             {tiempos &&
               tiempos.map((time, index) => {
-                console.log(time);
-
                 return (
                   <div key={index} className="row3L-r">
                     <b>{time[0] ? time[0] : null}</b>
@@ -234,26 +296,18 @@ function WorkOrder(props) {
               <span>Barcode</span>
               <span>Herramienta</span>
             </div>
-            <div className="row3R-rh">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-            <div className="row3R-rh">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-            <div className="row3R-rh">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-            <div className="row3R-rh">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
+            {herramientas &&
+              herramientas.map((herr, index) => {
+                return (
+                  <div key={index} className="row3R-rh">
+                    <span>
+                      {herr[0] ? moment(herr[0]).format("DD/MM/YY") : null}
+                    </span>
+                    <span> {herr[1]} </span>
+                    <span> {herr[2]} </span>
+                  </div>
+                );
+              })}
           </div>
         </div>
         <div className="row4">
@@ -269,22 +323,31 @@ function WorkOrder(props) {
             <span> {data.funcionando ? "SI" : "NO"} </span>
           </div>
         </div>
-        <div className="row5">
+        <div
+          className={
+            data.condiciones === "Reprogramado"
+              ? "row5 row5_2fr_en_Reprog"
+              : "row5"
+          }>
           <b className="obsTitle">Observaciones</b>
           <span className="observaciones"> {data.observaciones} </span>
           <b className="reprogTitle">Reprogramación del servicio:</b>
           <b className="reprog">
-            {" "}
             {data.condiciones === "Reprogramado"
               ? "En vista de la imposibilidad de realización del mantenimiento preventivo en el periodo designado por el manual, y tomando en consideración la solicitud del cliente, el mantenimiento previsto originalmente para el día:_____________, ahora será llevado a cabo el día:____________."
-              : "N/A"}{" "}
+              : "N/A"}
           </b>
           <div className="condiciones">
             <b>Condiciones en las que se deja el equipo:</b>
             <b>{data.condiciones}</b>
           </div>
         </div>
-        <div className="row6">
+        <div
+          className={
+            data.condiciones === "Reprogramado"
+              ? "row6 row6_5fr"
+              : "row6 row6_6fr"
+          }>
           <b className="refsTitle">
             Kit y refacciones utilizadas en el servicio
           </b>
@@ -294,24 +357,17 @@ function WorkOrder(props) {
             <b>Descripción</b>
             <b>No. Orden / No. de GON</b>
           </div>
-          <div className="row6-4c">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <div className="row6-4c">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <div className="row6-4c">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
+          {refacciones &&
+            refacciones.map((refa, index) => {
+              return (
+                <div key={index} className="row6-4c">
+                  <span> {refa[0]} </span>
+                  <span> {refa[1]} </span>
+                  <span> {refa[2]} </span>
+                  <span> {refa[3]} </span>
+                </div>
+              );
+            })}
           <div className="sellos sellosTitle">
             <span>Sello de Unidad</span>
             <span>Sello Fechador</span>
