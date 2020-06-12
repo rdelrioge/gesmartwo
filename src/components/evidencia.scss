@@ -1,0 +1,99 @@
+.evidencia {
+  font-size: 1.3vw;
+  .rows {
+    display: grid;
+    margin: 2em;
+    grid-gap: 0.5em;
+    .row1 {
+      display: grid;
+      grid-template-columns: 1fr 4fr;
+      .logo {
+        padding: 3px;
+        background-image: url("../assets/images/logoGE.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+      }
+      .datosge {
+        align-self: center;
+        text-align: right;
+        p {
+          margin: 0;
+        }
+      }
+    }
+    h2 {
+      color: red;
+      text-align: center;
+    }
+    .row2 {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      .datoscliente {
+        display: grid;
+        grid-template-rows: repeat(6, 1fr);
+        border: 1px solid;
+        div {
+          display: grid;
+          grid-template-columns: 1fr 2fr;
+          padding-left: 0.2em;
+          border-bottom: 1px solid;
+        }
+        .telcliente {
+          border-bottom: none;
+        }
+      }
+      .datosequipo {
+        display: grid;
+        grid-template-rows: 2fr 1fr 1fr 1fr 1fr;
+        border: 1px solid;
+        border-left: none;
+        div {
+          display: grid;
+          grid-template-columns: 1fr 3fr;
+          padding-left: 0.2em;
+          border-bottom: 1px solid;
+          span:last-child {
+            font-size: calc(0.8em + 0.1vw);
+          }
+        }
+        .sid {
+          align-content: center;
+        }
+        .modalidad {
+          border-bottom: none;
+        }
+      }
+    }
+    .row3 {
+      .row3row {
+        display: grid;
+        grid-template-columns: 1em 1fr 1fr;
+        margin-top: 4em;
+        span {
+          writing-mode: vertical-rl;
+          transform: scale(-1);
+          font-size: 2em;
+          text-align: center;
+        }
+        img {
+          width: 40vw;
+          height: 14vh;
+          margin: auto;
+        }
+      }
+    }
+  }
+}
+
+@media print {
+  .evidencia {
+    font-size: 2.6vw;
+    margin-top: 1em;
+  }
+  img {
+    width: 180pt !important;
+    height: 110pt !important;
+    margin: auto;
+  }
+}

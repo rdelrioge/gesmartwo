@@ -1202,6 +1202,12 @@ function Home() {
                 tiempos,
                 herramientas,
                 refacciones,
+                fotoAntes1,
+                fotoAntes2,
+                fotoDurante1,
+                fotoDurante2,
+                fotoDespues1,
+                fotoDespues2,
               }}
             />
           )}
