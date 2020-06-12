@@ -1,7 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import moment from "moment";
+
 import "./capacitacion.scss";
 
-function Capacitacion() {
+function Capacitacion(props) {
+  const data = { ...props.data };
+
+  const [diahoy, setDiahoy] = useState("");
+  const [meshoy, setMeshoy] = useState("");
+  const [añohoy, setAñohoy] = useState("");
+
+  console.log(data);
+
+  useEffect(() => {
+    let fechafin = data.tiempos[data.tiempos.length - 1][3];
+    setDiahoy(moment(fechafin).format("DD"));
+    setMeshoy(moment(fechafin).format("MM"));
+    setAñohoy(moment(fechafin).format("YYYY"));
+    console.log(diahoy, meshoy, añohoy);
+  }, []);
+
   return (
     <div className="capacitacion">
       <div className="rows">
@@ -22,19 +40,19 @@ function Capacitacion() {
           <div className="datoscliente">
             <div>
               <span>Razón Social:</span>
-              <span>HGSZ/MF No. 3</span>
+              <span>{data.equipo.hospital}</span>
             </div>
             <div>
               <span>Ciudad / Localidad: </span>
-              <span>CHILPANCINGO</span>
+              <span>{data.equipo.ciudad}</span>
             </div>
             <div>
               <span>Delegación:</span>
-              <span>GUERRERO</span>
+              <span>{data.equipo.delegacion}</span>
             </div>
             <div>
               <span>Dependencia:</span>
-              <span>IMSS</span>
+              <span>{data.equipo.cliente}</span>
             </div>
             <div>
               <span>Dirección:</span>
@@ -48,19 +66,19 @@ function Capacitacion() {
           <div className="datosequipo">
             <div className="sid">
               <span>SID:</span>
-              <b>57618</b>
+              <b>{data.equipo.sid}</b>
             </div>
             <div className="equipo">
               <span>Equipo:</span>
-              <span>Ventilador de traslado pediátrico-adulto</span>
+              <span>{data.equipo.equipo}</span>
             </div>
             <div>
               <span>Modelo:</span>
-              <span>Falcon 202 Evo</span>
+              <span>{data.equipo.modelo}</span>
             </div>
             <div>
               <span>Serie:</span>
-              <span>57618</span>
+              <span>{data.equipo.serie}</span>
             </div>
             <div className="modalidad">
               <span>Modalidad:</span>
@@ -77,20 +95,20 @@ function Capacitacion() {
               <span>Año</span>
             </div>
             <div className="row3L-r">
-              <span>16</span>
-              <span>02</span>
-              <span>20</span>
+              <span>{diahoy}</span>
+              <span>{meshoy}</span>
+              <span>{añohoy}</span>
             </div>
           </div>
           <div className="row3R">
             <b className="rowtitle"></b>
             <div className="row3R-r">
-              <span>Tipo de contrato:</span>
-              <b>Contrato</b>
+              <span>Tipo de trabajo:</span>
+              <b>{data.tipoDeContrato}</b>
             </div>
             <div className="row3R-r">
               <span>Contrato No:</span>
-              <b>19BI0127</b>
+              <span>{data.equipo.contrato}</span>
             </div>
           </div>
         </div>
@@ -224,7 +242,7 @@ function Capacitacion() {
           </div>
           <div className="sellos">
             <span></span>
-            <span className="fename"> Ing. Ricardo Del Rio </span>
+            <span className="fename">{data.inge} </span>
           </div>
         </div>
         <div className="row6">
