@@ -29,7 +29,7 @@ import { db } from "../index";
 moment.locale("es");
 function Home() {
   // homeLayout
-  const [activeStep, setActiveStep] = useState(1); //7 para ver print
+  const [activeStep, setActiveStep] = useState(0); //7 para ver print
   const [nextDisabled, setNextDisabled] = useState(true);
   // view1 SSO [0]
   const [sso, setSSO] = useState("");

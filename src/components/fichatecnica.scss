@@ -1,0 +1,115 @@
+.fichatecnica {
+  font-size: 1.1vw;
+  .rows {
+    display: grid;
+    margin: 1em;
+    border: 1px solid black;
+    h2 {
+      margin: 0;
+      width: auto;
+    }
+    .row {
+      display: grid;
+      margin: 2px 0;
+      p {
+        text-align: center;
+      }
+      b {
+        display: flex !important;
+        justify-content: left;
+        align-items: center;
+        padding: 0.5em 0 0.5em 1em;
+      }
+    }
+    .c3fr4fr {
+      grid-template-columns: 1fr 1.5fr 1fr 2.5fr;
+    }
+    .c3frauto {
+      grid-template-columns: 1fr 5fr;
+    }
+    .c6fr {
+      grid-template-columns: repeat(6, 1fr);
+    }
+    .c8fr {
+      grid-template-columns: repeat(8, 1fr);
+    }
+    .c4fr {
+      grid-template-columns: 1fr 2fr 1fr 2fr;
+    }
+    .c2fr3fr {
+      grid-template-columns: 2fr 3fr;
+      b {
+        margin: 0.25em 0;
+      }
+    }
+    .c1fr {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 5em;
+      margin: 1em 10em;
+      b {
+        justify-content: center;
+      }
+      .cuadro {
+        height: 20em;
+        width: 34.8vw;
+        border: 1px solid black;
+      }
+      span {
+        text-align: center;
+      }
+    }
+    .firmas {
+      margin-top: 10em;
+    }
+  }
+
+  .borderT {
+    border-top: 1px solid black;
+  }
+  .borderR {
+    border-right: 1px solid black;
+  }
+  .borderL {
+    border-left: 1px solid black;
+  }
+  .borderB {
+    border-bottom: 1px solid black;
+  }
+  .borderBN {
+    border-bottom: none !important;
+  }
+  .smallText {
+    font-size: 0.75em;
+    align-self: center;
+  }
+  .centerText {
+    text-align: center;
+  }
+  .paddingL {
+    padding-left: 1px;
+  }
+  .grayed {
+    background-color: lightgray;
+    font-weight: bold;
+    display: block !important;
+  }
+  .alignEnd {
+    align-self: end;
+  }
+}
+@media print {
+  .fichatecnica {
+    font-size: 2.2vw;
+    .rows {
+      margin-top: 0;
+    }
+    img {
+      width: 169pt !important;
+      height: 110pt !important;
+      margin: auto;
+    }
+  }
+  @page {
+    margin-bottom: 1cm;
+  }
+}

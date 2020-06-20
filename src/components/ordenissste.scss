@@ -231,43 +231,42 @@
       }
     }
   }
-}
 
-.borderT {
-  border-top: 1px solid black;
+  .borderT {
+    border-top: 1px solid black;
+  }
+  .borderR {
+    border-right: 1px solid black;
+  }
+  .borderL {
+    border-left: 1px solid black;
+  }
+  .borderB {
+    border-bottom: 1px solid black;
+  }
+  .borderBN {
+    border-bottom: none !important;
+  }
+  .smallText {
+    font-size: 0.75em;
+    align-self: center;
+  }
+  .centerText {
+    text-align: center;
+  }
+  .paddingL {
+    padding-left: 1px;
+  }
+  .grayed {
+    background-color: lightgray;
+    text-align: center;
+    font-weight: bold;
+    display: block !important;
+  }
+  .alignEnd {
+    align-self: end;
+  }
 }
-.borderR {
-  border-right: 1px solid black;
-}
-.borderL {
-  border-left: 1px solid black;
-}
-.borderB {
-  border-bottom: 1px solid black;
-}
-.borderBN {
-  border-bottom: none !important;
-}
-.smallText {
-  font-size: 0.75em;
-  align-self: center;
-}
-.centerText {
-  text-align: center;
-}
-.paddingL {
-  padding-left: 1px;
-}
-.grayed {
-  background-color: lightgray;
-  text-align: center;
-  font-weight: bold;
-  display: block !important;
-}
-.alignEnd {
-  align-self: end;
-}
-
 @media print {
   .ordenissste {
     font-size: 2.6vw;
