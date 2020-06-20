@@ -23,8 +23,8 @@ function WorkOrder(props) {
     let t = t1 - t2;
     let temp =
       "RDR" +
-      moment(data.tiempos[1]).format("D") +
-      moment(data.tiempos[1]).format("M") +
+      moment(data.tiempos[0][1]).format("D") +
+      moment(data.tiempos[0][1]).format("M") +
       y.substr(1) +
       "." +
       t;
@@ -198,7 +198,7 @@ function WorkOrder(props) {
             </div>
             <div>
               <span>Dirección:</span>
-              <span></span>
+              <span className="smallText">{data.equipo.direccion}</span>
             </div>
             <div className="telcliente">
               <span>Teléfono:</span>

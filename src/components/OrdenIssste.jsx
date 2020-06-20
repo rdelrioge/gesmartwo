@@ -1,7 +1,140 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import moment from "moment";
+
 import "./ordenissste.scss";
 
-function OrdenIssste() {
+function OrdenIssste(props) {
+  const data = { ...props.data };
+
+  console.log(data);
+  const [finDelServicio, setFinDelServicio] = useState("");
+  const [finDeMes, setFinDeMes] = useState("");
+  const [misRefacciones, setMisRefacciones] = useState([]);
+
+  const calcularFinDeServicio = () => {
+    let fin = moment(data.tiempos[data.tiempos.length - 1][3]);
+    let finmes = moment(fin).endOf("month").format("DD");
+    setFinDeMes(finmes);
+    setFinDelServicio(fin);
+  };
+
+  const cortarTexto = (mydata) => {
+    let midesc = [];
+    let des0 = [];
+    let des1 = [];
+    let des2 = [];
+    let des3 = [];
+    des0 = mydata.split(" ");
+    if (des0.length > 13) {
+      for (let i = 13; i < des0.length; i++) {
+        des1.push(des0[i]);
+      }
+      des0.splice(13, des0.length);
+      midesc.push(des0.join(" "));
+    } else {
+      midesc.push(des0.join(" "));
+    }
+    if (des1.length > 13) {
+      for (let i = 13; i < des1.length; i++) {
+        des2.push(des1[i]);
+      }
+      des1.splice(13, des1.length);
+      midesc.push(des1.join(" "));
+    } else {
+      midesc.push(des1.join(" "));
+    }
+    if (des2.length > 13) {
+      for (let i = 13; i < des2.length; i++) {
+        des3.push(des2[i]);
+      }
+      des2.splice(13, des2.length);
+      midesc.push(des2.join(" "));
+      midesc.push(des3.join(" "));
+    } else {
+      midesc.push(des2.join(" "));
+    }
+    console.log(midesc);
+    return (
+      <>
+        {midesc.map((desc, index) => (
+          <div key={index} className="centerText">
+            {desc}
+          </div>
+        ))}
+      </>
+    );
+  };
+
+  const displayRefacciones = () => {
+    let arrTemp = [
+      ["", "", "", ""],
+      ["", "", "", ""],
+      ["", "", "", ""],
+    ];
+    switch (data.refacciones.length) {
+      case 0:
+        break;
+      case 1:
+        arrTemp = [
+          [
+            data.refacciones[0][1],
+            data.refacciones[0][2],
+            data.refacciones[0][0],
+            "pza",
+          ],
+          ["", "", "", ""],
+          ["", "", "", ""],
+        ];
+        break;
+      case 2:
+        arrTemp = [
+          [
+            data.refacciones[0][1],
+            data.refacciones[0][2],
+            data.refacciones[0][0],
+            "pza",
+          ],
+          [
+            data.refacciones[1][1],
+            data.refacciones[1][2],
+            data.refacciones[1][0],
+            "pza",
+          ],
+          ["", "", "", ""],
+        ];
+        break;
+      case 3:
+        arrTemp = [
+          [
+            data.refacciones[0][1],
+            data.refacciones[0][2],
+            data.refacciones[0][0],
+            "pza",
+          ],
+          [
+            data.refacciones[1][1],
+            data.refacciones[1][2],
+            data.refacciones[1][0],
+            "pza",
+          ],
+          [
+            data.refacciones[2][1],
+            data.refacciones[2][2],
+            data.refacciones[2][0],
+            "pza",
+          ],
+        ];
+        break;
+      default:
+        break;
+    }
+    setMisRefacciones(arrTemp);
+  };
+  useEffect(() => {
+    calcularFinDeServicio();
+    displayRefacciones();
+  }, []);
+
   return (
     <div className="ordenissste">
       <div className="rows">
@@ -22,11 +155,11 @@ function OrdenIssste() {
             <b></b>
             <b></b>
             <div className="numero">
-              <b>No. </b> <b>109 </b>
+              <b>No. </b> <b> </b>
             </div>
             <b></b>
             <div className="hojade">
-              <b>Hoja No.</b> <span></span> <b>de:</b> <span></span>
+              <b>Hoja No.</b> <span>1</span> <b>de:</b> <span>1</span>
             </div>
           </div>
         </div>
@@ -53,32 +186,32 @@ function OrdenIssste() {
             </div>
             <div className="bottom paddingL">
               <b>Técnico:</b>
-              <span></span>
+              <span> {data.inge} </span>
             </div>
             <div className="grayed borderR">Datos Técnicos</div>
             <div>
               <b className="paddingL">Equipo:</b>
-              <span>Rayos X Portatil</span>
+              <span>{data.equipo.equipo}</span>
             </div>
             <div>
               <b className="paddingL">Marca:</b>
-              <span>General Electric</span>
+              <span>{data.equipo.marca}</span>
             </div>
             <div>
               <b className="paddingL">Modelo:</b>
-              <span>AMX 4</span>
+              <span>{data.equipo.modelo}</span>
             </div>
             <div>
               <b className="paddingL">Serie:</b>
-              <span>46261AMX4</span>
+              <span>{data.equipo.serie}</span>
             </div>
             <div>
               <b className="paddingL">Inventario:</b>
-              <span>615827</span>
+              <span>{data.equipo.inventario}</span>
             </div>
             <div>
               <b className="paddingL">Ubicación:</b>
-              <span></span>
+              <span>{data.ubicacion} </span>
             </div>
             <div className="borderBN"></div>
           </div>
@@ -86,23 +219,21 @@ function OrdenIssste() {
             <div className="grayed borderL"></div>
             <div>
               <b>Unidad Médica:</b>
-              <span className="alignEnd">C.H. Irapuato</span>
+              <span className="alignEnd">{data.equipo.hospital}</span>
             </div>
             <div>
               <b>Domicilio:</b>
-              <span className="smallText">
-                Av. de la Rivera No. 275 Las Trojes C.P. 36640
-              </span>
+              <span className="smallText">{data.equipo.direccion}</span>
             </div>
             <div>
               <b>Entidad:</b>
-              <span>Irapuato, Guanajuato</span>
+              <span>{data.equipo.ciudad + ", " + data.equipo.estado}</span>
             </div>
             <div className="contrato">
               <b>Contrato:</b>
-              <span>DNAF/CM/033/2020</span>
+              <span>{data.equipo.contrato} </span>
               <b>Bitácora:</b>
-              <span></span>
+              <span>{data.bitacora}</span>
             </div>
             <div className="grayed borderL">
               Matenimiento Preventivo-Correctivo
@@ -138,42 +269,58 @@ function OrdenIssste() {
             <div className="fechas">
               <b className="paddingL">Inicio</b>
               <div className="dma borderL">
-                <span>07</span>
-                <span className="borderL borderR">MAR</span>
-                <span>20</span>
+                {data.tipoDeServicio !== "PM (Mantenimiento Preventivo)" ? (
+                  <span>{moment(finDelServicio).format("DD")}</span>
+                ) : (
+                  <span>01</span>
+                )}
+                <span className="borderR borderL">
+                  {moment(finDelServicio).format("MMM")}
+                </span>
+                <span>{moment(finDelServicio).format("YY")} </span>
               </div>
               <div className="dma borderL">
-                <span>07</span>
-                <span className="borderR borderL">MAR</span>
-                <span>20</span>
+                <span>{moment(finDelServicio).format("DD")} </span>
+                <span className="borderR borderL">
+                  {moment(finDelServicio).format("MMM")}
+                </span>
+                <span>{moment(finDelServicio).format("YY")} </span>
               </div>
               <div className="dma borderL ">
-                <span>07</span>
-                <span className="borderR borderL">03</span>
-                <span>20</span>
+                <span>-</span>
+                <span className="borderR borderL">-</span>
+                <span>-</span>
               </div>
             </div>
             <div className="fechas">
               <b className="paddingL">Término</b>
               <div className="dma borderL">
-                <span>07</span>
-                <span className="borderL borderR">MAR</span>
-                <span>20</span>
+                {data.tipoDeServicio !== "PM (Mantenimiento Preventivo)" ? (
+                  <span>{moment(finDelServicio).format("DD")}</span>
+                ) : (
+                  <span>{finDeMes}</span>
+                )}
+                <span className="borderR borderL">
+                  {moment(finDelServicio).format("MMM")}
+                </span>
+                <span>{moment(finDelServicio).format("YY")} </span>
               </div>
               <div className="dma borderL">
-                <span>07</span>
-                <span className="borderR borderL">MAR</span>
-                <span>20</span>
+                <span>{moment(finDelServicio).format("DD")} </span>
+                <span className="borderR borderL">
+                  {moment(finDelServicio).format("MMM")}
+                </span>
+                <span>{moment(finDelServicio).format("YY")} </span>
               </div>
               <div className="dma borderL ">
-                <span>07</span>
-                <span className="borderR borderL">03</span>
-                <span>20</span>
+                <span>-</span>
+                <span className="borderR borderL">-</span>
+                <span>-</span>
               </div>
             </div>
             <div className="atraso">
               <b className="paddingL borderL">Días de atraso</b>
-              <span className="borderL"></span>
+              <span className="borderL centerText">0</span>
               <span className="borderL"></span>
             </div>
             <div className="borderBN"></div>
@@ -184,24 +331,30 @@ function OrdenIssste() {
           <div className="row3row mantenimientos">
             <b>MANTENIMIENTO PREVENTIVO</b>
             <div className="col5fr">
-              <b className="borderL borderR">X</b>
+              <b className="borderL borderR">
+                {data.tipoDeServicio === "PM (Mantenimiento Preventivo)"
+                  ? "X"
+                  : null}
+              </b>
               <div></div>
               <div></div>
               <div></div>
             </div>
             <b>MANTENIMIENTO CORRECTIVO</b>
             <div className="col5fr">
-              <b className="borderL borderR">X</b>
+              <b className="borderL borderR">
+                {data.tipoDeServicio !== "PM (Mantenimiento Preventivo)"
+                  ? "X"
+                  : null}
+              </b>
               <div></div>
               <div></div>
               <div></div>
             </div>
           </div>
           <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
+          <div className="centerText"> {data.sintoma} </div>
+          {cortarTexto(data.descripcion)}
           <div></div>
           <div></div>
           <div></div>
@@ -213,33 +366,41 @@ function OrdenIssste() {
           <div className="row3row condiciones">
             <b>Funcionando</b>
             <div className="col5fr">
-              <b className="borderL borderR">X</b>
+              <b className="borderL borderR">
+                {data.condiciones === "Funcionando" ? "X" : null}
+              </b>
               <div></div>
               <div></div>
               <div></div>
             </div>
             <b>Funcionando Parcialmente</b>
             <div className="col5fr">
-              <b className="borderL borderR">X</b>
+              <b className="borderL borderR">
+                {data.condiciones === "Parcialmente funcionando" ? "X" : null}
+              </b>
               <div></div>
               <div></div>
               <div></div>
             </div>
             <b>Fuera de Servicio</b>
             <div className="col5fr">
-              <b className="borderL borderR">X</b>
+              <b className="borderL borderR">
+                {data.condiciones === "No funcional" ? "X" : null}
+              </b>
               <div></div>
               <div></div>
               <div></div>
             </div>
           </div>
-          <div>
-            <b className="paddingL">Observaciones:</b>
-            <span className="paddingL">Aqui van las Observaciones</span>
+          <div className="observaciones">
+            <div className="obsIzq">
+              <b className="paddingL borderB">Observaciones:</b>
+              <div></div>
+              <div></div>
+              <div className="borderBN"></div>
+            </div>
+            <div className="obsDer">{cortarTexto(data.observaciones)}</div>
           </div>
-          <div></div>
-          <div></div>
-          <div className="borderBN"></div>
         </div>
         <div className="row4">
           <div className="row4L borderR borderL">
@@ -252,24 +413,17 @@ function OrdenIssste() {
               <b className="borderR">Cant</b>
               <b>Unidad</b>
             </div>
-            <div className="row4Lrow">
-              <span className="borderR"></span>
-              <span className="borderR"></span>
-              <span className="borderR"></span>
-              <span></span>
-            </div>
-            <div className="row4Lrow">
-              <span className="borderR"></span>
-              <span className="borderR"></span>
-              <span className="borderR"></span>
-              <span></span>
-            </div>
-            <div className="row4Lrow">
-              <span className="borderR"></span>
-              <span className="borderR"></span>
-              <span className="borderR"></span>
-              <span></span>
-            </div>
+            {misRefacciones &&
+              misRefacciones.map((refa, index) => {
+                return (
+                  <div key={index} className="row4Lrow">
+                    <span className="borderR">{refa[0]}</span>
+                    <span className="borderR">{refa[1]}</span>
+                    <span className="borderR">{refa[2]}</span>
+                    <span>{refa[3]}</span>
+                  </div>
+                );
+              })}
             <div className="row4Lrow">
               <span className="borderR"></span>
               <span className="borderR"></span>
@@ -287,7 +441,7 @@ function OrdenIssste() {
               <b className="paddingL">
                 HORAS REALES UTILIZADAS EN LA REPARACIÓN
               </b>
-              <span className="centerText">4</span>
+              <span className="centerText">{data.hrsReales}</span>
               <b className="centerText">HRS.</b>
             </div>
           </div>
@@ -307,8 +461,10 @@ function OrdenIssste() {
             <div></div>
             <b>Contratista</b>
             <div></div>
-            <div></div>
-            <p className="borderB"></p>
+            <span> {data.inge} </span>
+            <p className="borderB">
+              {moment(finDelServicio).format("DD-MMM-YYYY")}
+            </p>
             <span>INGENIERO</span>
             <span>Nombre, Firma y Fecha </span>
             <div></div>
@@ -351,6 +507,131 @@ function OrdenIssste() {
         <span className="centerText borderL borderR borderB">
           NOTAS ACLARATORIAS AL REVERSO ( TURNAR COPIA ORIGINAL AL RESIDENTE )
         </span>
+        <br />
+        <br />
+        <div className="row6">
+          <div className="row6col row6L borderL">
+            <div className="grayed borderT borderB borderR">GENERALIDADES</div>
+            <div></div>
+            <div className="servAnterior">
+              <span>Servicio Anterior por Mantenimiento:</span>
+              <b>Prev.</b>
+              <div className="borderB borderT">
+                {data.tipoDeServicio === "PM (Mantenimiento Preventivo)"
+                  ? "X"
+                  : null}
+              </div>
+              <b>Correc.</b>
+              <div className="borderB borderT borderR">
+                {data.tipoDeServicio !== "PM (Mantenimiento Preventivo)"
+                  ? "X"
+                  : null}
+              </div>
+              <div></div>
+              <b>Autorización SMEM</b>
+            </div>
+            <div className="row6Lcol_5fr_2fr">
+              <span>Fecha de último servicio:</span>
+              <div className="borderB"></div>
+              <b className="paddingL borderL borderB">N°:</b>
+              <div className="borderR borderB"></div>
+            </div>
+            <div className="row6Lcol_5fr_2fr">
+              <span>Numero de personal técnico:</span>
+              <div className="borderB"></div>
+              <b className="paddingL borderL borderB"></b>
+              <div className="borderR borderB"></div>
+            </div>
+            <div className="row6Lcol_5fr">
+              <span>Nombre del Técnico:</span>
+              <div className="borderB"></div>
+            </div>
+            <div className="row6Lcol_5fr">
+              <span></span>
+              <div className="borderB"></div>
+            </div>
+            <div className="row6Lcol_5fr">
+              <span>Fecha próximo servicio:</span>
+              <div className="borderB"></div>
+            </div>
+            <div className="row6Lcol_7fr">
+              <span>Tiempo de garantía en refacciones:</span>
+              <div className="borderB"></div>
+            </div>
+            <div className="row6Lcol_7fr">
+              <span>Hrs. efectivas en Mano de Obra:</span>
+              <div className="borderB"></div>
+            </div>
+            <div className="row6Lcol_7fr">
+              <span>Tiempo de garantía en Mano de Obra :</span>
+              <div className="borderB"></div>
+            </div>
+            <div></div>
+          </div>
+          <div className="row6col row6R borderR">
+            <div className="grayed borderT borderL borderB">
+              Anexos (Copias)
+            </div>
+            <div></div>
+            <div>1.-Hojas de Bitácoras del Equipo ( Hoja rosa )</div>
+            <div></div>
+            <div>2.-Orden de Servicio de la Compañía (En su caso)</div>
+            <div></div>
+            <div>3.-Carta de Garantía P/Ref. Originales (En su caso)</div>
+            <div></div>
+            <div>
+              4.-Registros de hora Mano de Obra en Bitácora (En su caso)
+            </div>
+            <div></div>
+            <div>5.-Informes requeridos conforme a ciontrato (En su caso)</div>
+            <div></div>
+          </div>
+        </div>
+        <div className="row7">
+          <div className="grayed">Recomendaciones</div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div className="grayed">Observaciones y Conclusiones </div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div className="borderBN"></div>
+        </div>
       </div>
     </div>
   );

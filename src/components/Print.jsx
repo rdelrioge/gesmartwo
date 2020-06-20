@@ -11,13 +11,14 @@ function Print(props) {
 
   return (
     <div className="printable">
-      {/* <WorkOrder data={props.data} />
-      
+      <WorkOrder data={props.data} />
+      {/* 
       <div className="saltodepag"></div>
       <Evidencia data={props.data} />
       <div className="saltodepag"></div>
       <Capacitacion data={props.data} /> */}
-      <OrdenIssste />
+      <div className="saltodepag"></div>
+      <OrdenIssste data={props.data} />
     </div>
   );
 }

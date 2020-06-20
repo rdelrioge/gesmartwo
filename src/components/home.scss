@@ -149,10 +149,45 @@
       }
     }
   }
-  .view7 {
+  .IMSS {
     display: grid;
     text-align: center;
     grid-template-rows: auto 1fr 1fr 1fr;
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      .cell {
+        margin: 1em;
+        align-self: center;
+        position: relative;
+        .btnDelete {
+          background-color: #f44336;
+          padding: 0 1em;
+          border-radius: 4px;
+          color: white;
+          position: absolute;
+          right: 0;
+        }
+      }
+    }
+    .inputPhoto {
+      display: none;
+    }
+  }
+  .ISSSTE {
+    display: grid;
+    grid-template-rows: auto 1fr 2fr 2fr 4fr 4fr;
+    text-align: center;
+    margin: 0 1em;
+    row-gap: 0.5em;
+    *:not(h3) {
+      font-size: 0.9em;
+    }
+    .tresFr {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      column-gap: 1em;
+    }
     .row {
       display: grid;
       grid-template-columns: 1fr 1fr;

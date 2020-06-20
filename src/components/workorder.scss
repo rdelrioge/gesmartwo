@@ -326,6 +326,11 @@
   }
 }
 
+.smallText {
+  font-size: 0.75em;
+  align-self: center;
+}
+
 @media print {
   .workorder {
     font-size: 2.6vw;
