@@ -341,6 +341,7 @@ function Home() {
                   Validar
                 </Button>
               )}
+              <b className="version">Version 1.0.0</b>
             </div>
             <div className="views view2">
               <h3>Datos iniciales</h3>
