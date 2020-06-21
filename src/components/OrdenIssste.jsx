@@ -186,7 +186,7 @@ function OrdenIssste(props) {
             </div>
             <div className="bottom paddingL">
               <b>Técnico:</b>
-              <span> {data.inge} </span>
+              <span> {data.inge.nombre} </span>
             </div>
             <div className="grayed borderR">Datos Técnicos</div>
             <div>
@@ -461,7 +461,7 @@ function OrdenIssste(props) {
             <div></div>
             <b>Contratista</b>
             <div></div>
-            <span> {data.inge} </span>
+            <span> {data.inge.nombre} </span>
             <p className="borderB">
               {moment(finDelServicio).format("DD-MMM-YYYY")}
             </p>

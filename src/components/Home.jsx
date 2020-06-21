@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./home.scss";
 import moment from "moment";
 import "moment/locale/es";
 
@@ -20,7 +21,6 @@ import {
 } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 
-import "./home.scss";
 import Print from "./Print";
 import SkeletorWO from "./SkeletorWO";
 
@@ -33,7 +33,7 @@ function Home() {
   const [nextDisabled, setNextDisabled] = useState(true);
   // view1 SSO [0]
   const [sso, setSSO] = useState("");
-  const [inge, setInge] = useState("");
+  const [inge, setInge] = useState(null);
   // view2 SID CASE WO [1]
   const [sid, setSID] = useState("");
   const [caso, setCaso] = useState("");
@@ -119,7 +119,7 @@ function Home() {
           data.forEach((user) => {
             let us = { ...user.data(), uid: user.id };
             console.log(us);
-            setInge(us.nombre);
+            setInge(us);
             setNextDisabled(false);
           });
         }
@@ -329,9 +329,17 @@ function Home() {
                 value={sso}
               />
               {inge ? (
-                <p className="nombreInge">{inge}</p>
+                <p className="nombreInge">{inge.nombre}</p>
               ) : (
-                <Button onClick={() => validateSSO()}>Validar</Button>
+                <Button
+                  className="btnValidate"
+                  size="small"
+                  variant="contained"
+                  disabled={sso.length === 9 ? false : true}
+                  color="primary"
+                  onClick={() => validateSSO()}>
+                  Validar
+                </Button>
               )}
             </div>
             <div className="views view2">

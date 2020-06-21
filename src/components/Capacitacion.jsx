@@ -242,7 +242,7 @@ function Capacitacion(props) {
           </div>
           <div className="sellos">
             <span></span>
-            <span className="fename">{data.inge} </span>
+            <span className="fename">{data.inge.nombre} </span>
           </div>
         </div>
         <div className="row6">

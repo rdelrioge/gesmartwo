@@ -91,7 +91,7 @@ function FichaTecnica(props) {
           <img className="cuadro" alt="foto" src={data.fotoDurante2}></img>
         </div>
         <div className="row c1fr firmas">
-          <span className="borderB">{data.inge}</span>
+          <span className="borderB">{data.inge.nombre}</span>
           <span className="borderB"></span>
           <span>ELABORÓ</span>
           <span>AUTORIZÓ</span>

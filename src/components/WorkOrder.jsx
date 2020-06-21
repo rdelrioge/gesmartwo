@@ -22,7 +22,7 @@ function WorkOrder(props) {
     let t2 = Number(m) / 5;
     let t = t1 - t2;
     let temp =
-      "RDR" +
+      data.inge.iniciales +
       moment(data.tiempos[0][1]).format("D") +
       moment(data.tiempos[0][1]).format("M") +
       y.substr(1) +
@@ -388,7 +388,7 @@ function WorkOrder(props) {
               <span></span>
               <span className="line">Nombre completo</span>
               <span></span>
-              <span>{data.inge} </span>
+              <span>{data.inge.nombre} </span>
               <span className="line">Ingeniero de Servicio</span>
             </div>
             <div className="firmaUsuario">
