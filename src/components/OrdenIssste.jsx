@@ -516,13 +516,13 @@ function OrdenIssste(props) {
             <div className="servAnterior">
               <span>Servicio Anterior por Mantenimiento:</span>
               <b>Prev.</b>
-              <div className="borderB borderT">
+              <div className="borderB borderT centerText">
                 {data.tipoDeServicio === "PM (Mantenimiento Preventivo)"
                   ? "X"
                   : null}
               </div>
               <b>Correc.</b>
-              <div className="borderB borderT borderR">
+              <div className="borderB borderT borderR centerText">
                 {data.tipoDeServicio !== "PM (Mantenimiento Preventivo)"
                   ? "X"
                   : null}
@@ -591,10 +591,7 @@ function OrdenIssste(props) {
           <div className="grayed">Recomendaciones</div>
           <div></div>
           <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
+          {cortarTexto(data.recomendaciones)}
           <div></div>
           <div></div>
           <div></div>
@@ -617,8 +614,7 @@ function OrdenIssste(props) {
           <div className="grayed">Observaciones y Conclusiones </div>
           <div></div>
           <div></div>
-          <div></div>
-          <div></div>
+          {cortarTexto(data.conclusiones)}
           <div></div>
           <div></div>
           <div></div>

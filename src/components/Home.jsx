@@ -33,7 +33,7 @@ function Home() {
   const [nextDisabled, setNextDisabled] = useState(true);
   // view1 SSO [0]
   const [sso, setSSO] = useState("");
-  const [inge, setInge] = useState("Ricardo Del Rio");
+  const [inge, setInge] = useState("");
   // view2 SID CASE WO [1]
   const [sid, setSID] = useState("");
   const [caso, setCaso] = useState("");
@@ -101,14 +101,32 @@ function Home() {
 
   const changeSSO = (value) => {
     setSSO(value);
-    if (value.length === 9) {
-      setNextDisabled(false);
-    } else {
+    if (inge) {
       setNextDisabled(true);
+      setInge(null);
     }
   };
   const validateSSO = () => {
     console.log(sso);
+    db.collection("users")
+      .where("sso", "==", sso)
+      .get()
+      .then((data) => {
+        if (data.empty) {
+          setNextDisabled(true);
+          alert("No existe el usuario");
+        } else {
+          data.forEach((user) => {
+            let us = { ...user.data(), uid: user.id };
+            console.log(us);
+            setInge(us.nombre);
+            setNextDisabled(false);
+          });
+        }
+      })
+      .catch((err) => {
+        console.log("Error: " + err);
+      });
   };
 
   const changeSID = (value) => {
@@ -240,12 +258,9 @@ function Home() {
   };
 
   useEffect(() => {
-    console.log(activeStep);
-    console.log(tiempos);
-
     switch (activeStep) {
       case 0:
-        sso ? setNextDisabled(false) : setNextDisabled(true);
+        inge ? setNextDisabled(false) : setNextDisabled(true);
         break;
       case 1:
         if (caso !== "" && wo !== "" && equipo) {
@@ -313,7 +328,11 @@ function Home() {
                 onChange={(ev) => changeSSO(ev.target.value)}
                 value={sso}
               />
-              <Button onClick={() => validateSSO()}>Vallidate</Button>
+              {inge ? (
+                <p className="nombreInge">{inge}</p>
+              ) : (
+                <Button onClick={() => validateSSO()}>Validar</Button>
+              )}
             </div>
             <div className="views view2">
               <h3>Datos iniciales</h3>
@@ -1362,32 +1381,34 @@ function Home() {
               </div>
             )}
           </SwipeableViews>
-          <MobileStepper
-            steps={7}
-            position="bottom"
-            variant="progress"
-            activeStep={activeStep}
-            nextButton={
-              <Button
-                size="small"
-                variant="contained"
-                color="primary"
-                onClick={handleNext}
-                disabled={nextDisabled}>
-                {activeStep === 6 ? "Finish" : "Next >"}
-              </Button>
-            }
-            backButton={
-              <Button
-                size="small"
-                variant="contained"
-                color="primary"
-                onClick={handleBack}
-                disabled={activeStep === 0}>
-                {"<"} Back
-              </Button>
-            }
-          />
+          {inge ? (
+            <MobileStepper
+              steps={7}
+              position="bottom"
+              variant="progress"
+              activeStep={activeStep}
+              nextButton={
+                <Button
+                  size="small"
+                  variant="contained"
+                  color="primary"
+                  onClick={handleNext}
+                  disabled={nextDisabled}>
+                  {activeStep === 6 ? "Finish" : "Next >"}
+                </Button>
+              }
+              backButton={
+                <Button
+                  size="small"
+                  variant="contained"
+                  color="primary"
+                  onClick={handleBack}
+                  disabled={activeStep === 0}>
+                  {"<"} Back
+                </Button>
+              }
+            />
+          ) : null}
         </>
       ) : (
         <div className="revisar">
@@ -1434,6 +1455,8 @@ function Home() {
                 bitacora,
                 hrsReales,
                 vidaUtil,
+                recomendaciones,
+                conclusiones,
                 fotoAntes1,
                 fotoAntes2,
                 fotoDurante1,
