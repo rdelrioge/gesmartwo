@@ -11,6 +11,7 @@ import {
   FormControl,
   Select,
   IconButton,
+  Drawer,
 } from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
 
@@ -25,6 +26,7 @@ import Print from "./Print";
 import SkeletorWO from "./SkeletorWO";
 
 import { db } from "../index";
+import AddManual from "./AddManual";
 
 moment.locale("es");
 function Home() {
@@ -41,6 +43,7 @@ function Home() {
   const [equipo, setEquipo] = useState(null);
   const [ubicacion, setUbicacion] = useState("");
   const [showAddManual, setShowAddManual] = useState(false);
+  const [openAddManualDrawer, setOpenAddManualDrawer] = useState(false);
   // view3 Servicio [2]
   const [tipoDeServicio, setTipoDeServicio] = useState("");
   const [tipoDeContrato, setTipoDeContrato] = useState("Contrato");
@@ -165,6 +168,13 @@ function Home() {
       .catch((err) => {
         console.log("Error: " + err);
       });
+  };
+
+  const closeAddManual = (eq) => {
+    setEquipo(eq);
+    setHideInfo(false);
+    console.log(equipo);
+    setOpenAddManualDrawer(false);
   };
 
   const changeTipoDeServicio = (tds) => {
@@ -426,7 +436,7 @@ function Home() {
                       variant="contained"
                       color="primary"
                       onClick={() => {
-                        console.log("agregar SID");
+                        setOpenAddManualDrawer(true);
                       }}
                     >
                       Agregar equipo
@@ -434,6 +444,11 @@ function Home() {
                   ) : null}
                 </div>
               )}
+              <AddManual
+                open={openAddManualDrawer}
+                equipo={equipo}
+                onClose={(eq) => closeAddManual(eq)}
+              />
 
               <div className={hideInfo ? "info hideinfo" : "info"}>
                 {equipo ? (
