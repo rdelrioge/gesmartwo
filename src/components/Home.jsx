@@ -40,6 +40,7 @@ function Home() {
   const [wo, setWO] = useState("");
   const [equipo, setEquipo] = useState(null);
   const [ubicacion, setUbicacion] = useState("");
+  const [showAddManual, setShowAddManual] = useState(false);
   // view3 Servicio [2]
   const [tipoDeServicio, setTipoDeServicio] = useState("");
   const [tipoDeContrato, setTipoDeContrato] = useState("Contrato");
@@ -135,6 +136,7 @@ function Home() {
       setHideInfo(true);
       setNextDisabled(true);
       setEquipo(null);
+      setShowAddManual(false);
     }
   };
   const buscarSID = () => {
@@ -146,7 +148,10 @@ function Home() {
           setEquipo(null);
           setHideInfo(true);
           setNextDisabled(true);
-          alert("No existe el SID en la base de datos");
+          alert(
+            "No existe el SID en la base de datos. Considera agregarlo manualmente"
+          );
+          setShowAddManual(true);
         } else {
           data.forEach((refa) => {
             let eq = { ...refa.data(), uid: refa.id };
@@ -337,11 +342,12 @@ function Home() {
                   variant="contained"
                   disabled={sso.length === 9 ? false : true}
                   color="primary"
-                  onClick={() => validateSSO()}>
+                  onClick={() => validateSSO()}
+                >
                   Validar
                 </Button>
               )}
-              <b className="version">Version 1.0.0</b>
+              <b className="version">Version 1.0.1</b>
             </div>
             <div className="views view2">
               <h3>Datos iniciales</h3>
@@ -401,16 +407,32 @@ function Home() {
                   />
                 ) : null
               ) : (
-                <Button
-                  className="btnSID"
-                  size="small"
-                  variant="contained"
-                  color="primary"
-                  onClick={() => {
-                    buscarSID();
-                  }}>
-                  Buscar equipo
-                </Button>
+                <div className="searchAddBtns">
+                  <Button
+                    className="btnSID"
+                    size="small"
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {
+                      buscarSID();
+                    }}
+                  >
+                    Buscar equipo
+                  </Button>
+                  {showAddManual ? (
+                    <Button
+                      className="btnSID"
+                      size="small"
+                      variant="contained"
+                      color="primary"
+                      onClick={() => {
+                        console.log("agregar SID");
+                      }}
+                    >
+                      Agregar equipo
+                    </Button>
+                  ) : null}
+                </div>
               )}
 
               <div className={hideInfo ? "info hideinfo" : "info"}>
@@ -469,7 +491,8 @@ function Home() {
                     inputProps={{
                       name: "tipoDeServicio",
                       id: "selectTipoDeServ",
-                    }}>
+                    }}
+                  >
                     <option aria-label="None" value="" />
                     <option value={"PM (Mantenimiento Preventivo)"}>
                       Preventivo
@@ -499,7 +522,8 @@ function Home() {
                     inputProps={{
                       name: "tipoDeContrato",
                       id: "selectTipoDeContrato",
-                    }}>
+                    }}
+                  >
                     <option value={"Contrato"}>Contrato</option>
                     <option value={"Garantía"}>Garantia</option>
                     <option value={"Facturable"}>Facturable</option>
@@ -520,7 +544,8 @@ function Home() {
                       inputProps={{
                         name: "sintoma",
                         id: "sintoma",
-                      }}>
+                      }}
+                    >
                       <option aria-label="None" value="" />
                       <option value={"1er Mantenimiento Preventivo"}>
                         1er PM
@@ -599,7 +624,8 @@ function Home() {
                     inputProps={{
                       name: "condiciones",
                       id: "selectCondiciones",
-                    }}>
+                    }}
+                  >
                     <option value={"Funcionando"}>Funcionando</option>
                     <option value={"Parcialmente funcionando"}>
                       Parcialmente funcionando
@@ -628,7 +654,8 @@ function Home() {
                       inputProps={{
                         name: "tipoDeTrabajo",
                         id: "selectTipoDeTrabajo",
-                      }}>
+                      }}
+                    >
                       <option aria-label="None" value="" />
                       <option value={"Viaje"}>Viaje</option>
                       <option value={"En espera"}>En Espera</option>
@@ -652,7 +679,8 @@ function Home() {
                           <option
                             value={
                               "Entrega de materiales, embalaje, desembalaje."
-                            }>
+                            }
+                          >
                             Entrega de materiales, embalaje, desembalaje.
                           </option>
                           <option value={"Potencia y puesta a tierra "}>
@@ -661,7 +689,8 @@ function Home() {
                           <option
                             value={
                               "Rcarga de helio / mantenimiento de Cryogenos"
-                            }>
+                            }
+                          >
                             Rcarga de helio / mantenimiento de Cryogenos
                           </option>
                           <option value={"OJT en entrenamiento de trabajo"}>
@@ -797,7 +826,8 @@ function Home() {
                     size="small"
                     variant="contained"
                     color="primary"
-                    onClick={() => addTime()}>
+                    onClick={() => addTime()}
+                  >
                     Agregar
                   </Button>
                 </div>
@@ -825,7 +855,8 @@ function Home() {
                           <li>
                             <b
                               className="btnDeleteTime"
-                              onClick={() => deleteTime(index)}>
+                              onClick={() => deleteTime(index)}
+                            >
                               X
                             </b>
                           </li>
@@ -882,7 +913,8 @@ function Home() {
                     size="small"
                     variant="contained"
                     color="primary"
-                    onClick={() => addHerramienta()}>
+                    onClick={() => addHerramienta()}
+                  >
                     Agregar
                   </Button>
                 </div>
@@ -906,7 +938,8 @@ function Home() {
                           <li>
                             <b
                               className="btnDeleteTime"
-                              onClick={() => deleteHerramienta(index)}>
+                              onClick={() => deleteHerramienta(index)}
+                            >
                               X
                             </b>
                           </li>
@@ -959,7 +992,8 @@ function Home() {
                     size="small"
                     variant="contained"
                     color="primary"
-                    onClick={() => addRefaccion()}>
+                    onClick={() => addRefaccion()}
+                  >
                     Agregar
                   </Button>
                 </div>
@@ -985,7 +1019,8 @@ function Home() {
                           <li>
                             <b
                               className="btnDeleteTime"
-                              onClick={() => deleteRefaccion(index)}>
+                              onClick={() => deleteRefaccion(index)}
+                            >
                               X
                             </b>
                           </li>
@@ -1004,7 +1039,8 @@ function Home() {
                     <div className="cell">
                       <b
                         className="btnDelete"
-                        onClick={() => setFotoAntes1(null)}>
+                        onClick={() => setFotoAntes1(null)}
+                      >
                         X
                       </b>
                       <img
@@ -1035,7 +1071,8 @@ function Home() {
                     <div className="cell">
                       <b
                         className="btnDelete"
-                        onClick={() => setFotoAntes2(null)}>
+                        onClick={() => setFotoAntes2(null)}
+                      >
                         X
                       </b>
                       <img
@@ -1068,7 +1105,8 @@ function Home() {
                     <div className="cell">
                       <b
                         className="btnDelete"
-                        onClick={() => setFotoDurante1(null)}>
+                        onClick={() => setFotoDurante1(null)}
+                      >
                         X
                       </b>
                       <img
@@ -1099,7 +1137,8 @@ function Home() {
                     <div className="cell">
                       <b
                         className="btnDelete"
-                        onClick={() => setFotoDurante2(null)}>
+                        onClick={() => setFotoDurante2(null)}
+                      >
                         X
                       </b>
                       <img
@@ -1132,7 +1171,8 @@ function Home() {
                     <div className="cell">
                       <b
                         className="btnDelete"
-                        onClick={() => setFotoDespues1(null)}>
+                        onClick={() => setFotoDespues1(null)}
+                      >
                         X
                       </b>
                       <img
@@ -1163,7 +1203,8 @@ function Home() {
                     <div className="cell">
                       <b
                         className="btnDelete"
-                        onClick={() => setFotoDespues2(null)}>
+                        onClick={() => setFotoDespues2(null)}
+                      >
                         X
                       </b>
                       <img
@@ -1256,7 +1297,8 @@ function Home() {
                     <div className="cell">
                       <b
                         className="btnDelete"
-                        onClick={() => setFotoAntes1(null)}>
+                        onClick={() => setFotoAntes1(null)}
+                      >
                         X
                       </b>
                       <img
@@ -1287,7 +1329,8 @@ function Home() {
                     <div className="cell">
                       <b
                         className="btnDelete"
-                        onClick={() => setFotoAntes2(null)}>
+                        onClick={() => setFotoAntes2(null)}
+                      >
                         X
                       </b>
                       <img
@@ -1320,7 +1363,8 @@ function Home() {
                     <div className="cell">
                       <b
                         className="btnDelete"
-                        onClick={() => setFotoDurante1(null)}>
+                        onClick={() => setFotoDurante1(null)}
+                      >
                         X
                       </b>
                       <img
@@ -1351,7 +1395,8 @@ function Home() {
                     <div className="cell">
                       <b
                         className="btnDelete"
-                        onClick={() => setFotoDurante2(null)}>
+                        onClick={() => setFotoDurante2(null)}
+                      >
                         X
                       </b>
                       <img
@@ -1402,7 +1447,8 @@ function Home() {
                   variant="contained"
                   color="primary"
                   onClick={handleNext}
-                  disabled={nextDisabled}>
+                  disabled={nextDisabled}
+                >
                   {activeStep === 6 ? "Finish" : "Next >"}
                 </Button>
               }
@@ -1412,7 +1458,8 @@ function Home() {
                   variant="contained"
                   color="primary"
                   onClick={handleBack}
-                  disabled={activeStep === 0}>
+                  disabled={activeStep === 0}
+                >
                   {"<"} Back
                 </Button>
               }
@@ -1425,14 +1472,16 @@ function Home() {
             <Button
               variant="outlined"
               color="primary"
-              onClick={() => setActiveStep(6)}>
+              onClick={() => setActiveStep(6)}
+            >
               {"<"}
             </Button>
             <b>Revisa la WO </b>
             <Button
               variant="contained"
               color="primary"
-              onClick={() => window.print()}>
+              onClick={() => window.print()}
+            >
               Print
             </Button>
           </div>
