@@ -1,49 +1,168 @@
 import React, { useState, useEffect } from "react";
-import { TextField, Drawer } from "@material-ui/core";
+import {
+  TextField,
+  Drawer,
+  Button,
+  InputLabel,
+  FormControl,
+  Select,
+} from "@material-ui/core";
+
+import "./addmanual.scss";
+
 function AddManual(props) {
-  const [equipo, setEquipo] = useState(props.equipo);
-  const [cliente, setCliente] = useState("");
-  const [hospital, setHospital] = useState("");
+  const [cliente, setCliente] = useState(props.equipo.cliente);
+  const [hospital, setHospital] = useState(props.equipo.hospital);
+  const [direccion, setDireccion] = useState(props.equipo.direccion);
+  const [ciudad, setCiudad] = useState(props.equipo.ciudad);
+  const [estado, setEstado] = useState(props.equipo.estado);
+  const [equipo, setEquipo] = useState(props.equipo.equipo);
+  const [modelo, setModelo] = useState(props.equipo.modelo);
+  const [sid, setSID] = useState(props.sid);
+  // const [system, setSystem] = useState(props.equipo);
 
   useEffect(() => {
-    setEquipo(props.equipo);
-    console.log(props.equipo);
+    // if (system) {
+    //   console.log(system);
+    //   // setCliente()
+    // }
+    setSID(props.sid);
+
+    console.log(props);
   }, [props]);
 
-  const handleClose = () => {
-    props.onClose({ cliente, hospital });
+  const handleClose = (ev, flag) => {
+    ev.preventDefault();
+    if (flag) {
+      // setSystem({
+      //   cliente,
+      //   hospital,
+      //   direccion,
+      //   ciudad,
+      //   estado,
+      //   equipo,
+      //   modelo,
+      // });
+      props.onClose(
+        {
+          cliente,
+          hospital,
+          direccion,
+          ciudad,
+          estado,
+          equipo,
+          modelo,
+        },
+        sid,
+        flag
+      );
+    } else {
+      props.onClose({}, sid, flag);
+    }
   };
 
   return (
-    <Drawer anchor="bottom" open={props.open} onClose={handleClose}>
-      <h3 onClick={handleClose}>Hola soy un drawer</h3>
-      <TextField
-        label="Cliente"
-        required
-        color="secondary"
-        variant="outlined"
-        size="small"
-        placeholder="IMSS, ISSSTE"
-        inputProps={{
-          maxLength: 20,
-        }}
-        type="text"
-        onChange={(ev) => setCliente(ev.target.value)}
-        value={cliente}
-      />
-      <TextField
-        label="Hospital"
-        required
-        color="secondary"
-        variant="outlined"
-        size="small"
-        inputProps={{
-          maxLength: 20,
-        }}
-        type="text"
-        onChange={(ev) => setHospital(ev.target.value)}
-        value={hospital}
-      />
+    <Drawer
+      anchor="bottom"
+      open={props.open}
+      onClose={(ev) => handleClose(ev, false)}
+    >
+      <div className="addmanualdrawer">
+        <h3>Agregar equipo</h3>
+        <form
+          onSubmit={(ev) => {
+            handleClose(ev, true);
+          }}
+        >
+          <FormControl size="small" fullWidth variant="outlined">
+            <InputLabel htmlFor="selectCliente">Cliente</InputLabel>
+            <Select
+              native
+              value={cliente}
+              onChange={(e) => setCliente(e.target.value)}
+              label="cliente"
+              inputProps={{
+                name: "cliente",
+                id: "selectCliente",
+              }}
+            >
+              <option aria-label="None" value="" />
+              <option value={"IMSS"}>IMSS</option>
+              <option value={"ISSSTE"}>ISSSTE</option>
+              <option value={"Otro"}>Otro</option>
+            </Select>
+          </FormControl>
+          <TextField
+            label="Hospital"
+            required
+            color="secondary"
+            variant="outlined"
+            size="small"
+            type="text"
+            onChange={(ev) => setHospital(ev.target.value)}
+            value={hospital}
+          />
+          <TextField
+            label="Dirección"
+            color="secondary"
+            variant="outlined"
+            size="small"
+            type="text"
+            onChange={(ev) => setDireccion(ev.target.value)}
+            value={direccion}
+          />
+          <TextField
+            label="Ciudad"
+            color="secondary"
+            variant="outlined"
+            size="small"
+            type="text"
+            onChange={(ev) => setCiudad(ev.target.value)}
+            value={ciudad}
+          />
+          <TextField
+            label="Estado"
+            color="secondary"
+            variant="outlined"
+            size="small"
+            type="text"
+            onChange={(ev) => setEstado(ev.target.value)}
+            value={estado}
+          />
+          <TextField
+            label="Equipo"
+            color="secondary"
+            variant="outlined"
+            size="small"
+            type="text"
+            onChange={(ev) => setEquipo(ev.target.value)}
+            value={equipo}
+          />
+          <TextField
+            label="Modelo"
+            required
+            color="secondary"
+            variant="outlined"
+            size="small"
+            type="text"
+            onChange={(ev) => setModelo(ev.target.value)}
+            value={modelo}
+          />
+          <TextField
+            label="SID"
+            required
+            color="secondary"
+            variant="outlined"
+            size="small"
+            type="text"
+            onChange={(ev) => setSID(ev.target.value)}
+            value={sid}
+          />
+          <Button type="submit" variant="contained" color="primary">
+            Agregar
+          </Button>
+        </form>
+      </div>
     </Drawer>
   );
 }

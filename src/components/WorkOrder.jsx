@@ -208,7 +208,7 @@ function WorkOrder(props) {
           <div className="datosequipo">
             <div className="sid">
               <span>SID:</span>
-              <b>{data.equipo.sid}</b>
+              <b>{data.sid}</b>
             </div>
             <div className="equipo">
               <span>Equipo:</span>
@@ -328,7 +328,8 @@ function WorkOrder(props) {
             data.condiciones === "Reprogramado"
               ? "row5 row5_2fr_en_Reprog"
               : "row5"
-          }>
+          }
+        >
           <b className="obsTitle">Observaciones</b>
           <span className="observaciones"> {data.observaciones} </span>
           <b className="reprogTitle">Reprogramación del servicio:</b>
@@ -347,7 +348,8 @@ function WorkOrder(props) {
             data.condiciones === "Reprogramado"
               ? "row6 row6_5fr"
               : "row6 row6_6fr"
-          }>
+          }
+        >
           <b className="refsTitle">
             Kit y refacciones utilizadas en el servicio
           </b>
@@ -385,10 +387,10 @@ function WorkOrder(props) {
           </span>
           <div className="firmas">
             <div className="firmaFE">
-              <span></span>
+              <span>{data.inge.nombre} </span>
               <span className="line">Nombre completo</span>
               <span></span>
-              <span>{data.inge.nombre} </span>
+              <span></span>
               <span className="line">Ingeniero de Servicio</span>
             </div>
             <div className="firmaUsuario">

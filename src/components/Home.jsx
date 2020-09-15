@@ -148,7 +148,15 @@ function Home() {
       .get()
       .then((data) => {
         if (data.empty) {
-          setEquipo(null);
+          setEquipo({
+            cliente: "",
+            hospital: "",
+            direccion: "",
+            ciudad: "",
+            estado: "",
+            equipo: "",
+            modelo: "",
+          });
           setHideInfo(true);
           setNextDisabled(true);
           alert(
@@ -170,10 +178,12 @@ function Home() {
       });
   };
 
-  const closeAddManual = (eq) => {
-    setEquipo(eq);
-    setHideInfo(false);
-    console.log(equipo);
+  const closeAddManual = (eq, s, flag) => {
+    if (flag) {
+      setEquipo(eq);
+      setHideInfo(false);
+      console.log(equipo);
+    }
     setOpenAddManualDrawer(false);
   };
 
@@ -272,6 +282,7 @@ function Home() {
     // URL.revokeObjectURL(photo.src);
   };
 
+  // Habilitar o deshabilitar el next button
   useEffect(() => {
     switch (activeStep) {
       case 0:
@@ -305,6 +316,11 @@ function Home() {
         break;
       case 5:
         setNextDisabled(false);
+        break;
+      case 6:
+        if (equipo.cliente === "") {
+          handleNext();
+        }
         break;
       default:
         break;
@@ -401,35 +417,20 @@ function Home() {
                 onChange={(ev) => changeSID(ev.target.value.toUpperCase())}
                 value={sid}
               />
-              {equipo ? (
-                equipo.cliente === "ISSSTE" ? (
-                  <TextField
-                    label="Ubicación"
-                    color="secondary"
-                    variant="outlined"
-                    size="small"
-                    inputProps={{
-                      maxLength: 20,
-                    }}
-                    type="text"
-                    onChange={(ev) => setUbicacion(ev.target.value)}
-                    value={ubicacion}
-                  />
-                ) : null
-              ) : (
-                <div className="searchAddBtns">
-                  <Button
-                    className="btnSID"
-                    size="small"
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {
-                      buscarSID();
-                    }}
-                  >
-                    Buscar equipo
-                  </Button>
-                  {showAddManual ? (
+              <div className="searchAddBtns">
+                <Button
+                  className="btnSID"
+                  size="small"
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    buscarSID();
+                  }}
+                >
+                  Buscar equipo
+                </Button>
+                {showAddManual ? (
+                  <>
                     <Button
                       className="btnSID"
                       size="small"
@@ -441,17 +442,20 @@ function Home() {
                     >
                       Agregar equipo
                     </Button>
-                  ) : null}
-                </div>
-              )}
-              <AddManual
-                open={openAddManualDrawer}
-                equipo={equipo}
-                onClose={(eq) => closeAddManual(eq)}
-              />
+                    <AddManual
+                      open={openAddManualDrawer}
+                      equipo={equipo}
+                      sid={sid}
+                      onClose={(eq, ssid, f) =>
+                        closeAddManual(eq, setSID(ssid), f)
+                      }
+                    />
+                  </>
+                ) : null}
+              </div>
 
               <div className={hideInfo ? "info hideinfo" : "info"}>
-                {equipo ? (
+                {hideInfo === false ? (
                   <>
                     <p>
                       <b>Cliente: </b>
@@ -574,6 +578,7 @@ function Home() {
                       <option value={"4to Mantenimiento Preventivo"}>
                         4to PM
                       </option>
+                      <option value={"Mantenimiento Preventivo"}>PM</option>
                     </Select>
                   </FormControl>
                 ) : (
@@ -1290,6 +1295,15 @@ function Home() {
                   />
                 </div>
                 <TextField
+                  label="Ubicación"
+                  fullWidth
+                  variant="outlined"
+                  size="small"
+                  type="text"
+                  onChange={(ev) => setUbicacion(ev.target.value)}
+                  value={ubicacion}
+                />
+                <TextField
                   label="Recomendaciones"
                   fullWidth
                   multiline
@@ -1445,8 +1459,9 @@ function Home() {
                 <h3>Datos ISAPEG</h3>
               </div>
             ) : (
-              <div>
-                <h3>Siguiente</h3>
+              <div className="views">
+                <h3>Revisar datos</h3>
+                {activeStep}
               </div>
             )}
           </SwipeableViews>
@@ -1487,7 +1502,11 @@ function Home() {
             <Button
               variant="outlined"
               color="primary"
-              onClick={() => setActiveStep(6)}
+              onClick={
+                equipo.cliente === ""
+                  ? () => setActiveStep(5)
+                  : () => setActiveStep(6)
+              }
             >
               {"<"}
             </Button>
