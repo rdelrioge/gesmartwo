@@ -318,7 +318,7 @@ function Home() {
         setNextDisabled(false);
         break;
       case 6:
-        if (equipo.cliente === "") {
+        if (equipo.cliente === "" || equipo.cliente === "Otro") {
           handleNext();
         }
         break;
@@ -373,7 +373,7 @@ function Home() {
                   Validar
                 </Button>
               )}
-              <b className="version">Version 1.1.0</b>
+              <b className="version">Version 1.1.1</b>
             </div>
             <div className="views view2">
               <h3>Datos iniciales</h3>
@@ -1503,7 +1503,7 @@ function Home() {
               variant="outlined"
               color="primary"
               onClick={
-                equipo.cliente === ""
+                equipo.cliente === "" || equipo.cliente === "Otro"
                   ? () => setActiveStep(5)
                   : () => setActiveStep(6)
               }
