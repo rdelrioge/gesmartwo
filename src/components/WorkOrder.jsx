@@ -186,7 +186,11 @@ function WorkOrder(props) {
             </div>
             <div>
               <span>Ciudad / Localidad: </span>
-              <span>{data.equipo.ciudad}</span>
+              <span>
+                {data.equipo.estado
+                  ? data.equipo.ciudad + ", " + data.equipo.estado
+                  : data.equipo.ciudad}
+              </span>
             </div>
             <div>
               <span>Delegación:</span>

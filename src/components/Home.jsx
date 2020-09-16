@@ -373,7 +373,7 @@ function Home() {
                   Validar
                 </Button>
               )}
-              <b className="version">Version 1.1.1</b>
+              <b className="version">Version 1.1.2</b>
             </div>
             <div className="views view2">
               <h3>Datos iniciales</h3>
@@ -481,14 +481,20 @@ function Home() {
                       <b>Modelo: </b>
                       {equipo.modelo}
                     </p>
-                    <p>
-                      <b>Serie: </b>
-                      {equipo.serie}
-                    </p>
-                    <p>
-                      <b>Contrato: </b>
-                      {equipo.contrato}
-                    </p>
+                    {equipo.cliente === "Otro" ||
+                    equipo.cliente === "" ? null : (
+                      <p>
+                        <b>Serie: </b>
+                        {equipo.serie}
+                      </p>
+                    )}
+                    {equipo.cliente === "Otro" ||
+                    equipo.cliente === "" ? null : (
+                      <p>
+                        <b>Contrato: </b>
+                        {equipo.contrato}
+                      </p>
+                    )}
                   </>
                 ) : (
                   <div className="nada"></div>
