@@ -19,6 +19,10 @@ function AddManual(props) {
   const [equipo, setEquipo] = useState(props.equipo.equipo);
   const [modelo, setModelo] = useState(props.equipo.modelo);
   const [sid, setSID] = useState(props.sid);
+  const [serie, setSerie] = useState(props.equipo.serie);
+  const [contrato, setContrato] = useState(props.equipo.contrato);
+  // const [system, setSystem] = useState(props.equipo);
+  // const [system, setSystem] = useState(props.equipo);
   // const [system, setSystem] = useState(props.equipo);
 
   useEffect(() => {
@@ -147,6 +151,24 @@ function AddManual(props) {
             type="text"
             onChange={(ev) => setModelo(ev.target.value)}
             value={modelo}
+          />
+          <TextField
+            label="Serie"
+            color="secondary"
+            variant="outlined"
+            size="small"
+            type="text"
+            onChange={(ev) => setSerie(ev.target.value)}
+            value={serie}
+          />
+          <TextField
+            label="Contrato"
+            color="secondary"
+            variant="outlined"
+            size="small"
+            type="text"
+            onChange={(ev) => setContrato(ev.target.value)}
+            value={contrato}
           />
           <TextField
             label="SID"

@@ -27,6 +27,8 @@ import SkeletorWO from "./SkeletorWO";
 
 import { db } from "../index";
 import AddManual from "./AddManual";
+import AddEvidencia from "./AddEvidencia";
+import AddDatosISSSTE from "./AddDatosISSSTE";
 
 moment.locale("es");
 function Home() {
@@ -41,7 +43,6 @@ function Home() {
   const [caso, setCaso] = useState("");
   const [wo, setWO] = useState("");
   const [equipo, setEquipo] = useState(null);
-  const [ubicacion, setUbicacion] = useState("");
   const [showAddManual, setShowAddManual] = useState(false);
   const [openAddManualDrawer, setOpenAddManualDrawer] = useState(false);
   // view3 Servicio [2]
@@ -82,6 +83,7 @@ function Home() {
   const [bitacora, setBitacora] = useState("");
   const [hrsReales, setHrsReales] = useState("");
   const [vidaUtil, setVidaUtil] = useState("");
+  const [ubicacion, setUbicacion] = useState("");
   const [recomendaciones, setRecomendaciones] = useState("");
   const [conclusiones, setConclusiones] = useState("");
   // print
@@ -245,43 +247,6 @@ function Home() {
     setRefacciones(arrTemp);
   };
 
-  const subirFotoAntes1 = (e) => {
-    let photo = new Image();
-    photo.src = URL.createObjectURL(e.target.files[0]);
-    setFotoAntes1(photo.src);
-    // URL.revokeObjectURL(photo.src);
-  };
-  const subirFotoAntes2 = (e) => {
-    let photo = new Image();
-    photo.src = URL.createObjectURL(e.target.files[0]);
-    setFotoAntes2(photo.src);
-    // URL.revokeObjectURL(photo.src);
-  };
-  const subirFotoDurante1 = (e) => {
-    let photo = new Image();
-    photo.src = URL.createObjectURL(e.target.files[0]);
-    setFotoDurante1(photo.src);
-    // URL.revokeObjectURL(photo.src);
-  };
-  const subirFotoDurante2 = (e) => {
-    let photo = new Image();
-    photo.src = URL.createObjectURL(e.target.files[0]);
-    setFotoDurante2(photo.src);
-    // URL.revokeObjectURL(photo.src);
-  };
-  const subirFotoDespues1 = (e) => {
-    let photo = new Image();
-    photo.src = URL.createObjectURL(e.target.files[0]);
-    setFotoDespues1(photo.src);
-    // URL.revokeObjectURL(photo.src);
-  };
-  const subirFotoDespues2 = (e) => {
-    let photo = new Image();
-    photo.src = URL.createObjectURL(e.target.files[0]);
-    setFotoDespues2(photo.src);
-    // URL.revokeObjectURL(photo.src);
-  };
-
   // Habilitar o deshabilitar el next button
   useEffect(() => {
     switch (activeStep) {
@@ -373,7 +338,7 @@ function Home() {
                   Validar
                 </Button>
               )}
-              <b className="version">Version 1.1.2</b>
+              <b className="version">Version 1.2.0</b>
             </div>
             <div className="views view2">
               <h3>Datos iniciales</h3>
@@ -481,20 +446,14 @@ function Home() {
                       <b>Modelo: </b>
                       {equipo.modelo}
                     </p>
-                    {equipo.cliente === "Otro" ||
-                    equipo.cliente === "" ? null : (
-                      <p>
-                        <b>Serie: </b>
-                        {equipo.serie}
-                      </p>
-                    )}
-                    {equipo.cliente === "Otro" ||
-                    equipo.cliente === "" ? null : (
-                      <p>
-                        <b>Contrato: </b>
-                        {equipo.contrato}
-                      </p>
-                    )}
+                    <p>
+                      <b>Serie: </b>
+                      {equipo.serie}
+                    </p>
+                    <p>
+                      <b>Contrato: </b>
+                      {equipo.contrato}
+                    </p>
                   </>
                 ) : (
                   <div className="nada"></div>
@@ -1058,408 +1017,38 @@ function Home() {
               </div>
             </div>
             {equipo && equipo.cliente === "IMSS" ? (
-              <div className="views IMSS">
-                <h3>Evidencia IMSS</h3>
-                <div className="row antes">
-                  {fotoAntes1 ? (
-                    <div className="cell">
-                      <b
-                        className="btnDelete"
-                        onClick={() => setFotoAntes1(null)}
-                      >
-                        X
-                      </b>
-                      <img
-                        width="150"
-                        height="100"
-                        src={fotoAntes1}
-                        alt="antes1"
-                      />
-                    </div>
-                  ) : (
-                    <div className="cell">
-                      <input
-                        accept="image/*"
-                        className="inputPhoto"
-                        id="antes1"
-                        onChange={(e) => subirFotoAntes1(e)}
-                        type="file"
-                      />
-                      <label htmlFor="antes1">
-                        Antes
-                        <IconButton color="primary" component="span">
-                          <span className="material-icons">add_a_photo</span>
-                        </IconButton>
-                      </label>
-                    </div>
-                  )}
-                  {fotoAntes2 ? (
-                    <div className="cell">
-                      <b
-                        className="btnDelete"
-                        onClick={() => setFotoAntes2(null)}
-                      >
-                        X
-                      </b>
-                      <img
-                        width="150"
-                        height="100"
-                        src={fotoAntes2}
-                        alt="antes2"
-                      />
-                    </div>
-                  ) : (
-                    <div className="cell">
-                      <input
-                        accept="image/*"
-                        className="inputPhoto"
-                        id="antes2"
-                        onChange={(e) => subirFotoAntes2(e)}
-                        type="file"
-                      />
-                      <label htmlFor="antes2">
-                        Antes
-                        <IconButton color="primary" component="span">
-                          <span className="material-icons">add_a_photo</span>
-                        </IconButton>
-                      </label>
-                    </div>
-                  )}
-                </div>
-                <div className="row durante">
-                  {fotoDurante1 ? (
-                    <div className="cell">
-                      <b
-                        className="btnDelete"
-                        onClick={() => setFotoDurante1(null)}
-                      >
-                        X
-                      </b>
-                      <img
-                        width="150"
-                        height="100"
-                        src={fotoDurante1}
-                        alt="durante1"
-                      />
-                    </div>
-                  ) : (
-                    <div className="cell">
-                      <input
-                        accept="image/*"
-                        className="inputPhoto"
-                        id="durante1"
-                        onChange={(e) => subirFotoDurante1(e)}
-                        type="file"
-                      />
-                      <label htmlFor="durante1">
-                        Durante
-                        <IconButton color="primary" component="span">
-                          <span className="material-icons">add_a_photo</span>
-                        </IconButton>
-                      </label>
-                    </div>
-                  )}
-                  {fotoDurante2 ? (
-                    <div className="cell">
-                      <b
-                        className="btnDelete"
-                        onClick={() => setFotoDurante2(null)}
-                      >
-                        X
-                      </b>
-                      <img
-                        width="150"
-                        height="100"
-                        src={fotoDurante2}
-                        alt="durante2"
-                      />
-                    </div>
-                  ) : (
-                    <div className="cell">
-                      <input
-                        accept="image/*"
-                        className="inputPhoto"
-                        id="durante2"
-                        onChange={(e) => subirFotoDurante2(e)}
-                        type="file"
-                      />
-                      <label htmlFor="durante2">
-                        Durante
-                        <IconButton color="primary" component="span">
-                          <span className="material-icons">add_a_photo</span>
-                        </IconButton>
-                      </label>
-                    </div>
-                  )}
-                </div>
-                <div className="row despues">
-                  {fotoDespues1 ? (
-                    <div className="cell">
-                      <b
-                        className="btnDelete"
-                        onClick={() => setFotoDespues1(null)}
-                      >
-                        X
-                      </b>
-                      <img
-                        width="150"
-                        height="100"
-                        src={fotoDespues1}
-                        alt="despues1"
-                      />
-                    </div>
-                  ) : (
-                    <div className="cell">
-                      <input
-                        accept="image/*"
-                        className="inputPhoto"
-                        id="despues1"
-                        onChange={(e) => subirFotoDespues1(e)}
-                        type="file"
-                      />
-                      <label htmlFor="despues1">
-                        Despues
-                        <IconButton color="primary" component="span">
-                          <span className="material-icons">add_a_photo</span>
-                        </IconButton>
-                      </label>
-                    </div>
-                  )}
-                  {fotoDespues2 ? (
-                    <div className="cell">
-                      <b
-                        className="btnDelete"
-                        onClick={() => setFotoDespues2(null)}
-                      >
-                        X
-                      </b>
-                      <img
-                        width="150"
-                        height="100"
-                        src={fotoDespues2}
-                        alt="despues2"
-                      />
-                    </div>
-                  ) : (
-                    <div className="cell">
-                      <input
-                        accept="image/*"
-                        className="inputPhoto"
-                        id="despues2"
-                        onChange={(e) => subirFotoDespues2(e)}
-                        type="file"
-                      />
-                      <label htmlFor="despues2">
-                        Despues
-                        <IconButton color="primary" component="span">
-                          <span className="material-icons">add_a_photo</span>
-                        </IconButton>
-                      </label>
-                    </div>
-                  )}
-                </div>
-              </div>
+              <AddEvidencia
+                cliente={equipo.cliente}
+                fotoAntes1
+                fotoAntes2
+                fotoDurante1
+                fotoDurante2
+                fotoDespues1
+                fotoDespues2
+              />
             ) : equipo && equipo.cliente === "ISSSTE" ? (
-              <div className="views ISSSTE">
-                <h3>Datos ISSSTE</h3>
-                <div className="tresFr">
-                  <TextField
-                    label="N° Bitacora"
-                    fullWidth
-                    variant="outlined"
-                    type="tel"
-                    inputProps={{
-                      maxLength: 8,
-                    }}
-                    size="small"
-                    value={bitacora}
-                    onChange={(e) => setBitacora(e.target.value)}
-                  />
-                  <TextField
-                    label="Hrs reales"
-                    fullWidth
-                    variant="outlined"
-                    type="tel"
-                    inputProps={{
-                      maxLength: 2,
-                    }}
-                    size="small"
-                    value={hrsReales}
-                    onChange={(e) => setHrsReales(e.target.value)}
-                  />
-                  <TextField
-                    label="Vida útil"
-                    fullWidth
-                    variant="outlined"
-                    type="tel"
-                    inputProps={{
-                      maxLength: 2,
-                    }}
-                    size="small"
-                    value={vidaUtil}
-                    onChange={(e) => setVidaUtil(e.target.value)}
-                  />
-                </div>
-                <TextField
-                  label="Ubicación"
-                  fullWidth
-                  variant="outlined"
-                  size="small"
-                  type="text"
-                  onChange={(ev) => setUbicacion(ev.target.value)}
-                  value={ubicacion}
-                />
-                <TextField
-                  label="Recomendaciones"
-                  fullWidth
-                  multiline
-                  rows={2}
-                  value={recomendaciones}
-                  variant="outlined"
-                  onChange={(e) => setRecomendaciones(e.target.value)}
-                />
-                <TextField
-                  label="Conclusiones"
-                  fullWidth
-                  multiline
-                  rows={2}
-                  value={conclusiones}
-                  variant="outlined"
-                  onChange={(e) => setConclusiones(e.target.value)}
-                />
-                <div className="row">
-                  {fotoAntes1 ? (
-                    <div className="cell">
-                      <b
-                        className="btnDelete"
-                        onClick={() => setFotoAntes1(null)}
-                      >
-                        X
-                      </b>
-                      <img
-                        width="150"
-                        height="100"
-                        src={fotoAntes1}
-                        alt="antes1"
-                      />
-                    </div>
-                  ) : (
-                    <div className="cell">
-                      <input
-                        accept="image/*"
-                        className="inputPhoto"
-                        id="antes1"
-                        onChange={(e) => subirFotoAntes1(e)}
-                        type="file"
-                      />
-                      <label htmlFor="antes1">
-                        Foto Normal
-                        <IconButton color="primary" component="span">
-                          <span className="material-icons">add_a_photo</span>
-                        </IconButton>
-                      </label>
-                    </div>
-                  )}
-                  {fotoAntes2 ? (
-                    <div className="cell">
-                      <b
-                        className="btnDelete"
-                        onClick={() => setFotoAntes2(null)}
-                      >
-                        X
-                      </b>
-                      <img
-                        width="150"
-                        height="100"
-                        src={fotoAntes2}
-                        alt="antes2"
-                      />
-                    </div>
-                  ) : (
-                    <div className="cell">
-                      <input
-                        accept="image/*"
-                        className="inputPhoto"
-                        id="antes2"
-                        onChange={(e) => subirFotoAntes2(e)}
-                        type="file"
-                      />
-                      <label htmlFor="antes2">
-                        Placa N° de Serie
-                        <IconButton color="primary" component="span">
-                          <span className="material-icons">add_a_photo</span>
-                        </IconButton>
-                      </label>
-                    </div>
-                  )}
-                </div>
-                <div className="row">
-                  {fotoDurante1 ? (
-                    <div className="cell">
-                      <b
-                        className="btnDelete"
-                        onClick={() => setFotoDurante1(null)}
-                      >
-                        X
-                      </b>
-                      <img
-                        width="150"
-                        height="100"
-                        src={fotoDurante1}
-                        alt="durante1"
-                      />
-                    </div>
-                  ) : (
-                    <div className="cell">
-                      <input
-                        accept="image/*"
-                        className="inputPhoto"
-                        id="durante1"
-                        onChange={(e) => subirFotoDurante1(e)}
-                        type="file"
-                      />
-                      <label htmlFor="durante1">
-                        Placa N° de Inventario
-                        <IconButton color="primary" component="span">
-                          <span className="material-icons">add_a_photo</span>
-                        </IconButton>
-                      </label>
-                    </div>
-                  )}
-                  {fotoDurante2 ? (
-                    <div className="cell">
-                      <b
-                        className="btnDelete"
-                        onClick={() => setFotoDurante2(null)}
-                      >
-                        X
-                      </b>
-                      <img
-                        width="150"
-                        height="100"
-                        src={fotoDurante2}
-                        alt="durante2"
-                      />
-                    </div>
-                  ) : (
-                    <div className="cell">
-                      <input
-                        accept="image/*"
-                        className="inputPhoto"
-                        id="durante2"
-                        onChange={(e) => subirFotoDurante2(e)}
-                        type="file"
-                      />
-                      <label htmlFor="durante2">
-                        Foto panorámica del bien
-                        <IconButton color="primary" component="span">
-                          <span className="material-icons">add_a_photo</span>
-                        </IconButton>
-                      </label>
-                    </div>
-                  )}
-                </div>
-              </div>
+              <AddDatosISSSTE
+                bitacora={bitacora}
+                hrsReales={hrsReales}
+                vidaUtil={vidaUtil}
+                ubicacion={ubicacion}
+                recomendaciones={recomendaciones}
+                conclusiones={conclusiones}
+                fotoAntes1={fotoAntes1}
+                fotoAntes2={fotoAntes2}
+                fotoDurante1={fotoDurante1}
+                fotoDurante2={fotoDurante2}
+                changeBitacora={(e) => setBitacora(e)}
+                changeHrsReales={(e) => setHrsReales(e)}
+                changeVidaUtil={(e) => setVidaUtil(e)}
+                changeUbicacion={(e) => setUbicacion(e)}
+                changeRecomendaciones={(e) => setRecomendaciones(e)}
+                changeConclusiones={(e) => setConclusiones(e)}
+                changeFotoAntes1={(e) => setFotoAntes1(e)}
+                changeFotoAntes2={(e) => setFotoAntes2(e)}
+                changeFotoDurante1={(e) => setFotoDurante1(e)}
+                changeFotoDurante2={(e) => setFotoDurante2(e)}
+              />
             ) : equipo && equipo.cliente === "ISAPEG" ? (
               <div className="views ISAPEG">
                 <h3>Datos ISAPEG</h3>
