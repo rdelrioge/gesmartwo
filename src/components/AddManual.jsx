@@ -21,32 +21,15 @@ function AddManual(props) {
   const [sid, setSID] = useState(props.sid);
   const [serie, setSerie] = useState(props.equipo.serie);
   const [contrato, setContrato] = useState(props.equipo.contrato);
-  // const [system, setSystem] = useState(props.equipo);
-  // const [system, setSystem] = useState(props.equipo);
-  // const [system, setSystem] = useState(props.equipo);
 
   useEffect(() => {
-    // if (system) {
-    //   console.log(system);
-    //   // setCliente()
-    // }
     setSID(props.sid);
-
     console.log(props);
-  }, [props]);
+  }, [props.sid]);
 
   const handleClose = (ev, flag) => {
     ev.preventDefault();
     if (flag) {
-      // setSystem({
-      //   cliente,
-      //   hospital,
-      //   direccion,
-      //   ciudad,
-      //   estado,
-      //   equipo,
-      //   modelo,
-      // });
       props.onClose(
         {
           cliente,
@@ -56,6 +39,8 @@ function AddManual(props) {
           estado,
           equipo,
           modelo,
+          serie,
+          contrato,
         },
         sid,
         flag

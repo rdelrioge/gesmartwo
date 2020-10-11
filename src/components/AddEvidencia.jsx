@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { IconButton } from "@material-ui/core";
 
 function AddEvidencia(props) {
-  const [cliente, setCliente] = useState(props.cliente);
+  const cliente = props.cliente;
   const [fotoAntes1, setFotoAntes1] = useState(props.fotoAntes1);
   const [fotoAntes2, setFotoAntes2] = useState(props.fotoAntes2);
   const [fotoDurante1, setFotoDurante1] = useState(props.fotoDurante1);
@@ -12,53 +12,86 @@ function AddEvidencia(props) {
   const [fotoDespues2, setFotoDespues2] = useState(props.fotoDespues2);
 
   const subirFotoAntes1 = (e) => {
-    let photo = new Image();
-    photo.src = URL.createObjectURL(e.target.files[0]);
-    setFotoAntes1(photo.src);
-    // URL.revokeObjectURL(photo.src);
+    if (e !== null) {
+      let photo = new Image();
+      photo.src = URL.createObjectURL(e.target.files[0]);
+      setFotoAntes1(photo.src);
+      props.changeFotoAntes1(photo.src);
+      // URL.revokeObjectURL(photo.src);
+    } else {
+      setFotoAntes1(e);
+      props.changeFotoAntes1(e);
+    }
   };
   const subirFotoAntes2 = (e) => {
-    let photo = new Image();
-    photo.src = URL.createObjectURL(e.target.files[0]);
-    setFotoAntes2(photo.src);
-    // URL.revokeObjectURL(photo.src);
+    if (e !== null) {
+      let photo = new Image();
+      photo.src = URL.createObjectURL(e.target.files[0]);
+      setFotoAntes2(photo.src);
+      props.changeFotoAntes2(photo.src);
+      // URL.revokeObjectURL(photo.src);
+    } else {
+      setFotoAntes2(e);
+      props.changeFotoAntes2(e);
+    }
   };
+
   const subirFotoDurante1 = (e) => {
-    let photo = new Image();
-    photo.src = URL.createObjectURL(e.target.files[0]);
-    setFotoDurante1(photo.src);
-    // URL.revokeObjectURL(photo.src);
+    if (e !== null) {
+      let photo = new Image();
+      photo.src = URL.createObjectURL(e.target.files[0]);
+      setFotoDurante1(photo.src);
+      props.changeFotoDurante1(photo.src);
+      // URL.revokeObjectURL(photo.src);
+    } else {
+      setFotoDurante1(e);
+      props.changeFotoDurante1(e);
+    }
   };
   const subirFotoDurante2 = (e) => {
-    let photo = new Image();
-    photo.src = URL.createObjectURL(e.target.files[0]);
-    setFotoDurante2(photo.src);
-    // URL.revokeObjectURL(photo.src);
+    if (e !== null) {
+      let photo = new Image();
+      photo.src = URL.createObjectURL(e.target.files[0]);
+      setFotoDurante2(photo.src);
+      props.changeFotoDurante2(photo.src);
+      // URL.revokeObjectURL(photo.src);
+    } else {
+      setFotoDurante2(e);
+      props.changeFotoDurante2(e);
+    }
   };
   const subirFotoDespues1 = (e) => {
-    let photo = new Image();
-    photo.src = URL.createObjectURL(e.target.files[0]);
-    setFotoDespues1(photo.src);
-    // URL.revokeObjectURL(photo.src);
+    if (e !== null) {
+      let photo = new Image();
+      photo.src = URL.createObjectURL(e.target.files[0]);
+      setFotoDespues1(photo.src);
+      props.changeFotoDespues1(photo.src);
+      // URL.revokeObjectURL(photo.src);
+    } else {
+      setFotoDespues1(e);
+      props.changeFotoDespues1(e);
+    }
   };
   const subirFotoDespues2 = (e) => {
-    let photo = new Image();
-    photo.src = URL.createObjectURL(e.target.files[0]);
-    setFotoDespues2(photo.src);
-    // URL.revokeObjectURL(photo.src);
+    if (e !== null) {
+      let photo = new Image();
+      photo.src = URL.createObjectURL(e.target.files[0]);
+      setFotoDespues2(photo.src);
+      props.changeFotoDespues2(photo.src);
+      // URL.revokeObjectURL(photo.src);
+    } else {
+      setFotoDespues2(e);
+      props.changeFotoDespues2(e);
+    }
   };
 
   return (
     <div className="views IMSS">
-      {cliente === "IMMS" ? (
-        <h3>Evidencia IMSS</h3>
-      ) : (
-        <h3>Evidencia Fotográfica</h3>
-      )}
+      {cliente === "IMSS" ? <h3>Evidencia IMSS</h3> : <b></b>}
       <div className="row antes">
         {fotoAntes1 ? (
           <div className="cell">
-            <b className="btnDelete" onClick={() => setFotoAntes1(null)}>
+            <b className="btnDelete" onClick={() => subirFotoAntes1(null)}>
               X
             </b>
             <img width="150" height="100" src={fotoAntes1} alt="antes1" />
@@ -82,7 +115,7 @@ function AddEvidencia(props) {
         )}
         {fotoAntes2 ? (
           <div className="cell">
-            <b className="btnDelete" onClick={() => setFotoAntes2(null)}>
+            <b className="btnDelete" onClick={() => subirFotoAntes2(null)}>
               X
             </b>
             <img width="150" height="100" src={fotoAntes2} alt="antes2" />
@@ -108,7 +141,7 @@ function AddEvidencia(props) {
       <div className="row durante">
         {fotoDurante1 ? (
           <div className="cell">
-            <b className="btnDelete" onClick={() => setFotoDurante1(null)}>
+            <b className="btnDelete" onClick={() => subirFotoDurante1(null)}>
               X
             </b>
             <img width="150" height="100" src={fotoDurante1} alt="durante1" />
@@ -132,7 +165,7 @@ function AddEvidencia(props) {
         )}
         {fotoDurante2 ? (
           <div className="cell">
-            <b className="btnDelete" onClick={() => setFotoDurante2(null)}>
+            <b className="btnDelete" onClick={() => subirFotoDurante2(null)}>
               X
             </b>
             <img width="150" height="100" src={fotoDurante2} alt="durante2" />
@@ -158,7 +191,7 @@ function AddEvidencia(props) {
       <div className="row despues">
         {fotoDespues1 ? (
           <div className="cell">
-            <b className="btnDelete" onClick={() => setFotoDespues1(null)}>
+            <b className="btnDelete" onClick={() => subirFotoDespues1(null)}>
               X
             </b>
             <img width="150" height="100" src={fotoDespues1} alt="despues1" />
@@ -182,7 +215,7 @@ function AddEvidencia(props) {
         )}
         {fotoDespues2 ? (
           <div className="cell">
-            <b className="btnDelete" onClick={() => setFotoDespues2(null)}>
+            <b className="btnDelete" onClick={() => subirFotoDespues2(null)}>
               X
             </b>
             <img width="150" height="100" src={fotoDespues2} alt="despues2" />

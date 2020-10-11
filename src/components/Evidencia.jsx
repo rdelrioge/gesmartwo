@@ -4,18 +4,6 @@ import "./evidencia.scss";
 
 function Evidencia(props) {
   const data = { ...props.data };
-  //   const data = {
-  //     equipo: {
-  //       hospital: "UMAE 25",
-  //       ciudad: "Monterrey",
-  //       delegacion: "Nuevo Leon",
-  //       cliente: "IMSS",
-  //       sid: "123456",
-  //       equipo: "Tomografo",
-  //       modelo: "Rev EVO",
-  //       serie: "456789",
-  //     },
-  //   };
 
   return (
     <div className="evidencia">
@@ -63,7 +51,7 @@ function Evidencia(props) {
           <div className="datosequipo">
             <div className="sid">
               <span>SID:</span>
-              <b>{data.equipo.sid}</b>
+              <b>{data.sid}</b>
             </div>
             <div className="equipo">
               <span>Equipo:</span>

@@ -10,8 +10,7 @@ import {
   InputLabel,
   FormControl,
   Select,
-  IconButton,
-  Drawer,
+  Switch,
 } from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
 
@@ -86,6 +85,8 @@ function Home() {
   const [ubicacion, setUbicacion] = useState("");
   const [recomendaciones, setRecomendaciones] = useState("");
   const [conclusiones, setConclusiones] = useState("");
+  // view 7
+  const [flagAddFotos, setFlagAddFotos] = useState(false);
   // print
   const [hideInfo, setHideInfo] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -158,6 +159,8 @@ function Home() {
             estado: "",
             equipo: "",
             modelo: "",
+            serie: "",
+            contrato: "",
           });
           setHideInfo(true);
           setNextDisabled(true);
@@ -283,9 +286,9 @@ function Home() {
         setNextDisabled(false);
         break;
       case 6:
-        if (equipo.cliente === "" || equipo.cliente === "Otro") {
-          handleNext();
-        }
+        // if (equipo.cliente === "" || equipo.cliente === "Otro") {
+        //   handleNext();
+        // }
         break;
       default:
         break;
@@ -531,19 +534,21 @@ function Home() {
                       }}
                     >
                       <option aria-label="None" value="" />
+                      <option value={"Mantenimiento Preventivo"}>
+                        Mantenimiento Preventivo
+                      </option>
                       <option value={"1er Mantenimiento Preventivo"}>
-                        1er PM
+                        1er MP
                       </option>
                       <option value={"2do Mantenimiento Preventivo"}>
-                        2do PM
+                        2do MP
                       </option>
                       <option value={"3er Mantenimiento Preventivo"}>
-                        3er PM
+                        3er MP
                       </option>
                       <option value={"4to Mantenimiento Preventivo"}>
-                        4to PM
+                        4to MP
                       </option>
-                      <option value={"Mantenimiento Preventivo"}>PM</option>
                     </Select>
                   </FormControl>
                 ) : (
@@ -1019,12 +1024,18 @@ function Home() {
             {equipo && equipo.cliente === "IMSS" ? (
               <AddEvidencia
                 cliente={equipo.cliente}
-                fotoAntes1
-                fotoAntes2
-                fotoDurante1
-                fotoDurante2
-                fotoDespues1
-                fotoDespues2
+                fotoAntes1={fotoAntes1}
+                fotoAntes2={fotoAntes2}
+                fotoDurante1={fotoDurante1}
+                fotoDurante2={fotoDurante2}
+                fotoDespues1={fotoDespues1}
+                fotoDespues2={fotoDespues2}
+                changeFotoAntes1={(e) => setFotoAntes1(e)}
+                changeFotoAntes2={(e) => setFotoAntes2(e)}
+                changeFotoDurante1={(e) => setFotoDurante1(e)}
+                changeFotoDurante2={(e) => setFotoDurante2(e)}
+                changeFotoDespues1={(e) => setFotoDespues1(e)}
+                changeFotoDespues2={(e) => setFotoDespues2(e)}
               />
             ) : equipo && equipo.cliente === "ISSSTE" ? (
               <AddDatosISSSTE
@@ -1055,8 +1066,27 @@ function Home() {
               </div>
             ) : (
               <div className="views">
-                <h3>Revisar datos</h3>
-                {activeStep}
+                <div className="headerAddFotos">
+                  <b>¿Agregar Evidencia Fotográfica?</b>
+                  <Switch onChange={(e) => setFlagAddFotos(e.target.checked)} />
+                </div>
+                {equipo && flagAddFotos ? (
+                  <AddEvidencia
+                    cliente={equipo.cliente}
+                    fotoAntes1={fotoAntes1}
+                    fotoAntes2={fotoAntes2}
+                    fotoDurante1={fotoDurante1}
+                    fotoDurante2={fotoDurante2}
+                    fotoDespues1={fotoDespues1}
+                    fotoDespues2={fotoDespues2}
+                    changeFotoAntes1={(e) => setFotoAntes1(e)}
+                    changeFotoAntes2={(e) => setFotoAntes2(e)}
+                    changeFotoDurante1={(e) => setFotoDurante1(e)}
+                    changeFotoDurante2={(e) => setFotoDurante2(e)}
+                    changeFotoDespues1={(e) => setFotoDespues1(e)}
+                    changeFotoDespues2={(e) => setFotoDespues2(e)}
+                  />
+                ) : null}
               </div>
             )}
           </SwipeableViews>
@@ -1097,11 +1127,7 @@ function Home() {
             <Button
               variant="outlined"
               color="primary"
-              onClick={
-                equipo.cliente === "" || equipo.cliente === "Otro"
-                  ? () => setActiveStep(5)
-                  : () => setActiveStep(6)
-              }
+              onClick={() => setActiveStep(6)}
             >
               {"<"}
             </Button>
@@ -1150,6 +1176,7 @@ function Home() {
                 fotoDurante2,
                 fotoDespues1,
                 fotoDespues2,
+                flagAddFotos,
               }}
             />
           )}

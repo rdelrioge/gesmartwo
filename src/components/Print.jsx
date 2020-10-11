@@ -27,6 +27,8 @@ function Print(props) {
           <div className="marginTop"></div>
           <FichaTecnica data={props.data} />
         </>
+      ) : props.data.flagAddFotos ? (
+        <Evidencia data={props.data} />
       ) : null}
     </div>
   );
