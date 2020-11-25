@@ -28,12 +28,14 @@ import { db } from "../index";
 import AddManual from "./AddManual";
 import AddEvidencia from "./AddEvidencia";
 import AddDatosISSSTE from "./AddDatosISSSTE";
+import View1SSO from "./views/View1SSO";
 
 moment.locale("es");
 function Home() {
 	// homeLayout
 	const [activeStep, setActiveStep] = useState(0); //7 para ver print
 	const [nextDisabled, setNextDisabled] = useState(true);
+	const [datos, setDatos] = useState({});
 	// view1 SSO [0]
 	const [sso, setSSO] = useState("");
 	const [inge, setInge] = useState(null);
@@ -104,36 +106,6 @@ function Home() {
 
 	const handleBack = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep - 1);
-	};
-
-	const changeSSO = (value) => {
-		setSSO(value);
-		if (inge) {
-			setNextDisabled(true);
-			setInge(null);
-		}
-	};
-	const validateSSO = () => {
-		console.log(sso);
-		db.collection("users")
-			.where("sso", "==", sso)
-			.get()
-			.then((data) => {
-				if (data.empty) {
-					setNextDisabled(true);
-					alert("No existe el usuario");
-				} else {
-					data.forEach((user) => {
-						let us = { ...user.data(), uid: user.id };
-						console.log(us);
-						setInge(us);
-						setNextDisabled(false);
-					});
-				}
-			})
-			.catch((err) => {
-				console.log("Error: " + err);
-			});
 	};
 
 	const changeSID = (value) => {
@@ -305,6 +277,10 @@ function Home() {
 		equipo,
 	]);
 
+	useEffect(() => {
+		console.log(datos);
+	}, [datos]);
+
 	return (
 		<div className={activeStep === 7 ? "home scrollHome " : "home"}>
 			<div className="nav-bar">
@@ -315,32 +291,15 @@ function Home() {
 				<>
 					<SwipeableViews disabled index={activeStep}>
 						<div className="views view1">
-							<h3>Ingresa tu SSO</h3>
-							<TextField
-								label="SSO"
-								color="secondary"
-								variant="outlined"
-								type="tel"
-								inputProps={{
-									maxLength: 9,
+							<View1SSO
+								nextDisabled={nextDisabled}
+								onDone={(nD, ing) => {
+									console.log(nD, ing);
+									setNextDisabled(nD);
+									setInge(ing);
+									setDatos({ ...datos, inge: ing });
 								}}
-								onChange={(ev) => changeSSO(ev.target.value)}
-								value={sso}
 							/>
-							{inge ? (
-								<p className="nombreInge">{inge.nombre}</p>
-							) : (
-								<Button
-									className="btnValidate"
-									size="small"
-									variant="contained"
-									disabled={sso.length === 9 ? false : true}
-									color="primary"
-									onClick={() => validateSSO()}>
-									Validar
-								</Button>
-							)}
-							<b className="version">Version 1.2.0</b>
 						</div>
 						<div className="views view2">
 							<h3>Datos iniciales</h3>
