@@ -18,19 +18,12 @@ function View4PeriodoDeServicio(props) {
 	const [startTime, setStartTime] = useState(null);
 	const [endDate, setEndDate] = useState(null);
 	const [endTime, setEndTime] = useState(null);
-	// from other views
-	const [tipoDeServicio, setTipoDeServicio] = useState(props.tps);
 
 	useEffect(() => {
 		if (props.step === 3) {
 			tiempos.length > 0 ? props.handleNext(false) : props.handleNext(true);
 		}
 	}, [tiempos, props]);
-
-	useEffect(() => {
-		setTipoDeServicio(props.tds);
-		console.log(props);
-	}, [props.tps]);
 
 	const addTime = () => {
 		let arrTemp = [...tiempos];
@@ -73,7 +66,7 @@ function View4PeriodoDeServicio(props) {
 							<option value={"Viaje"}>Viaje</option>
 							<option value={"En espera"}>En Espera</option>
 							<option value={"Administración"}>Administración</option>
-							{tipoDeServicio === "PM (Mantenimiento Preventivo)" ? (
+							{props.tps === "PM (Mantenimiento Preventivo)" ? (
 								<option value={"Preventivo"}>Preventivo</option>
 							) : (
 								<>
