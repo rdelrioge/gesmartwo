@@ -29,6 +29,7 @@ import AddEvidencia from "./AddEvidencia";
 import AddDatosISSSTE from "./AddDatosISSSTE";
 import View1SSO from "./views/View1SSO";
 import View2DatosIniciales from "./views/View2DatosIniciales";
+import View3DatosDelServicio from "./views/View3DatosDelServicio";
 
 moment.locale("es");
 function Home() {
@@ -106,17 +107,6 @@ function Home() {
 
 	const handleBack = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep - 1);
-	};
-
-	const changeTipoDeServicio = (tds) => {
-		setTipoDeServicio(tds);
-		if (tds === "PM (Mantenimiento Preventivo)") {
-			setDescripcion(
-				`Se realiza mantenimiento preventivo segun especificaciones técnicas del fabricante asi como pruebas de funcionamiento satisfactorias. El equipo se encuentra operando correctamente.`
-			);
-		} else {
-			setDescripcion("");
-		}
 	};
 
 	const addTime = () => {
@@ -238,11 +228,9 @@ function Home() {
 							<View1SSO
 								step={activeStep}
 								handleNext={(nD) => {
-									console.log(nD);
 									setNextDisabled(nD);
 								}}
 								onDone={(_miinge) => {
-									console.log(_miinge);
 									setInge(_miinge);
 									setDatos({ ...datos, inge: _miinge });
 								}}
@@ -255,7 +243,6 @@ function Home() {
 									setNextDisabled(nD);
 								}}
 								onDone={(_micase, _miwo, _miequipo) => {
-									console.log(_micase, _miwo, _miequipo);
 									setCaso(_micase);
 									setWO(_miwo);
 									setEquipo(_miequipo);
@@ -269,165 +256,43 @@ function Home() {
 							/>
 						</div>
 						<div className="views view3">
-							<h3>Datos del Servicio</h3>
-							<div className="item3">
-								<FormControl size="small" fullWidth variant="outlined">
-									<InputLabel htmlFor="selectTipoDeServ">
-										Tipo de servicio
-									</InputLabel>
-									<Select
-										native
-										value={tipoDeServicio}
-										onChange={(e) => changeTipoDeServicio(e.target.value)}
-										label="Tipo de servicio"
-										inputProps={{
-											name: "tipoDeServicio",
-											id: "selectTipoDeServ",
-										}}>
-										<option aria-label="None" value="" />
-										<option value={"PM (Mantenimiento Preventivo)"}>
-											Preventivo
-										</option>
-										<option value={"CM (Mantenimiento Correctivo)"}>
-											Correctivo
-										</option>
-										<option value={"FMI"}>FMI</option>
-										<option value={"INS (Instalación)"}>Instalación</option>
-										<option value={"Otros"}>Otros</option>
-										<option value={"HBS"}>HBS</option>
-										<option value={"APlicaciones"}>Aplicaciones</option>
-										<option value={"Desinstalación"}>Desinstalación</option>
-									</Select>
-								</FormControl>
-							</div>
-							<div className="item3">
-								<FormControl size="small" fullWidth variant="outlined">
-									<InputLabel htmlFor="selectTipoDeContrato">
-										Tipo de trabajo
-									</InputLabel>
-									<Select
-										native
-										value={tipoDeContrato}
-										onChange={(e) => setTipoDeContrato(e.target.value)}
-										label="Tipo de trabajo"
-										inputProps={{
-											name: "tipoDeContrato",
-											id: "selectTipoDeContrato",
-										}}>
-										<option value={"Contrato"}>Contrato</option>
-										<option value={"Garantía"}>Garantia</option>
-										<option value={"Facturable"}>Facturable</option>
-										<option value={"FMI"}>FMI</option>
-										<option value={"On demand"}>On demand</option>
-									</Select>
-								</FormControl>
-							</div>
-							<div className="item3">
-								{tipoDeServicio === "PM (Mantenimiento Preventivo)" ? (
-									<FormControl size="small" fullWidth variant="outlined">
-										<InputLabel htmlFor="numeroPM">Síntoma</InputLabel>
-										<Select
-											native
-											value={sintoma}
-											onChange={(e) => setSintoma(e.target.value)}
-											label="Sintoma"
-											inputProps={{
-												name: "sintoma",
-												id: "sintoma",
-											}}>
-											<option aria-label="None" value="" />
-											<option value={"Mantenimiento Preventivo"}>
-												Mantenimiento Preventivo
-											</option>
-											<option value={"1er Mantenimiento Preventivo"}>
-												1er MP
-											</option>
-											<option value={"2do Mantenimiento Preventivo"}>
-												2do MP
-											</option>
-											<option value={"3er Mantenimiento Preventivo"}>
-												3er MP
-											</option>
-											<option value={"4to Mantenimiento Preventivo"}>
-												4to MP
-											</option>
-										</Select>
-									</FormControl>
-								) : (
-									<TextField
-										label="Síntoma"
-										fullWidth
-										multiline
-										rows={3}
-										variant="outlined"
-										onChange={(e) => setSintoma(e.target.value)}
-									/>
-								)}
-							</div>
-							<div className="item3">
-								<TextField
-									label="Descripción del servicio"
-									fullWidth
-									multiline
-									rows={4}
-									value={descripcion}
-									variant="outlined"
-									onChange={(e) => setDescripcion(e.target.value)}
-								/>
-							</div>
-							<div className="item3 preguntas">
-								<b>
-									¿El equipo queda operativamente apto para realizar el trabajo
-									para lo que fue diseñado?
-								</b>
-								<input
-									type="checkbox"
-									checked={apto}
-									onChange={(e) => setApto(e.target.checked)}
-								/>
-								<b>¿Funcionando al 100%?</b>
-								<input
-									type="checkbox"
-									checked={funcionando}
-									onChange={(e) => setFuncionando(e.target.checked)}
-								/>
-							</div>
-							<div className="item3">
-								<TextField
-									label="Observaciones"
-									fullWidth
-									multiline
-									value={observaciones}
-									rows={2}
-									variant="outlined"
-									onChange={(e) => setObservaciones(e.target.value)}
-								/>
-							</div>
-							<div className="item3">
-								<FormControl size="small" fullWidth variant="outlined">
-									<InputLabel htmlFor="selectCondiciones">
-										Condiciones en las que se deja el equipo
-									</InputLabel>
-									<Select
-										native
-										value={condiciones}
-										onChange={(e) => setCondiciones(e.target.value)}
-										label="Condiciones en las que se deja el equipo"
-										inputProps={{
-											name: "condiciones",
-											id: "selectCondiciones",
-										}}>
-										<option value={"Funcionando"}>Funcionando</option>
-										<option value={"Parcialmente funcionando"}>
-											Parcialmente funcionando
-										</option>
-										<option value={"No funcional"}>No funcional</option>
-										<option value={"No localizado"}>No localizado</option>
-										<option value={"Baja"}>Baja</option>
-										<option value={"Reprogramado"}>Reprogramado</option>
-									</Select>
-								</FormControl>
-							</div>
+							<View3DatosDelServicio
+								step={activeStep}
+								flag={activeStep === 3 ? true : false}
+								handleNext={(nD) => {
+									setNextDisabled(nD);
+								}}
+								onDone={(
+									_mitipoDeServicio,
+									_mitipoDeContrato,
+									_misintoma,
+									_midescripcion,
+									_miapto,
+									_mifuncionando,
+									_miobservaciones,
+									_micondiciones
+								) => {
+									setTipoDeServicio(_mitipoDeServicio);
+									setTipoDeContrato(_mitipoDeContrato);
+									setSintoma(_misintoma);
+									setDescripcion(_midescripcion);
+									setApto(_miapto);
+									setFuncionando(_mifuncionando);
+									setObservaciones(_miobservaciones);
+									setCondiciones(_micondiciones);
+									setDatos({
+										...datos,
+										tipoDeServicio: _mitipoDeServicio,
+										tipoDeContrato: _mitipoDeContrato,
+										sintoma: _misintoma,
+										descripcion: _midescripcion,
+										apto: _miapto,
+										funcionando: _mifuncionando,
+										observaciones: _miobservaciones,
+										condiciones: _micondiciones,
+									});
+								}}
+							/>
 						</div>
 						<div className="views view4">
 							<h3>Periodo de servicio</h3>
