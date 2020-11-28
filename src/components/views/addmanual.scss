@@ -1,0 +1,15 @@
+.addmanualdrawer {
+	margin: 0 1em 1em 1em;
+	h3 {
+		text-align: center;
+	}
+	.closeBtn {
+		position: absolute;
+		top: 4px;
+		right: 8px;
+	}
+	form {
+		display: grid;
+		row-gap: 1em;
+	}
+}

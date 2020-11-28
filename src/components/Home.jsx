@@ -25,10 +25,10 @@ import Print from "./Print";
 import SkeletorWO from "./SkeletorWO";
 
 import { db } from "../index";
-import AddManual from "./AddManual";
 import AddEvidencia from "./AddEvidencia";
 import AddDatosISSSTE from "./AddDatosISSSTE";
 import View1SSO from "./views/View1SSO";
+import View2DatosIniciales from "./views/View2DatosIniciales";
 
 moment.locale("es");
 function Home() {
@@ -108,62 +108,6 @@ function Home() {
 		setActiveStep((prevActiveStep) => prevActiveStep - 1);
 	};
 
-	const changeSID = (value) => {
-		setSID(value);
-		if (equipo) {
-			setHideInfo(true);
-			setNextDisabled(true);
-			setEquipo(null);
-			setShowAddManual(false);
-		}
-	};
-	const buscarSID = () => {
-		db.collection("equipos")
-			.where("sid", "==", sid)
-			.get()
-			.then((data) => {
-				if (data.empty) {
-					setEquipo({
-						cliente: "",
-						hospital: "",
-						direccion: "",
-						ciudad: "",
-						estado: "",
-						equipo: "",
-						modelo: "",
-						serie: "",
-						contrato: "",
-					});
-					setHideInfo(true);
-					setNextDisabled(true);
-					alert(
-						"No existe el SID en la base de datos. Considera agregarlo manualmente"
-					);
-					setShowAddManual(true);
-				} else {
-					data.forEach((refa) => {
-						let eq = { ...refa.data(), uid: refa.id };
-						console.log(eq);
-						setEquipo(eq);
-						setHideInfo(false);
-						// setNextDisabled(false);
-					});
-				}
-			})
-			.catch((err) => {
-				console.log("Error: " + err);
-			});
-	};
-
-	const closeAddManual = (eq, s, flag) => {
-		if (flag) {
-			setEquipo(eq);
-			setHideInfo(false);
-			console.log(equipo);
-		}
-		setOpenAddManualDrawer(false);
-	};
-
 	const changeTipoDeServicio = (tds) => {
 		setTipoDeServicio(tds);
 		if (tds === "PM (Mantenimiento Preventivo)") {
@@ -223,59 +167,59 @@ function Home() {
 	};
 
 	// Habilitar o deshabilitar el next button
-	useEffect(() => {
-		switch (activeStep) {
-			case 0:
-				inge ? setNextDisabled(false) : setNextDisabled(true);
-				break;
-			case 1:
-				if (caso !== "" && wo !== "" && equipo) {
-					setNextDisabled(false);
-				} else {
-					setNextDisabled(true);
-				}
-				break;
-			case 2:
-				if (
-					tipoDeServicio !== "" &&
-					tipoDeContrato !== "" &&
-					sintoma !== "" &&
-					descripcion !== "" &&
-					condiciones !== ""
-				) {
-					setNextDisabled(false);
-				} else {
-					setNextDisabled(true);
-				}
-				break;
-			case 3:
-				tiempos.length > 0 ? setNextDisabled(false) : setNextDisabled(true);
-				break;
-			case 4:
-				setNextDisabled(false);
-				break;
-			case 5:
-				setNextDisabled(false);
-				break;
-			case 6:
-				// if (equipo.cliente === "" || equipo.cliente === "Otro") {
-				//   handleNext();
-				// }
-				break;
-			default:
-				break;
-		}
-	}, [
-		activeStep,
-		tipoDeServicio,
-		tipoDeContrato,
-		sintoma,
-		descripcion,
-		tiempos,
-		caso,
-		wo,
-		equipo,
-	]);
+	// useEffect(() => {
+	// 	switch (activeStep) {
+	// 		case 0:
+	// 			// inge ? setNextDisabled(false) : setNextDisabled(true);
+	// 			break;
+	// 		case 1:
+	// 			// if (caso !== "" && wo !== "" && equipo) {
+	// 			// 	setNextDisabled(false);
+	// 			// } else {
+	// 			// 	setNextDisabled(true);
+	// 			// }
+	// 			break;
+	// 		case 2:
+	// 			if (
+	// 				tipoDeServicio !== "" &&
+	// 				tipoDeContrato !== "" &&
+	// 				sintoma !== "" &&
+	// 				descripcion !== "" &&
+	// 				condiciones !== ""
+	// 			) {
+	// 				setNextDisabled(false);
+	// 			} else {
+	// 				setNextDisabled(true);
+	// 			}
+	// 			break;
+	// 		case 3:
+	// 			tiempos.length > 0 ? setNextDisabled(false) : setNextDisabled(true);
+	// 			break;
+	// 		case 4:
+	// 			setNextDisabled(false);
+	// 			break;
+	// 		case 5:
+	// 			setNextDisabled(false);
+	// 			break;
+	// 		case 6:
+	// 			// if (equipo.cliente === "" || equipo.cliente === "Otro") {
+	// 			//   handleNext();
+	// 			// }
+	// 			break;
+	// 		default:
+	// 			break;
+	// 	}
+	// }, [
+	// 	activeStep,
+	// 	tipoDeServicio,
+	// 	tipoDeContrato,
+	// 	sintoma,
+	// 	descripcion,
+	// 	tiempos,
+	// 	caso,
+	// 	wo,
+	// 	equipo,
+	// ]);
 
 	useEffect(() => {
 		console.log(datos);
@@ -292,132 +236,37 @@ function Home() {
 					<SwipeableViews disabled index={activeStep}>
 						<div className="views view1">
 							<View1SSO
-								nextDisabled={nextDisabled}
-								onDone={(nD, ing) => {
-									console.log(nD, ing);
+								step={activeStep}
+								handleNext={(nD) => {
+									console.log(nD);
 									setNextDisabled(nD);
-									setInge(ing);
-									setDatos({ ...datos, inge: ing });
+								}}
+								onDone={(_miinge) => {
+									console.log(_miinge);
+									setInge(_miinge);
+									setDatos({ ...datos, inge: _miinge });
 								}}
 							/>
 						</div>
 						<div className="views view2">
-							<h3>Datos iniciales</h3>
-							<TextField
-								label="Case"
-								fullWidth
-								variant="outlined"
-								type="tel"
-								size="small"
-								inputProps={{
-									maxLength: 8,
+							<View2DatosIniciales
+								step={activeStep}
+								handleNext={(nD) => {
+									setNextDisabled(nD);
 								}}
-								value={caso}
-								onChange={(e) => setCaso(e.target.value)}
+								onDone={(_micase, _miwo, _miequipo) => {
+									console.log(_micase, _miwo, _miequipo);
+									setCaso(_micase);
+									setWO(_miwo);
+									setEquipo(_miequipo);
+									setDatos({
+										...datos,
+										case: _micase,
+										wo: _miwo,
+										equipo: _miequipo,
+									});
+								}}
 							/>
-							<TextField
-								label="Work Order"
-								fullWidth
-								variant="outlined"
-								type="tel"
-								inputProps={{
-									maxLength: 11,
-								}}
-								size="small"
-								value={wo}
-								onFocus={() => {
-									wo === "" ? setWO("WO-") : console.log();
-								}}
-								onChange={(e) => setWO(e.target.value.toUpperCase())}
-							/>
-							<TextField
-								label="SID"
-								required
-								color="secondary"
-								variant="outlined"
-								size="small"
-								inputProps={{
-									maxLength: 20,
-								}}
-								type="text"
-								onChange={(ev) => changeSID(ev.target.value.toUpperCase())}
-								value={sid}
-							/>
-							<div className="searchAddBtns">
-								<Button
-									className="btnSID"
-									size="small"
-									variant="contained"
-									color="primary"
-									onClick={() => {
-										buscarSID();
-									}}>
-									Buscar equipo
-								</Button>
-								{showAddManual ? (
-									<>
-										<Button
-											className="btnSID"
-											size="small"
-											variant="contained"
-											color="primary"
-											onClick={() => {
-												setOpenAddManualDrawer(true);
-											}}>
-											Agregar equipo
-										</Button>
-										<AddManual
-											open={openAddManualDrawer}
-											equipo={equipo}
-											sid={sid}
-											onClose={(eq, ssid, f) =>
-												closeAddManual(eq, setSID(ssid), f)
-											}
-										/>
-									</>
-								) : null}
-							</div>
-
-							<div className={hideInfo ? "info hideinfo" : "info"}>
-								{hideInfo === false ? (
-									<>
-										<p>
-											<b>Cliente: </b>
-											{equipo.cliente}
-										</p>
-										<p>
-											<b>Hospital: </b>
-											{equipo.hospital}
-										</p>
-										<p>
-											<b>Ciudad: </b>
-											{equipo.ciudad}
-										</p>
-										<p>
-											<b>Estado: </b>
-											{equipo.estado}
-										</p>
-										<p>
-											<b>Equipo: </b>
-											{equipo.equipo}
-										</p>
-										<p>
-											<b>Modelo: </b>
-											{equipo.modelo}
-										</p>
-										<p>
-											<b>Serie: </b>
-											{equipo.serie}
-										</p>
-										<p>
-											<b>Contrato: </b>
-											{equipo.contrato}
-										</p>
-									</>
-								) : (
-									<div className="nada"></div>
-								)}
-							</div>
 						</div>
 						<div className="views view3">
 							<h3>Datos del Servicio</h3>
