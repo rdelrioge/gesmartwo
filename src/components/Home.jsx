@@ -32,6 +32,7 @@ import View2DatosIniciales from "./views/View2DatosIniciales";
 import View3DatosDelServicio from "./views/View3DatosDelServicio";
 import View4PeriodoDeServicio from "./views/View4PeriodoDeServicio";
 import View5Herramientas from "./views/View5Herramientas";
+import View6Refacciones from "./views/View6Refacciones";
 
 moment.locale("es");
 function Home() {
@@ -109,21 +110,6 @@ function Home() {
 
 	const handleBack = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep - 1);
-	};
-
-	const addRefaccion = () => {
-		let arrTemp = [...refacciones];
-		arrTemp.push([cantidad, parte, descripcionParte, orden]);
-		setRefacciones(arrTemp);
-		setParte("");
-		setDescripcionParte("");
-		setOrden("");
-	};
-
-	const deleteRefaccion = (i) => {
-		let arrTemp = [...refacciones];
-		arrTemp.splice(i, 1);
-		setRefacciones(arrTemp);
 	};
 
 	// Habilitar o deshabilitar el next button
@@ -292,83 +278,15 @@ function Home() {
 							/>
 						</div>
 						<div className="views view6">
-							<h3>Refacciones</h3>
-							<div className="refXAgregar">
-								<TextField
-									label="Cantidad"
-									fullWidth
-									type="number"
-									variant="outlined"
-									size="small"
-									value={cantidad}
-									onChange={(e) => setCantidad(e.target.value)}
-								/>
-								<TextField
-									label="# Parte / Catálogo"
-									fullWidth
-									variant="outlined"
-									size="small"
-									value={parte}
-									onChange={(e) => setParte(e.target.value)}
-								/>
-								<TextField
-									label="Descripción"
-									fullWidth
-									variant="outlined"
-									size="small"
-									value={descripcionParte}
-									onChange={(e) => setDescripcionParte(e.target.value)}
-								/>
-								<TextField
-									label="No. de Orden / No. de GON"
-									fullWidth
-									variant="outlined"
-									size="small"
-									value={orden}
-									onChange={(e) => setOrden(e.target.value)}
-								/>
-
-								<div className="btnAddRef">
-									<Button
-										size="small"
-										variant="contained"
-										color="primary"
-										onClick={() => addRefaccion()}>
-										Agregar
-									</Button>
-								</div>
-							</div>
-							<div className="refAgregadas">
-								{refacciones.length > 0 ? (
-									<>
-										<ul className="ulref">
-											<li>Cant.</li>
-											<li># Parte / Catálogo</li>
-											<li>Descripción</li>
-											<li>No. de Orden / No. de GON</li>
-											<li>Borrar</li>
-										</ul>
-
-										{refacciones.map((refa, index) => {
-											return (
-												<ul className="ulref" key={index}>
-													<li>{refa[0]}</li>
-													<li>{refa[1]}</li>
-													<li>{refa[2]}</li>
-													<li>{refa[3]}</li>
-													<li>
-														<b
-															className="btnDeleteTime"
-															onClick={() => deleteRefaccion(index)}>
-															X
-														</b>
-													</li>
-												</ul>
-											);
-										})}
-									</>
-								) : null}
-							</div>
+							<View6Refacciones
+								onDone={(_mirefacciones) => {
+									setRefacciones(_mirefacciones);
+									setDatos({
+										...datos,
+										refacciones: _mirefacciones,
+									});
+								}}
+							/>
 						</div>
 						{equipo && equipo.cliente === "IMSS" ? (
 							<AddEvidencia
