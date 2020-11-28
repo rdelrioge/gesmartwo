@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Button, TextField } from "@material-ui/core";
 
@@ -8,6 +8,12 @@ function View6Refacciones(props) {
 	const [parte, setParte] = useState("");
 	const [descripcionParte, setDescripcionParte] = useState("");
 	const [orden, setOrden] = useState("");
+
+	useEffect(() => {
+		if (props.flag) {
+			props.onDone(refacciones);
+		}
+	}, [props.flag]);
 
 	const addRefaccion = () => {
 		let arrTemp = [...refacciones];

@@ -3,28 +3,12 @@ import "./home.scss";
 import moment from "moment";
 import "moment/locale/es";
 
-import {
-	MobileStepper,
-	Button,
-	TextField,
-	InputLabel,
-	FormControl,
-	Select,
-	Switch,
-} from "@material-ui/core";
+import { MobileStepper, Button, Switch } from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
-
-import {
-	MuiPickersUtilsProvider,
-	TimePicker,
-	DatePicker,
-} from "@material-ui/pickers";
-import MomentUtils from "@date-io/moment";
 
 import Print from "./Print";
 import SkeletorWO from "./SkeletorWO";
 
-import { db } from "../index";
 import AddEvidencia from "./AddEvidencia";
 import AddDatosISSSTE from "./AddDatosISSSTE";
 import View1SSO from "./views/View1SSO";
@@ -41,42 +25,9 @@ function Home() {
 	const [nextDisabled, setNextDisabled] = useState(true);
 	const [datos, setDatos] = useState({});
 	// view1 SSO [0]
-	const [sso, setSSO] = useState("");
 	const [inge, setInge] = useState(null);
 	// view2 SID CASE WO [1]
-	const [sid, setSID] = useState("");
-	const [caso, setCaso] = useState("");
-	const [wo, setWO] = useState("");
 	const [equipo, setEquipo] = useState(null);
-	const [showAddManual, setShowAddManual] = useState(false);
-	const [openAddManualDrawer, setOpenAddManualDrawer] = useState(false);
-	// view3 Servicio [2]
-	const [tipoDeServicio, setTipoDeServicio] = useState("");
-	const [tipoDeContrato, setTipoDeContrato] = useState("Contrato");
-	const [sintoma, setSintoma] = useState("");
-	const [descripcion, setDescripcion] = useState("");
-	const [apto, setApto] = useState(true);
-	const [funcionando, setFuncionando] = useState(true);
-	const [observaciones, setObservaciones] = useState("");
-	const [condiciones, setCondiciones] = useState("Funcionando");
-	// view 4 Tiempos [3]
-	const [tiempos, setTiempos] = useState([]);
-	const [tipoDeTrabajo, setTipoDeTrabajo] = useState("");
-	const [startDate, setStartDate] = useState(null);
-	const [startTime, setStartTime] = useState(null);
-	const [endDate, setEndDate] = useState(null);
-	const [endTime, setEndTime] = useState(null);
-	// view 5 Herramientas [4]
-	const [herramientas, setHerramientas] = useState([]);
-	const [calibracion, setCalibracion] = useState(null);
-	const [barcode, setBarcode] = useState("");
-	const [herramienta, setHerramienta] = useState("");
-	// view 6 Refacciones [5]
-	const [refacciones, setRefacciones] = useState([]);
-	const [cantidad, setCantidad] = useState("");
-	const [parte, setParte] = useState("");
-	const [descripcionParte, setDescripcionParte] = useState("");
-	const [orden, setOrden] = useState("");
 	//view 7 Fotos [6] IMSS
 	const [fotoAntes1, setFotoAntes1] = useState(null);
 	const [fotoAntes2, setFotoAntes2] = useState(null);
@@ -94,7 +45,6 @@ function Home() {
 	// view 7
 	const [flagAddFotos, setFlagAddFotos] = useState(false);
 	// print
-	const [hideInfo, setHideInfo] = useState(true);
 	const [loading, setLoading] = useState(false);
 
 	const handleNext = () => {
@@ -111,61 +61,6 @@ function Home() {
 	const handleBack = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep - 1);
 	};
-
-	// Habilitar o deshabilitar el next button
-	// useEffect(() => {
-	// 	switch (activeStep) {
-	// 		case 0:
-	// 			// inge ? setNextDisabled(false) : setNextDisabled(true);
-	// 			break;
-	// 		case 1:
-	// 			// if (caso !== "" && wo !== "" && equipo) {
-	// 			// 	setNextDisabled(false);
-	// 			// } else {
-	// 			// 	setNextDisabled(true);
-	// 			// }
-	// 			break;
-	// 		case 2:
-	// 			if (
-	// 				tipoDeServicio !== "" &&
-	// 				tipoDeContrato !== "" &&
-	// 				sintoma !== "" &&
-	// 				descripcion !== "" &&
-	// 				condiciones !== ""
-	// 			) {
-	// 				setNextDisabled(false);
-	// 			} else {
-	// 				setNextDisabled(true);
-	// 			}
-	// 			break;
-	// 		case 3:
-	// 			tiempos.length > 0 ? setNextDisabled(false) : setNextDisabled(true);
-	// 			break;
-	// 		case 4:
-	// 			setNextDisabled(false);
-	// 			break;
-	// 		case 5:
-	// 			setNextDisabled(false);
-	// 			break;
-	// 		case 6:
-	// 			// if (equipo.cliente === "" || equipo.cliente === "Otro") {
-	// 			//   handleNext();
-	// 			// }
-	// 			break;
-	// 		default:
-	// 			break;
-	// 	}
-	// }, [
-	// 	activeStep,
-	// 	tipoDeServicio,
-	// 	tipoDeContrato,
-	// 	sintoma,
-	// 	descripcion,
-	// 	tiempos,
-	// 	caso,
-	// 	wo,
-	// 	equipo,
-	// ]);
 
 	useEffect(() => {
 		console.log(datos);
@@ -199,8 +94,6 @@ function Home() {
 									setNextDisabled(nD);
 								}}
 								onDone={(_micase, _miwo, _miequipo) => {
-									setCaso(_micase);
-									setWO(_miwo);
 									setEquipo(_miequipo);
 									setDatos({
 										...datos,
@@ -228,14 +121,6 @@ function Home() {
 									_miobservaciones,
 									_micondiciones
 								) => {
-									setTipoDeServicio(_mitipoDeServicio);
-									setTipoDeContrato(_mitipoDeContrato);
-									setSintoma(_misintoma);
-									setDescripcion(_midescripcion);
-									setApto(_miapto);
-									setFuncionando(_mifuncionando);
-									setObservaciones(_miobservaciones);
-									setCondiciones(_micondiciones);
 									setDatos({
 										...datos,
 										tipoDeServicio: _mitipoDeServicio,
@@ -258,7 +143,6 @@ function Home() {
 									setNextDisabled(nD);
 								}}
 								onDone={(_mitiempos) => {
-									setTiempos(_mitiempos);
 									setDatos({
 										...datos,
 										tiempos: _mitiempos,
@@ -268,8 +152,8 @@ function Home() {
 						</div>
 						<div className="views view5">
 							<View5Herramientas
+								flag={activeStep === 5 ? true : false}
 								onDone={(_miherramientas) => {
-									setHerramientas(_miherramientas);
 									setDatos({
 										...datos,
 										herramientas: _miherramientas,
@@ -279,8 +163,8 @@ function Home() {
 						</div>
 						<div className="views view6">
 							<View6Refacciones
+								flag={activeStep === 6 ? true : false}
 								onDone={(_mirefacciones) => {
-									setRefacciones(_mirefacciones);
 									setDatos({
 										...datos,
 										refacciones: _mirefacciones,
@@ -416,38 +300,39 @@ function Home() {
 						</>
 					) : (
 						<Print
-							data={{
-								sso,
-								inge,
-								sid,
-								caso,
-								wo,
-								equipo,
-								ubicacion,
-								tipoDeServicio,
-								tipoDeContrato,
-								sintoma,
-								descripcion,
-								apto,
-								funcionando,
-								observaciones,
-								condiciones,
-								tiempos,
-								herramientas,
-								refacciones,
-								bitacora,
-								hrsReales,
-								vidaUtil,
-								recomendaciones,
-								conclusiones,
-								fotoAntes1,
-								fotoAntes2,
-								fotoDurante1,
-								fotoDurante2,
-								fotoDespues1,
-								fotoDespues2,
-								flagAddFotos,
-							}}
+							// data={{
+							// 	sso,
+							// 	inge,
+							// 	sid,
+							// 	caso,
+							// 	wo,
+							// 	equipo,
+							// 	ubicacion,
+							// 	tipoDeServicio,
+							// 	tipoDeContrato,
+							// 	sintoma,
+							// 	descripcion,
+							// 	apto,
+							// 	funcionando,
+							// 	observaciones,
+							// 	condiciones,
+							// 	tiempos,
+							// 	herramientas,
+							// 	refacciones,
+							// 	bitacora,
+							// 	hrsReales,
+							// 	vidaUtil,
+							// 	recomendaciones,
+							// 	conclusiones,
+							// 	fotoAntes1,
+							// 	fotoAntes2,
+							// 	fotoDurante1,
+							// 	fotoDurante2,
+							// 	fotoDespues1,
+							// 	fotoDespues2,
+							// 	flagAddFotos,
+							// }}
+							data={datos}
 						/>
 					)}
 				</div>

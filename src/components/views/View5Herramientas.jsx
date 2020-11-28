@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import moment from "moment";
 import "moment/locale/es";
@@ -13,6 +13,12 @@ function View5Herramientas(props) {
 	const [calibracion, setCalibracion] = useState(null);
 	const [barcode, setBarcode] = useState("");
 	const [herramienta, setHerramienta] = useState("");
+
+	useEffect(() => {
+		if (props.flag) {
+			props.onDone(herramientas);
+		}
+	}, [props.flag]);
 
 	const addHerramienta = () => {
 		let arrTemp = [...herramientas];

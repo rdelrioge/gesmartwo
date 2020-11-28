@@ -24,7 +24,7 @@ function OrdenIssste(props) {
 		let des1 = [];
 		let des2 = [];
 		let des3 = [];
-		des0 = mydata.split(" ");
+		mydata ? (des0 = mydata.split(" ")) : (des0 = []);
 		if (des0.length > 13) {
 			for (let i = 13; i < des0.length; i++) {
 				des1.push(des0[i]);
