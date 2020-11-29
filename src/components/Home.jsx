@@ -21,20 +21,14 @@ import View6Refacciones from "./views/View6Refacciones";
 moment.locale("es");
 function Home() {
 	// homeLayout
-	const [activeStep, setActiveStep] = useState(0); //7 para ver print
+	const [activeStep, setActiveStep] = useState(6); //7 para ver print
 	const [nextDisabled, setNextDisabled] = useState(true);
 	const [datos, setDatos] = useState({});
 	// view1 SSO [0]
 	const [inge, setInge] = useState(null);
 	// view2 SID CASE WO [1]
-	const [equipo, setEquipo] = useState(null);
+	const [equipo, setEquipo] = useState({ cliente: "Otro" });
 	//view 7 Fotos [6] IMSS
-	const [fotoAntes1, setFotoAntes1] = useState(null);
-	const [fotoAntes2, setFotoAntes2] = useState(null);
-	const [fotoDurante1, setFotoDurante1] = useState(null);
-	const [fotoDurante2, setFotoDurante2] = useState(null);
-	const [fotoDespues1, setFotoDespues1] = useState(null);
-	const [fotoDespues2, setFotoDespues2] = useState(null);
 	// view 7 ISSSTE
 	const [flagFinish, setFlagFinish] = useState(false);
 	// view 7

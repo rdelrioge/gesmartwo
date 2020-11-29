@@ -10,6 +10,12 @@ function AddEvidencia(props) {
 	const [fotoDurante2, setFotoDurante2] = useState(null);
 	const [fotoDespues1, setFotoDespues1] = useState(null);
 	const [fotoDespues2, setFotoDespues2] = useState(null);
+	const [angulo1, setAngulo1] = useState(0);
+	const [angulo2, setAngulo2] = useState(0);
+	const [angulo3, setAngulo3] = useState(0);
+	const [angulo4, setAngulo4] = useState(0);
+	const [angulo5, setAngulo5] = useState(0);
+	const [angulo6, setAngulo6] = useState(0);
 
 	useEffect(() => {
 		if (props.flag) {
@@ -86,16 +92,46 @@ function AddEvidencia(props) {
 		}
 	};
 
+	useEffect(() => {
+		console.log(angulo1);
+	}, [angulo1]);
+
 	return (
 		<div className="views IMSS">
 			{cliente === "IMSS" ? <h3>Evidencia IMSS</h3> : <b></b>}
 			<div className="row antes">
 				{fotoAntes1 ? (
 					<div className="cell">
+						<b
+							className="btnRotateLeft"
+							onClick={() =>
+								setAngulo1((prevAngulo) =>
+									prevAngulo === -270 ? (prevAngulo = 0) : prevAngulo - 90
+								)
+							}>
+							L
+						</b>
+						<b
+							className="btnRotateRight"
+							onClick={() =>
+								setAngulo1((prevAngulo) =>
+									prevAngulo === 270 ? (prevAngulo = 0) : prevAngulo + 90
+								)
+							}>
+							R
+						</b>
 						<b className="btnDelete" onClick={() => subirFotoAntes1(null)}>
 							X
 						</b>
-						<img width="150" height="100" src={fotoAntes1} alt="antes1" />
+						<img
+							src={fotoAntes1}
+							alt="antes1"
+							style={{
+								transform: `rotate(${angulo1}deg)`,
+								width: "inherit",
+								height: "inherit",
+							}}
+						/>
 					</div>
 				) : (
 					<div className="cell">
@@ -116,10 +152,38 @@ function AddEvidencia(props) {
 				)}
 				{fotoAntes2 ? (
 					<div className="cell">
+						<b
+							className="btnRotateLeft"
+							onClick={() =>
+								setAngulo2((prevAngulo) =>
+									prevAngulo === -270 ? (prevAngulo = 0) : prevAngulo - 90
+								)
+							}>
+							L
+						</b>
+						<b
+							className="btnRotateRight"
+							onClick={() =>
+								setAngulo2((prevAngulo) =>
+									prevAngulo === 270 ? (prevAngulo = 0) : prevAngulo + 90
+								)
+							}>
+							R
+						</b>
 						<b className="btnDelete" onClick={() => subirFotoAntes2(null)}>
 							X
 						</b>
-						<img width="150" height="100" src={fotoAntes2} alt="antes2" />
+						<img
+							width="150"
+							height="100"
+							src={fotoAntes2}
+							alt="antes2"
+							style={{
+								transform: `rotate(${angulo2}deg)`,
+								width: "inherit",
+								height: "inherit",
+							}}
+						/>
 					</div>
 				) : (
 					<div className="cell">
@@ -142,10 +206,38 @@ function AddEvidencia(props) {
 			<div className="row durante">
 				{fotoDurante1 ? (
 					<div className="cell">
+						<b
+							className="btnRotateLeft"
+							onClick={() =>
+								setAngulo3((prevAngulo) =>
+									prevAngulo === -270 ? (prevAngulo = 0) : prevAngulo - 90
+								)
+							}>
+							L
+						</b>
+						<b
+							className="btnRotateRight"
+							onClick={() =>
+								setAngulo3((prevAngulo) =>
+									prevAngulo === 270 ? (prevAngulo = 0) : prevAngulo + 90
+								)
+							}>
+							R
+						</b>
 						<b className="btnDelete" onClick={() => subirFotoDurante1(null)}>
 							X
 						</b>
-						<img width="150" height="100" src={fotoDurante1} alt="durante1" />
+						<img
+							width="150"
+							height="100"
+							src={fotoDurante1}
+							alt="durante1"
+							style={{
+								transform: `rotate(${angulo3}deg)`,
+								width: "inherit",
+								height: "inherit",
+							}}
+						/>
 					</div>
 				) : (
 					<div className="cell">
@@ -166,10 +258,38 @@ function AddEvidencia(props) {
 				)}
 				{fotoDurante2 ? (
 					<div className="cell">
+						<b
+							className="btnRotateLeft"
+							onClick={() =>
+								setAngulo4((prevAngulo) =>
+									prevAngulo === -270 ? (prevAngulo = 0) : prevAngulo - 90
+								)
+							}>
+							L
+						</b>
+						<b
+							className="btnRotateRight"
+							onClick={() =>
+								setAngulo4((prevAngulo) =>
+									prevAngulo === 270 ? (prevAngulo = 0) : prevAngulo + 90
+								)
+							}>
+							R
+						</b>
 						<b className="btnDelete" onClick={() => subirFotoDurante2(null)}>
 							X
 						</b>
-						<img width="150" height="100" src={fotoDurante2} alt="durante2" />
+						<img
+							width="150"
+							height="100"
+							src={fotoDurante2}
+							alt="durante2"
+							style={{
+								transform: `rotate(${angulo4}deg)`,
+								width: "inherit",
+								height: "inherit",
+							}}
+						/>
 					</div>
 				) : (
 					<div className="cell">
@@ -192,10 +312,38 @@ function AddEvidencia(props) {
 			<div className="row despues">
 				{fotoDespues1 ? (
 					<div className="cell">
+						<b
+							className="btnRotateLeft"
+							onClick={() =>
+								setAngulo5((prevAngulo) =>
+									prevAngulo === -270 ? (prevAngulo = 0) : prevAngulo - 90
+								)
+							}>
+							L
+						</b>
+						<b
+							className="btnRotateRight"
+							onClick={() =>
+								setAngulo5((prevAngulo) =>
+									prevAngulo === 270 ? (prevAngulo = 0) : prevAngulo + 90
+								)
+							}>
+							R
+						</b>
 						<b className="btnDelete" onClick={() => subirFotoDespues1(null)}>
 							X
 						</b>
-						<img width="150" height="100" src={fotoDespues1} alt="despues1" />
+						<img
+							width="150"
+							height="100"
+							src={fotoDespues1}
+							alt="despues1"
+							style={{
+								transform: `rotate(${angulo5}deg)`,
+								width: "inherit",
+								height: "inherit",
+							}}
+						/>
 					</div>
 				) : (
 					<div className="cell">
@@ -216,10 +364,38 @@ function AddEvidencia(props) {
 				)}
 				{fotoDespues2 ? (
 					<div className="cell">
+						<b
+							className="btnRotateLeft"
+							onClick={() =>
+								setAngulo6((prevAngulo) =>
+									prevAngulo === -270 ? (prevAngulo = 0) : prevAngulo - 90
+								)
+							}>
+							L
+						</b>
+						<b
+							className="btnRotateRight"
+							onClick={() =>
+								setAngulo6((prevAngulo) =>
+									prevAngulo === 270 ? (prevAngulo = 0) : prevAngulo + 90
+								)
+							}>
+							R
+						</b>
 						<b className="btnDelete" onClick={() => subirFotoDespues2(null)}>
 							X
 						</b>
-						<img width="150" height="100" src={fotoDespues2} alt="despues2" />
+						<img
+							width="150"
+							height="100"
+							src={fotoDespues2}
+							alt="despues2"
+							style={{
+								transform: `rotate(${angulo6}deg)`,
+								width: "inherit",
+								height: "inherit",
+							}}
+						/>
 					</div>
 				) : (
 					<div className="cell">
