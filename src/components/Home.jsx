@@ -36,16 +36,11 @@ function Home() {
 	const [fotoDespues1, setFotoDespues1] = useState(null);
 	const [fotoDespues2, setFotoDespues2] = useState(null);
 	// view 7 ISSSTE
-	const [bitacora, setBitacora] = useState("");
-	const [hrsReales, setHrsReales] = useState("");
-	const [vidaUtil, setVidaUtil] = useState("");
-	const [ubicacion, setUbicacion] = useState("");
-	const [recomendaciones, setRecomendaciones] = useState("");
-	const [conclusiones, setConclusiones] = useState("");
+	const [flagFinish, setFlagFinish] = useState(false);
 	// view 7
 	const [flagAddFotos, setFlagAddFotos] = useState(false);
 	// print
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 
 	const handleNext = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -64,7 +59,17 @@ function Home() {
 
 	useEffect(() => {
 		console.log(datos);
+		if (activeStep === 7) {
+			setFlagFinish(true);
+		}
 	}, [datos]);
+
+	useEffect(() => {
+		console.log(activeStep);
+		if (activeStep !== 7) {
+			setFlagFinish(false);
+		}
+	}, [activeStep]);
 
 	return (
 		<div className={activeStep === 7 ? "home scrollHome " : "home"}>
@@ -72,7 +77,7 @@ function Home() {
 				<div className="logo"></div>
 				<a href="/">Smart WO</a>
 			</div>
-			{activeStep < 7 ? (
+			{!flagFinish ? (
 				<>
 					<SwipeableViews disabled index={activeStep}>
 						<div className="views view1">
@@ -190,26 +195,14 @@ function Home() {
 							/>
 						) : equipo && equipo.cliente === "ISSSTE" ? (
 							<AddDatosISSSTE
-								bitacora={bitacora}
-								hrsReales={hrsReales}
-								vidaUtil={vidaUtil}
-								ubicacion={ubicacion}
-								recomendaciones={recomendaciones}
-								conclusiones={conclusiones}
-								fotoAntes1={fotoAntes1}
-								fotoAntes2={fotoAntes2}
-								fotoDurante1={fotoDurante1}
-								fotoDurante2={fotoDurante2}
-								changeBitacora={(e) => setBitacora(e)}
-								changeHrsReales={(e) => setHrsReales(e)}
-								changeVidaUtil={(e) => setVidaUtil(e)}
-								changeUbicacion={(e) => setUbicacion(e)}
-								changeRecomendaciones={(e) => setRecomendaciones(e)}
-								changeConclusiones={(e) => setConclusiones(e)}
-								changeFotoAntes1={(e) => setFotoAntes1(e)}
-								changeFotoAntes2={(e) => setFotoAntes2(e)}
-								changeFotoDurante1={(e) => setFotoDurante1(e)}
-								changeFotoDurante2={(e) => setFotoDurante2(e)}
+								flag={activeStep === 7 ? true : false}
+								onDone={(_midatosISSSTE) => {
+									console.log(_midatosISSSTE);
+									setDatos({
+										...datos,
+										datosISSSTE: _midatosISSSTE,
+									});
+								}}
 							/>
 						) : equipo && equipo.cliente === "ISAPEG" ? (
 							<div className="views ISAPEG">
@@ -280,13 +273,6 @@ function Home() {
 							{"<"}
 						</Button>
 						<b>Revisa la WO </b>
-						{/* <Pdf targetRef={refPDF} filename="code-example.pdf">
-              {({ toPdf }) => (
-                <Button variant="contained" color="primary" onClick={toPdf}>
-                  PDF
-                </Button>
-              )}
-            </Pdf> */}
 						<Button
 							variant="contained"
 							color="primary"

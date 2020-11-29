@@ -211,7 +211,7 @@ function OrdenIssste(props) {
 						</div>
 						<div>
 							<b className="paddingL">Ubicación:</b>
-							<span>{data.ubicacion} </span>
+							<span>{data.datosISSSTE.ubicacion} </span>
 						</div>
 						<div className="borderBN"></div>
 					</div>
@@ -233,7 +233,7 @@ function OrdenIssste(props) {
 							<b>Contrato:</b>
 							<span>{data.equipo.contrato} </span>
 							<b>Bitácora:</b>
-							<span>{data.bitacora}</span>
+							<span>{data.datosISSSTE.bitacora}</span>
 						</div>
 						<div className="grayed borderL">
 							Matenimiento Preventivo-Correctivo
@@ -441,7 +441,7 @@ function OrdenIssste(props) {
 							<b className="paddingL">
 								HORAS REALES UTILIZADAS EN LA REPARACIÓN
 							</b>
-							<span className="centerText">{data.hrsReales}</span>
+							<span className="centerText">{data.datosISSSTE.hrsReales}</span>
 							<b className="centerText">HRS.</b>
 						</div>
 					</div>
@@ -591,7 +591,7 @@ function OrdenIssste(props) {
 					<div className="grayed">Recomendaciones</div>
 					<div></div>
 					<div></div>
-					{cortarTexto(data.recomendaciones)}
+					{cortarTexto(data.datosISSSTE.recomendaciones)}
 					<div></div>
 					<div></div>
 					<div></div>
@@ -614,7 +614,7 @@ function OrdenIssste(props) {
 					<div className="grayed">Observaciones y Conclusiones </div>
 					<div></div>
 					<div></div>
-					{cortarTexto(data.conclusiones)}
+					{cortarTexto(data.datosISSSTE.conclusiones)}
 					<div></div>
 					<div></div>
 					<div></div>
