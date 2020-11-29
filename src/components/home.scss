@@ -234,6 +234,8 @@
 					margin: 1em;
 					align-self: center;
 					position: relative;
+					width: 125px;
+					height: 125px;
 					.btnDelete {
 						background-color: #f44336;
 						padding: 0 1em;
@@ -241,6 +243,27 @@
 						color: white;
 						position: absolute;
 						right: 0;
+						z-index: 1;
+					}
+					.btnRotateLeft {
+						background-color: #3682f4;
+						padding: 0 1em;
+						border-radius: 4px;
+						color: white;
+						position: absolute;
+						left: 0;
+						bottom: 0;
+						z-index: 1;
+					}
+					.btnRotateRight {
+						background-color: #3682f4;
+						padding: 0 1em;
+						border-radius: 4px;
+						color: white;
+						position: absolute;
+						right: 0;
+						bottom: 0;
+						z-index: 1;
 					}
 				}
 			}

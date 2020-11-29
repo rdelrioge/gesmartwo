@@ -92,10 +92,6 @@ function AddEvidencia(props) {
 		}
 	};
 
-	useEffect(() => {
-		console.log(angulo1);
-	}, [angulo1]);
-
 	return (
 		<div className="views IMSS">
 			{cliente === "IMSS" ? <h3>Evidencia IMSS</h3> : <b></b>}
@@ -174,8 +170,6 @@ function AddEvidencia(props) {
 							X
 						</b>
 						<img
-							width="150"
-							height="100"
 							src={fotoAntes2}
 							alt="antes2"
 							style={{
@@ -228,8 +222,6 @@ function AddEvidencia(props) {
 							X
 						</b>
 						<img
-							width="150"
-							height="100"
 							src={fotoDurante1}
 							alt="durante1"
 							style={{
@@ -280,8 +272,6 @@ function AddEvidencia(props) {
 							X
 						</b>
 						<img
-							width="150"
-							height="100"
 							src={fotoDurante2}
 							alt="durante2"
 							style={{
@@ -334,8 +324,6 @@ function AddEvidencia(props) {
 							X
 						</b>
 						<img
-							width="150"
-							height="100"
 							src={fotoDespues1}
 							alt="despues1"
 							style={{
@@ -386,8 +374,6 @@ function AddEvidencia(props) {
 							X
 						</b>
 						<img
-							width="150"
-							height="100"
 							src={fotoDespues2}
 							alt="despues2"
 							style={{

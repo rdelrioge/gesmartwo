@@ -13,6 +13,10 @@ function AddDatosISSSTE(props) {
 	const [fotoSerie, setFotoSerie] = useState(null);
 	const [fotoInventario, setFotoInventario] = useState(null);
 	const [fotoPanoramica, setFotoPanoramica] = useState(null);
+	const [angulo1, setAngulo1] = useState(0);
+	const [angulo2, setAngulo2] = useState(0);
+	const [angulo3, setAngulo3] = useState(0);
+	const [angulo4, setAngulo4] = useState(0);
 
 	useEffect(() => {
 		if (props.flag) {
@@ -157,10 +161,36 @@ function AddDatosISSSTE(props) {
 			<div className="row">
 				{fotoNormal ? (
 					<div className="cell">
+						<b
+							className="btnRotateLeft"
+							onClick={() =>
+								setAngulo1((prevAngulo) =>
+									prevAngulo === -270 ? (prevAngulo = 0) : prevAngulo - 90
+								)
+							}>
+							L
+						</b>
+						<b
+							className="btnRotateRight"
+							onClick={() =>
+								setAngulo1((prevAngulo) =>
+									prevAngulo === 270 ? (prevAngulo = 0) : prevAngulo + 90
+								)
+							}>
+							R
+						</b>
 						<b className="btnDelete" onClick={() => subirFotoNormal(null)}>
 							X
 						</b>
-						<img width="150" height="100" src={fotoNormal} alt="antes1" />
+						<img
+							src={fotoNormal}
+							alt="antes1"
+							style={{
+								transform: `rotate(${angulo1}deg)`,
+								width: "inherit",
+								height: "inherit",
+							}}
+						/>
 					</div>
 				) : (
 					<div className="cell">
@@ -183,10 +213,36 @@ function AddDatosISSSTE(props) {
 				)}
 				{fotoSerie ? (
 					<div className="cell">
+						<b
+							className="btnRotateLeft"
+							onClick={() =>
+								setAngulo2((prevAngulo) =>
+									prevAngulo === -270 ? (prevAngulo = 0) : prevAngulo - 90
+								)
+							}>
+							L
+						</b>
+						<b
+							className="btnRotateRight"
+							onClick={() =>
+								setAngulo2((prevAngulo) =>
+									prevAngulo === 270 ? (prevAngulo = 0) : prevAngulo + 90
+								)
+							}>
+							R
+						</b>
 						<b className="btnDelete" onClick={() => subirFotoSerie(null)}>
 							X
 						</b>
-						<img width="150" height="100" src={fotoSerie} alt="antes2" />
+						<img
+							src={fotoSerie}
+							alt="antes2"
+							style={{
+								transform: `rotate(${angulo2}deg)`,
+								width: "inherit",
+								height: "inherit",
+							}}
+						/>
 					</div>
 				) : (
 					<div className="cell">
@@ -211,10 +267,36 @@ function AddDatosISSSTE(props) {
 			<div className="row">
 				{fotoInventario ? (
 					<div className="cell">
+						<b
+							className="btnRotateLeft"
+							onClick={() =>
+								setAngulo3((prevAngulo) =>
+									prevAngulo === -270 ? (prevAngulo = 0) : prevAngulo - 90
+								)
+							}>
+							L
+						</b>
+						<b
+							className="btnRotateRight"
+							onClick={() =>
+								setAngulo3((prevAngulo) =>
+									prevAngulo === 270 ? (prevAngulo = 0) : prevAngulo + 90
+								)
+							}>
+							R
+						</b>
 						<b className="btnDelete" onClick={() => subirFotoInventario(null)}>
 							X
 						</b>
-						<img width="150" height="100" src={fotoInventario} alt="durante1" />
+						<img
+							src={fotoInventario}
+							alt="durante1"
+							style={{
+								transform: `rotate(${angulo3}deg)`,
+								width: "inherit",
+								height: "inherit",
+							}}
+						/>
 					</div>
 				) : (
 					<div className="cell">
@@ -237,10 +319,36 @@ function AddDatosISSSTE(props) {
 				)}
 				{fotoPanoramica ? (
 					<div className="cell">
+						<b
+							className="btnRotateLeft"
+							onClick={() =>
+								setAngulo4((prevAngulo) =>
+									prevAngulo === -270 ? (prevAngulo = 0) : prevAngulo - 90
+								)
+							}>
+							L
+						</b>
+						<b
+							className="btnRotateRight"
+							onClick={() =>
+								setAngulo4((prevAngulo) =>
+									prevAngulo === 270 ? (prevAngulo = 0) : prevAngulo + 90
+								)
+							}>
+							R
+						</b>
 						<b className="btnDelete" onClick={() => subirFotoPanoramica(null)}>
 							X
 						</b>
-						<img width="150" height="100" src={fotoPanoramica} alt="durante2" />
+						<img
+							src={fotoPanoramica}
+							alt="durante2"
+							style={{
+								transform: `rotate(${angulo4}deg)`,
+								width: "inherit",
+								height: "inherit",
+							}}
+						/>
 					</div>
 				) : (
 					<div className="cell">
