@@ -9,8 +9,8 @@ import SwipeableViews from "react-swipeable-views";
 import Print from "./Print";
 import SkeletorWO from "./SkeletorWO";
 
-import AddEvidencia from "./AddEvidencia";
-import AddDatosISSSTE from "./AddDatosISSSTE";
+import AddEvidencia from "./views/AddEvidencia";
+import AddDatosISSSTE from "./views/AddDatosISSSTE";
 import View1SSO from "./views/View1SSO";
 import View2DatosIniciales from "./views/View2DatosIniciales";
 import View3DatosDelServicio from "./views/View3DatosDelServicio";
@@ -77,121 +77,117 @@ function Home() {
 				<div className="logo"></div>
 				<a href="/">Smart WO</a>
 			</div>
-			{!flagFinish ? (
-				<>
-					<SwipeableViews disabled index={activeStep}>
-						<div className="views view1">
-							<View1SSO
-								step={activeStep}
-								handleNext={(nD) => {
-									setNextDisabled(nD);
-								}}
-								onDone={(_miinge) => {
-									setInge(_miinge);
-									setDatos({ ...datos, inge: _miinge });
-								}}
-							/>
-						</div>
-						<div className="views view2">
-							<View2DatosIniciales
-								step={activeStep}
-								handleNext={(nD) => {
-									setNextDisabled(nD);
-								}}
-								onDone={(_micase, _miwo, _miequipo) => {
-									setEquipo(_miequipo);
-									setDatos({
-										...datos,
-										case: _micase,
-										wo: _miwo,
-										equipo: _miequipo,
-									});
-								}}
-							/>
-						</div>
-						<div className="views view3">
-							<View3DatosDelServicio
-								step={activeStep}
-								flag={activeStep === 3 ? true : false}
-								handleNext={(nD) => {
-									setNextDisabled(nD);
-								}}
-								onDone={(
-									_mitipoDeServicio,
-									_mitipoDeContrato,
-									_misintoma,
-									_midescripcion,
-									_miapto,
-									_mifuncionando,
-									_miobservaciones,
-									_micondiciones
-								) => {
-									setDatos({
-										...datos,
-										tipoDeServicio: _mitipoDeServicio,
-										tipoDeContrato: _mitipoDeContrato,
-										sintoma: _misintoma,
-										descripcion: _midescripcion,
-										apto: _miapto,
-										funcionando: _mifuncionando,
-										observaciones: _miobservaciones,
-										condiciones: _micondiciones,
-									});
-								}}
-							/>
-						</div>
-						<div className="views view4">
-							<View4PeriodoDeServicio
-								tps={datos.tipoDeServicio}
-								step={activeStep}
-								handleNext={(nD) => {
-									setNextDisabled(nD);
-								}}
-								onDone={(_mitiempos) => {
-									setDatos({
-										...datos,
-										tiempos: _mitiempos,
-									});
-								}}
-							/>
-						</div>
-						<div className="views view5">
-							<View5Herramientas
-								flag={activeStep === 5 ? true : false}
-								onDone={(_miherramientas) => {
-									setDatos({
-										...datos,
-										herramientas: _miherramientas,
-									});
-								}}
-							/>
-						</div>
-						<div className="views view6">
-							<View6Refacciones
-								flag={activeStep === 6 ? true : false}
-								onDone={(_mirefacciones) => {
-									setDatos({
-										...datos,
-										refacciones: _mirefacciones,
-									});
-								}}
-							/>
-						</div>
+			<div className={flagFinish ? "hideViews" : "showViews"}>
+				<SwipeableViews disabled index={activeStep}>
+					<div className="views view1">
+						<View1SSO
+							step={activeStep}
+							handleNext={(nD) => {
+								setNextDisabled(nD);
+							}}
+							onDone={(_miinge) => {
+								setInge(_miinge);
+								setDatos({ ...datos, inge: _miinge });
+							}}
+						/>
+					</div>
+					<div className="views view2">
+						<View2DatosIniciales
+							step={activeStep}
+							handleNext={(nD) => {
+								setNextDisabled(nD);
+							}}
+							onDone={(_micase, _miwo, _miequipo) => {
+								setEquipo(_miequipo);
+								setDatos({
+									...datos,
+									case: _micase,
+									wo: _miwo,
+									equipo: _miequipo,
+								});
+							}}
+						/>
+					</div>
+					<div className="views view3">
+						<View3DatosDelServicio
+							step={activeStep}
+							flag={activeStep === 3 ? true : false}
+							handleNext={(nD) => {
+								setNextDisabled(nD);
+							}}
+							onDone={(
+								_mitipoDeServicio,
+								_mitipoDeContrato,
+								_misintoma,
+								_midescripcion,
+								_miapto,
+								_mifuncionando,
+								_miobservaciones,
+								_micondiciones
+							) => {
+								setDatos({
+									...datos,
+									tipoDeServicio: _mitipoDeServicio,
+									tipoDeContrato: _mitipoDeContrato,
+									sintoma: _misintoma,
+									descripcion: _midescripcion,
+									apto: _miapto,
+									funcionando: _mifuncionando,
+									observaciones: _miobservaciones,
+									condiciones: _micondiciones,
+								});
+							}}
+						/>
+					</div>
+					<div className="views view4">
+						<View4PeriodoDeServicio
+							tps={datos.tipoDeServicio}
+							step={activeStep}
+							handleNext={(nD) => {
+								setNextDisabled(nD);
+							}}
+							onDone={(_mitiempos) => {
+								setDatos({
+									...datos,
+									tiempos: _mitiempos,
+								});
+							}}
+						/>
+					</div>
+					<div className="views view5">
+						<View5Herramientas
+							flag={activeStep === 5 ? true : false}
+							onDone={(_miherramientas) => {
+								setDatos({
+									...datos,
+									herramientas: _miherramientas,
+								});
+							}}
+						/>
+					</div>
+					<div className="views view6">
+						<View6Refacciones
+							flag={activeStep === 6 ? true : false}
+							onDone={(_mirefacciones) => {
+								setDatos({
+									...datos,
+									refacciones: _mirefacciones,
+								});
+							}}
+						/>
+					</div>
+					<div>
 						{equipo && equipo.cliente === "IMSS" ? (
 							<AddEvidencia
 								cliente={equipo.cliente}
-								fotoAntes1={fotoAntes1}
-								fotoAntes2={fotoAntes2}
-								fotoDurante1={fotoDurante1}
-								fotoDurante2={fotoDurante2}
-								fotoDespues1={fotoDespues1}
-								fotoDespues2={fotoDespues2}
-								changeFotoAntes1={(e) => setFotoAntes1(e)}
-								changeFotoAntes2={(e) => setFotoAntes2(e)}
-								changeFotoDurante1={(e) => setFotoDurante1(e)}
-								changeFotoDurante2={(e) => setFotoDurante2(e)}
-								changeFotoDespues1={(e) => setFotoDespues1(e)}
-								changeFotoDespues2={(e) => setFotoDespues2(e)}
+								flag={activeStep === 7 ? true : false}
+								onDone={(_mifotos) => {
+									console.log(_mifotos);
+									setDatos({
+										...datos,
+										fotos: _mifotos,
+									});
+								}}
 							/>
 						) : equipo && equipo.cliente === "ISSSTE" ? (
 							<AddDatosISSSTE
@@ -217,112 +213,73 @@ function Home() {
 								{equipo && flagAddFotos ? (
 									<AddEvidencia
 										cliente={equipo.cliente}
-										fotoAntes1={fotoAntes1}
-										fotoAntes2={fotoAntes2}
-										fotoDurante1={fotoDurante1}
-										fotoDurante2={fotoDurante2}
-										fotoDespues1={fotoDespues1}
-										fotoDespues2={fotoDespues2}
-										changeFotoAntes1={(e) => setFotoAntes1(e)}
-										changeFotoAntes2={(e) => setFotoAntes2(e)}
-										changeFotoDurante1={(e) => setFotoDurante1(e)}
-										changeFotoDurante2={(e) => setFotoDurante2(e)}
-										changeFotoDespues1={(e) => setFotoDespues1(e)}
-										changeFotoDespues2={(e) => setFotoDespues2(e)}
+										flag={activeStep === 7 ? true : false}
+										onDone={(_mifotos) => {
+											console.log(_mifotos);
+											setDatos({
+												...datos,
+												fotos: _mifotos,
+											});
+										}}
 									/>
 								) : null}
 							</div>
 						)}
-					</SwipeableViews>
-					{inge ? (
-						<MobileStepper
-							steps={7}
-							position="bottom"
-							variant="progress"
-							activeStep={activeStep}
-							nextButton={
-								<Button
-									size="small"
-									variant="contained"
-									color="primary"
-									onClick={handleNext}
-									disabled={nextDisabled}>
-									{activeStep === 6 ? "Finish" : "Next >"}
-								</Button>
-							}
-							backButton={
-								<Button
-									size="small"
-									variant="contained"
-									color="primary"
-									onClick={handleBack}
-									disabled={activeStep === 0}>
-									{"<"} Back
-								</Button>
-							}
-						/>
-					) : null}
-				</>
-			) : (
-				<div className="revisar">
-					<div className="revHeader">
-						<Button
-							variant="outlined"
-							color="primary"
-							onClick={() => setActiveStep(6)}>
-							{"<"}
-						</Button>
-						<b>Revisa la WO </b>
-						<Button
-							variant="contained"
-							color="primary"
-							onClick={() => window.print()}>
-							Print
-						</Button>
 					</div>
-					{loading ? (
-						<>
-							<SkeletorWO />
-						</>
-					) : (
-						<Print
-							// data={{
-							// 	sso,
-							// 	inge,
-							// 	sid,
-							// 	caso,
-							// 	wo,
-							// 	equipo,
-							// 	ubicacion,
-							// 	tipoDeServicio,
-							// 	tipoDeContrato,
-							// 	sintoma,
-							// 	descripcion,
-							// 	apto,
-							// 	funcionando,
-							// 	observaciones,
-							// 	condiciones,
-							// 	tiempos,
-							// 	herramientas,
-							// 	refacciones,
-							// 	bitacora,
-							// 	hrsReales,
-							// 	vidaUtil,
-							// 	recomendaciones,
-							// 	conclusiones,
-							// 	fotoAntes1,
-							// 	fotoAntes2,
-							// 	fotoDurante1,
-							// 	fotoDurante2,
-							// 	fotoDespues1,
-							// 	fotoDespues2,
-							// 	flagAddFotos,
-							// }}
-							data={datos}
-						/>
-					)}
+				</SwipeableViews>
+				{inge ? (
+					<MobileStepper
+						steps={7}
+						position="bottom"
+						variant="progress"
+						activeStep={activeStep}
+						nextButton={
+							<Button
+								size="small"
+								variant="contained"
+								color="primary"
+								onClick={handleNext}
+								disabled={nextDisabled}>
+								{activeStep === 6 ? "Finish" : "Next >"}
+							</Button>
+						}
+						backButton={
+							<Button
+								size="small"
+								variant="contained"
+								color="primary"
+								onClick={handleBack}
+								disabled={activeStep === 0}>
+								{"<"} Back
+							</Button>
+						}
+					/>
+				) : null}
+			</div>
+			<div className={flagFinish ? "showRevisar" : "hideRevisar"}>
+				<div className="revHeader">
+					<Button
+						variant="outlined"
+						color="primary"
+						onClick={() => setActiveStep(6)}>
+						{"<"}
+					</Button>
+					<b>Revisa la WO </b>
+					<Button
+						variant="contained"
+						color="primary"
+						onClick={() => window.print()}>
+						Print
+					</Button>
 				</div>
-			)}
+				{loading ? (
+					<>
+						<SkeletorWO />
+					</>
+				) : (
+					<Print data={datos} />
+				)}
+			</div>
 		</div>
 	);
 }
