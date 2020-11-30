@@ -55,7 +55,7 @@ function View3DatosDelServicio(props) {
 		setTipoDeServicio(tds);
 		if (tds === "PM (Mantenimiento Preventivo)") {
 			setDescripcion(
-				`Se realiza mantenimiento preventivo segun especificaciones técnicas del fabricante asi como pruebas de funcionamiento satisfactorias. El equipo se encuentra operando correctamente.`
+				`Se realiza mantenimiento preventivo según especificaciones técnicas del fabricante así como pruebas de funcionamiento satisfactorias. El equipo se encuentra operando correctamente.`
 			);
 			setSintoma("");
 		} else {
@@ -143,6 +143,11 @@ function View3DatosDelServicio(props) {
 						multiline
 						rows={3}
 						variant="outlined"
+						helperText={`${sintoma.split(" ").length}/52`}
+						inputProps={{
+							maxLength:
+								sintoma.split(" ").length === 53 ? sintoma.length : 480,
+						}}
 						onChange={(e) => setSintoma(e.target.value)}
 					/>
 				)}
@@ -154,6 +159,11 @@ function View3DatosDelServicio(props) {
 					multiline
 					rows={4}
 					value={descripcion}
+					helperText={`${descripcion.split(" ").length}/52`}
+					inputProps={{
+						maxLength:
+							descripcion.split(" ").length === 53 ? descripcion.length : 480,
+					}}
 					variant="outlined"
 					onChange={(e) => setDescripcion(e.target.value)}
 				/>
@@ -182,6 +192,13 @@ function View3DatosDelServicio(props) {
 					multiline
 					value={observaciones}
 					rows={2}
+					helperText={`${observaciones.split(" ").length}/36`}
+					inputProps={{
+						maxLength:
+							observaciones.split(" ").length === 36
+								? observaciones.length
+								: 480,
+					}}
 					variant="outlined"
 					onChange={(e) => setObservaciones(e.target.value)}
 				/>

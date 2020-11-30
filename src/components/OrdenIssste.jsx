@@ -52,13 +52,15 @@ function OrdenIssste(props) {
 			midesc.push(des3.join(" "));
 		} else {
 			midesc.push(des2.join(" "));
+			midesc.push(des3.join(" "));
 		}
 		console.log(midesc);
 		return (
 			<>
 				{midesc.map((desc, index) => (
-					<div key={index} className="centerText">
-						{desc}
+					<div key={index} className={"centerText"}>
+						{`${index}.- ${desc}`}
+						{/* {desc} */}
 					</div>
 				))}
 			</>
@@ -352,13 +354,8 @@ function OrdenIssste(props) {
 							<div></div>
 						</div>
 					</div>
-					<div></div>
-					<div className="centerText"> {data.sintoma} </div>
+					{cortarTexto(data.sintoma)}
 					{cortarTexto(data.descripcion)}
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
 					<div></div>
 					<div className="grayed">
 						Condiciones en las que se deja el Equipo:
@@ -395,6 +392,7 @@ function OrdenIssste(props) {
 					<div className="observaciones">
 						<div className="obsIzq">
 							<b className="paddingL borderB">Observaciones:</b>
+							<div></div>
 							<div></div>
 							<div></div>
 							<div className="borderBN"></div>
@@ -615,8 +613,6 @@ function OrdenIssste(props) {
 					<div></div>
 					<div></div>
 					{cortarTexto(data.datosISSSTE.conclusiones)}
-					<div></div>
-					<div></div>
 					<div></div>
 					<div></div>
 					<div></div>

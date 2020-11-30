@@ -143,6 +143,13 @@ function AddDatosISSSTE(props) {
 				rows={2}
 				value={recomendaciones}
 				variant="outlined"
+				helperText={`${recomendaciones.split(" ").length}/52`}
+				inputProps={{
+					maxLength:
+						recomendaciones.split(" ").length === 53
+							? recomendaciones.length
+							: 480,
+				}}
 				onChange={(e) => {
 					setRecomendaciones(e.target.value);
 				}}
@@ -154,6 +161,11 @@ function AddDatosISSSTE(props) {
 				rows={2}
 				value={conclusiones}
 				variant="outlined"
+				helperText={`${conclusiones.split(" ").length}/52`}
+				inputProps={{
+					maxLength:
+						conclusiones.split(" ").length === 53 ? conclusiones.length : 480,
+				}}
 				onChange={(e) => {
 					setConclusiones(e.target.value);
 				}}
@@ -203,12 +215,10 @@ function AddDatosISSSTE(props) {
 							}}
 							type="file"
 						/>
-						<label htmlFor="antes1">
-							Foto Normal
-							<IconButton color="primary" component="span">
-								<span className="material-icons">add_a_photo</span>
-							</IconButton>
-						</label>
+						<label htmlFor="antes1">Foto Normal</label>
+						<IconButton color="primary" component="span">
+							<span className="material-icons">add_a_photo</span>
+						</IconButton>
 					</div>
 				)}
 				{fotoSerie ? (
@@ -255,12 +265,10 @@ function AddDatosISSSTE(props) {
 							}}
 							type="file"
 						/>
-						<label htmlFor="antes2">
-							Placa N° de Serie
-							<IconButton color="primary" component="span">
-								<span className="material-icons">add_a_photo</span>
-							</IconButton>
-						</label>
+						<label htmlFor="antes2">Placa N° de Serie</label>
+						<IconButton color="primary" component="span">
+							<span className="material-icons">add_a_photo</span>
+						</IconButton>
 					</div>
 				)}
 			</div>
@@ -309,12 +317,10 @@ function AddDatosISSSTE(props) {
 							}}
 							type="file"
 						/>
-						<label htmlFor="durante1">
-							Placa N° de Inventario
-							<IconButton color="primary" component="span">
-								<span className="material-icons">add_a_photo</span>
-							</IconButton>
-						</label>
+						<label htmlFor="durante1">Placa N° de Inventario</label>
+						<IconButton color="primary" component="span">
+							<span className="material-icons">add_a_photo</span>
+						</IconButton>
 					</div>
 				)}
 				{fotoPanoramica ? (
@@ -361,12 +367,10 @@ function AddDatosISSSTE(props) {
 							}}
 							type="file"
 						/>
-						<label htmlFor="durante2">
-							Foto panorámica del bien
-							<IconButton color="primary" component="span">
-								<span className="material-icons">add_a_photo</span>
-							</IconButton>
-						</label>
+						<label htmlFor="durante2">Foto panorámica del bien</label>
+						<IconButton color="primary" component="span">
+							<span className="material-icons">add_a_photo</span>
+						</IconButton>
 					</div>
 				)}
 			</div>

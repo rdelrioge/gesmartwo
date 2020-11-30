@@ -214,7 +214,7 @@ function WorkOrder(props) {
 					<div className="datosequipo">
 						<div className="sid">
 							<span>SID:</span>
-							<b>{data.sid}</b>
+							<b>{data.equipo.sid}</b>
 						</div>
 						<div className="equipo">
 							<span>Equipo:</span>
