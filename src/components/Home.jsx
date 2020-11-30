@@ -79,9 +79,9 @@ function Home() {
 							handleNext={(nD) => {
 								setNextDisabled(nD);
 							}}
-							onDone={(_miinge) => {
-								setInge(_miinge);
-								setDatos({ ...datos, inge: _miinge });
+							onDone={(inge) => {
+								setInge(inge);
+								setDatos({ ...datos, inge });
 							}}
 						/>
 					</div>
@@ -91,13 +91,13 @@ function Home() {
 							handleNext={(nD) => {
 								setNextDisabled(nD);
 							}}
-							onDone={(_micase, _miwo, _miequipo) => {
-								setEquipo(_miequipo);
+							onDone={(caso, wo, equipo) => {
+								setEquipo(equipo);
 								setDatos({
 									...datos,
-									case: _micase,
-									wo: _miwo,
-									equipo: _miequipo,
+									case: caso,
+									wo,
+									equipo,
 								});
 							}}
 						/>
@@ -110,25 +110,25 @@ function Home() {
 								setNextDisabled(nD);
 							}}
 							onDone={(
-								_mitipoDeServicio,
-								_mitipoDeContrato,
-								_misintoma,
-								_midescripcion,
-								_miapto,
-								_mifuncionando,
-								_miobservaciones,
-								_micondiciones
+								tipoDeServicio,
+								tipoDeContrato,
+								sintoma,
+								descripcion,
+								apto,
+								funcionando,
+								observaciones,
+								condiciones
 							) => {
 								setDatos({
 									...datos,
-									tipoDeServicio: _mitipoDeServicio,
-									tipoDeContrato: _mitipoDeContrato,
-									sintoma: _misintoma,
-									descripcion: _midescripcion,
-									apto: _miapto,
-									funcionando: _mifuncionando,
-									observaciones: _miobservaciones,
-									condiciones: _micondiciones,
+									tipoDeServicio,
+									tipoDeContrato,
+									sintoma,
+									descripcion,
+									apto,
+									funcionando,
+									observaciones,
+									condiciones,
 								});
 							}}
 						/>
@@ -140,10 +140,10 @@ function Home() {
 							handleNext={(nD) => {
 								setNextDisabled(nD);
 							}}
-							onDone={(_mitiempos) => {
+							onDone={(tiempos) => {
 								setDatos({
 									...datos,
-									tiempos: _mitiempos,
+									tiempos,
 								});
 							}}
 						/>
@@ -151,10 +151,10 @@ function Home() {
 					<div className="views view5">
 						<View5Herramientas
 							flag={activeStep === 5 ? true : false}
-							onDone={(_miherramientas) => {
+							onDone={(herramientas) => {
 								setDatos({
 									...datos,
-									herramientas: _miherramientas,
+									herramientas,
 								});
 							}}
 						/>
@@ -162,10 +162,10 @@ function Home() {
 					<div className="views view6">
 						<View6Refacciones
 							flag={activeStep === 6 ? true : false}
-							onDone={(_mirefacciones) => {
+							onDone={(refacciones) => {
 								setDatos({
 									...datos,
-									refacciones: _mirefacciones,
+									refacciones,
 								});
 							}}
 						/>
@@ -175,22 +175,22 @@ function Home() {
 							<AddEvidencia
 								cliente={equipo.cliente}
 								flag={activeStep === 7 ? true : false}
-								onDone={(_mifotos) => {
-									console.log(_mifotos);
+								onDone={(fotos) => {
+									console.log(fotos);
 									setDatos({
 										...datos,
-										fotos: _mifotos,
+										fotos,
 									});
 								}}
 							/>
 						) : equipo && equipo.cliente === "ISSSTE" ? (
 							<AddDatosISSSTE
 								flag={activeStep === 7 ? true : false}
-								onDone={(_midatosISSSTE) => {
-									console.log(_midatosISSSTE);
+								onDone={(datosISSSTE) => {
+									console.log(datosISSSTE);
 									setDatos({
 										...datos,
-										datosISSSTE: _midatosISSSTE,
+										datosISSSTE,
 									});
 								}}
 							/>
@@ -208,11 +208,11 @@ function Home() {
 									<AddEvidencia
 										cliente={equipo.cliente}
 										flag={activeStep === 7 ? true : false}
-										onDone={(_mifotos) => {
-											console.log(_mifotos);
+										onDone={(fotos) => {
+											console.log(fotos);
 											setDatos({
 												...datos,
-												fotos: _mifotos,
+												fotos,
 											});
 										}}
 									/>
