@@ -13,12 +13,21 @@ function View5Herramientas(props) {
 	const [calibracion, setCalibracion] = useState(null);
 	const [barcode, setBarcode] = useState("");
 	const [herramienta, setHerramienta] = useState("");
+	const [disableAddBtnH, SetDisableAddBtnH] = useState(true);
 
 	useEffect(() => {
 		if (props.flag) {
 			props.onDone(herramientas);
 		}
 	}, [props.flag]);
+
+	useEffect(() => {
+		if (barcode !== "" && herramienta !== "" && calibracion !== null) {
+			SetDisableAddBtnH(false);
+		} else {
+			SetDisableAddBtnH(true);
+		}
+	}, [calibracion, barcode, herramienta]);
 
 	const addHerramienta = () => {
 		let arrTemp = [...herramientas];
@@ -83,6 +92,7 @@ function View5Herramientas(props) {
 					<Button
 						size="small"
 						variant="contained"
+						disabled={disableAddBtnH}
 						color="primary"
 						onClick={() => addHerramienta()}>
 						Agregar

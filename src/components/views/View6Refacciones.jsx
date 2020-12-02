@@ -8,12 +8,26 @@ function View6Refacciones(props) {
 	const [parte, setParte] = useState("");
 	const [descripcionParte, setDescripcionParte] = useState("");
 	const [orden, setOrden] = useState("");
+	const [disableAddBtnR, SetDisableAddBtnR] = useState(true);
 
 	useEffect(() => {
 		if (props.flag) {
 			props.onDone(refacciones);
 		}
 	}, [props.flag]);
+
+	useEffect(() => {
+		if (
+			cantidad !== "" &&
+			parte !== "" &&
+			descripcionParte !== "" &&
+			orden !== ""
+		) {
+			SetDisableAddBtnR(false);
+		} else {
+			SetDisableAddBtnR(true);
+		}
+	}, [cantidad, parte, descripcionParte, orden]);
 
 	const addRefaccion = () => {
 		let arrTemp = [...refacciones];
@@ -75,6 +89,7 @@ function View6Refacciones(props) {
 						size="small"
 						variant="contained"
 						color="primary"
+						disabled={disableAddBtnR}
 						onClick={() => addRefaccion()}>
 						Agregar
 					</Button>
