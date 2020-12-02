@@ -18,6 +18,7 @@ function View4PeriodoDeServicio(props) {
 	const [startTime, setStartTime] = useState(null);
 	const [endDate, setEndDate] = useState(null);
 	const [endTime, setEndTime] = useState(null);
+	const [disableAddBtn, SetDisableAddBtn] = useState(true);
 
 	useEffect(() => {
 		if (props.step === 3) {
@@ -25,16 +26,42 @@ function View4PeriodoDeServicio(props) {
 		}
 	}, [tiempos, props]);
 
+	useEffect(() => {
+		if (
+			tipoDeTrabajo !== "" &&
+			startDate !== null &&
+			startTime !== null &&
+			endDate !== null &&
+			endTime !== null
+		) {
+			SetDisableAddBtn(false);
+		} else {
+			SetDisableAddBtn(true);
+		}
+	}, [tipoDeTrabajo, startDate, startTime, endDate, endTime]);
+
 	const addTime = () => {
-		let arrTemp = [...tiempos];
-		arrTemp.push([tipoDeTrabajo, startDate, startTime, endDate, endTime]);
-		setTiempos(arrTemp);
-		setTipoDeTrabajo("");
-		setStartDate(null);
-		setStartTime(null);
-		setEndDate(null);
-		setEndTime(null);
-		props.onDone(arrTemp);
+		let sdts = startDate.startOf("day").valueOf();
+		let stts = startTime.valueOf();
+		let edts = endDate.startOf("day").valueOf();
+		let etts = endTime.valueOf();
+		if (edts < sdts) {
+			alert("Revisa que las fechas sean correctas");
+		} else {
+			if (etts < stts) {
+				alert("Revisa que las horas sean correctas");
+			} else {
+				let arrTemp = [...tiempos];
+				arrTemp.push([tipoDeTrabajo, startDate, startTime, endDate, endTime]);
+				setTiempos(arrTemp);
+				setTipoDeTrabajo("");
+				setStartDate(null);
+				setStartTime(null);
+				setEndDate(null);
+				setEndTime(null);
+				props.onDone(arrTemp);
+			}
+		}
 	};
 
 	const deleteTime = (i) => {
@@ -219,6 +246,7 @@ function View4PeriodoDeServicio(props) {
 					<Button
 						size="small"
 						variant="contained"
+						disabled={disableAddBtn}
 						color="primary"
 						onClick={() => addTime()}>
 						Agregar
