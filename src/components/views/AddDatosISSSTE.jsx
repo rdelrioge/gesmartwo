@@ -143,12 +143,12 @@ function AddDatosISSSTE(props) {
 				rows={2}
 				value={recomendaciones}
 				variant="outlined"
-				helperText={`${recomendaciones.split(" ").length}/52`}
+				helperText={`${recomendaciones.split(" ").length - 1}/52`}
 				inputProps={{
 					maxLength:
 						recomendaciones.split(" ").length === 53
 							? recomendaciones.length
-							: 480,
+							: 800,
 				}}
 				onChange={(e) => {
 					setRecomendaciones(e.target.value);
@@ -161,10 +161,10 @@ function AddDatosISSSTE(props) {
 				rows={2}
 				value={conclusiones}
 				variant="outlined"
-				helperText={`${conclusiones.split(" ").length}/52`}
+				helperText={`${conclusiones.split(" ").length - 1}/52`}
 				inputProps={{
 					maxLength:
-						conclusiones.split(" ").length === 53 ? conclusiones.length : 480,
+						conclusiones.split(" ").length === 53 ? conclusiones.length : 800,
 				}}
 				onChange={(e) => {
 					setConclusiones(e.target.value);

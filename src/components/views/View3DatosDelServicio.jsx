@@ -143,10 +143,10 @@ function View3DatosDelServicio(props) {
 						multiline
 						rows={3}
 						variant="outlined"
-						helperText={`${sintoma.split(" ").length}/52`}
+						helperText={`${sintoma.split(" ").length - 1}/52`}
 						inputProps={{
 							maxLength:
-								sintoma.split(" ").length === 53 ? sintoma.length : 480,
+								sintoma.split(" ").length === 53 ? sintoma.length : 800,
 						}}
 						onChange={(e) => setSintoma(e.target.value)}
 					/>
@@ -159,10 +159,10 @@ function View3DatosDelServicio(props) {
 					multiline
 					rows={4}
 					value={descripcion}
-					helperText={`${descripcion.split(" ").length}/52`}
+					helperText={`${descripcion.split(" ").length - 1}/52`}
 					inputProps={{
 						maxLength:
-							descripcion.split(" ").length === 53 ? descripcion.length : 480,
+							descripcion.split(" ").length === 53 ? descripcion.length : 800,
 					}}
 					variant="outlined"
 					onChange={(e) => setDescripcion(e.target.value)}
@@ -192,12 +192,12 @@ function View3DatosDelServicio(props) {
 					multiline
 					value={observaciones}
 					rows={2}
-					helperText={`${observaciones.split(" ").length}/36`}
+					helperText={`${observaciones.split(" ").length - 1}/36`}
 					inputProps={{
 						maxLength:
-							observaciones.split(" ").length === 36
+							observaciones.split(" ").length === 37
 								? observaciones.length
-								: 480,
+								: 800,
 					}}
 					variant="outlined"
 					onChange={(e) => setObservaciones(e.target.value)}
