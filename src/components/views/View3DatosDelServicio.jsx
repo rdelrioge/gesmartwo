@@ -117,9 +117,7 @@ function View3DatosDelServicio(props) {
 					</FormControl>
 				</div>
 			) : null}
-			{props.equipo &&
-			props.equipo.cliente === "" &&
-			tipoDeContrato === "Contrato" ? (
+			{props.flagManual && tipoDeContrato === "Contrato" ? (
 				<div className="item3">
 					<TextField
 						label="No. de Contrato"

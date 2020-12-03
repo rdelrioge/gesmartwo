@@ -46,7 +46,7 @@ function FichaTecnica(props) {
 					<b className="grayed">UNIDAD MÉDICA DE ADSCRIPCIÓN:</b>
 					<p>{data.equipo.hospital}</p>
 					<b className="grayed">UBICACIÓN:</b>
-					<p>{data.datosISSSTE.ubicacion}</p>
+					<p>{data.datosISSSTE && data.datosISSSTE.ubicacion}</p>
 				</div>
 				<b className="grayed centerText row">REFERENCIAS TÉCNICAS</b>
 				<div className="row c2fr3fr">
@@ -58,13 +58,13 @@ function FichaTecnica(props) {
 					</p>
 					<b className="grayed">PERIODO ESTIMADO DE VIDA ÚTIL:</b>
 					<p>
-						{data.datosISSSTE.vidaUtil !== ""
+						{data.datosISSSTE && data.datosISSSTE.vidaUtil !== ""
 							? `Aproximadamente ${data.datosISSSTE.vidaUtil} años`
 							: ""}
 					</p>
 					<b className="grayed">DISPONIBILIDAD DE REFERENCIA EN EL MERCADO:</b>
 					<p>
-						{data.datosISSSTE.vidaUtil !== ""
+						{data.datosISSSTE && data.datosISSSTE.vidaUtil !== ""
 							? `Aproximadamente ${data.datosISSSTE.vidaUtil} años`
 							: ""}
 					</p>
@@ -84,11 +84,11 @@ function FichaTecnica(props) {
 					<img
 						className="cuadro"
 						alt="foto"
-						src={data.datosISSSTE.fotoNormal}></img>
+						src={data.datosISSSTE && data.datosISSSTE.fotoNormal}></img>
 					<img
 						className="cuadro"
 						alt="foto"
-						src={data.datosISSSTE.fotoSerie}></img>
+						src={data.datosISSSTE && data.datosISSSTE.fotoSerie}></img>
 				</div>
 				<div className="row c1fr">
 					<b className="grayed">PLACA N° DE INVENTARIO</b>
@@ -96,11 +96,11 @@ function FichaTecnica(props) {
 					<img
 						className="cuadro"
 						alt="foto"
-						src={data.datosISSSTE.fotoInventario}></img>
+						src={data.datosISSSTE && data.datosISSSTE.fotoInventario}></img>
 					<img
 						className="cuadro"
 						alt="foto"
-						src={data.datosISSSTE.fotoPanoramica}></img>
+						src={data.datosISSSTE && data.datosISSSTE.fotoPanoramica}></img>
 				</div>
 				<div className="row c1fr firmas">
 					<span className="borderB">{data.inge.nombre}</span>
