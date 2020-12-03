@@ -322,11 +322,11 @@ function WorkOrder(props) {
 							EL EQUIPO QUEDA OPERATIVAMENTE APTO PARA REALIZAR EL TRABAJO PARA
 							LO QUE FUE DISEÑADO
 						</b>
-						<span>{data.apto ? "SI" : "NO"} </span>
+						<span>{data.apto ? `SI ✓` : "NO"} </span>
 					</div>
 					<div>
 						<b>FUNCIONANDO AL 100%</b>
-						<span> {data.funcionando ? "SI" : "NO"} </span>
+						<span> {data.funcionando ? `SI ✓` : "NO"} </span>
 					</div>
 				</div>
 				<div
