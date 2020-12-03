@@ -59,8 +59,8 @@ function OrdenIssste(props) {
 			<>
 				{midesc.map((desc, index) => (
 					<div key={index} className={"centerText"}>
-						{`${index}.- ${desc}`}
-						{/* {desc} */}
+						{/* {`${index}.- ${desc}`} */}
+						{desc}
 					</div>
 				))}
 			</>
