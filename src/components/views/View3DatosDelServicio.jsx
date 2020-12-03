@@ -37,7 +37,7 @@ function View3DatosDelServicio(props) {
 	]);
 
 	useEffect(() => {
-		console.log(props.flag);
+		console.log(props);
 		if (props.flag) {
 			props.onDone(
 				tipoDeServicio,
@@ -93,28 +93,30 @@ function View3DatosDelServicio(props) {
 					</Select>
 				</FormControl>
 			</div>
-			<div className="item3">
-				<FormControl size="small" fullWidth variant="outlined">
-					<InputLabel htmlFor="selectTipoDeContrato">
-						Tipo de trabajo
-					</InputLabel>
-					<Select
-						native
-						value={tipoDeContrato}
-						onChange={(e) => setTipoDeContrato(e.target.value)}
-						label="Tipo de trabajo"
-						inputProps={{
-							name: "tipoDeContrato",
-							id: "selectTipoDeContrato",
-						}}>
-						<option value={"Contrato"}>Contrato</option>
-						<option value={"Garantía"}>Garantia</option>
-						<option value={"Facturable"}>Facturable</option>
-						<option value={"FMI"}>FMI</option>
-						<option value={"On demand"}>On demand</option>
-					</Select>
-				</FormControl>
-			</div>
+			{props.flagManual ? (
+				<div className="item3">
+					<FormControl size="small" fullWidth variant="outlined">
+						<InputLabel htmlFor="selectTipoDeContrato">
+							Tipo de trabajo
+						</InputLabel>
+						<Select
+							native
+							value={tipoDeContrato}
+							onChange={(e) => setTipoDeContrato(e.target.value)}
+							label="Tipo de trabajo"
+							inputProps={{
+								name: "tipoDeContrato",
+								id: "selectTipoDeContrato",
+							}}>
+							<option value={"Contrato"}>Contrato</option>
+							<option value={"Garantía"}>Garantia</option>
+							<option value={"Facturable"}>Facturable</option>
+							<option value={"FMI"}>FMI</option>
+							<option value={"On demand"}>On demand</option>
+						</Select>
+					</FormControl>
+				</div>
+			) : null}
 			{props.equipo &&
 			props.equipo.cliente === "" &&
 			tipoDeContrato === "Contrato" ? (

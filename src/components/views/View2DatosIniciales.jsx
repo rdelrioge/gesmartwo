@@ -66,8 +66,7 @@ function View2DatosIniciales(props) {
 						console.log(eq);
 						setEquipo(eq);
 						setHideInfo(false);
-						props.onDone(caso, wo, eq);
-						// setNextDisabled(false);
+						props.onDone(caso, wo, eq, showAddManual);
 					});
 				}
 			})
@@ -81,7 +80,7 @@ function View2DatosIniciales(props) {
 			setEquipo(eq);
 			setHideInfo(false);
 			console.log(equipo);
-			props.onDone(caso, wo, eq);
+			props.onDone(caso, wo, eq, showAddManual);
 		}
 		setOpenAddManualDrawer(false);
 	};

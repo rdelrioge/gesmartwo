@@ -20,20 +20,17 @@ import View6Refacciones from "./views/View6Refacciones";
 
 moment.locale("es");
 function Home() {
-	// homeLayout
+	// global variables
 	const [activeStep, setActiveStep] = useState(0); //7 para ver print
-	const [nextDisabled, setNextDisabled] = useState(true);
 	const [datos, setDatos] = useState({});
-	// view1 SSO [0]
+	// multicomponent and conditional
 	const [inge, setInge] = useState(null);
-	// view2 SID CASE WO [1]
 	const [equipo, setEquipo] = useState(null);
-	//view 7 Fotos [6] IMSS
-	// view 7 ISSSTE
-	const [flagFinish, setFlagFinish] = useState(false);
-	// view 7
+	// flags
+	const [nextDisabled, setNextDisabled] = useState(true);
 	const [flagAddFotos, setFlagAddFotos] = useState(false);
-	// print
+	const [flagManual, setFlagManual] = useState(false);
+	const [flagFinish, setFlagFinish] = useState(false);
 	const [loading, setLoading] = useState(true);
 
 	const handleNext = () => {
@@ -93,8 +90,10 @@ function Home() {
 							handleNext={(nD) => {
 								setNextDisabled(nD);
 							}}
-							onDone={(caso, wo, equipo) => {
+							onDone={(caso, wo, equipo, manualFlag) => {
 								setEquipo(equipo);
+								console.log(manualFlag);
+								setFlagManual(manualFlag);
 								setDatos({
 									...datos,
 									case: caso,
@@ -108,6 +107,7 @@ function Home() {
 						<View3DatosDelServicio
 							step={activeStep}
 							equipo={equipo}
+							flagManual={flagManual}
 							flag={activeStep === 3 ? true : false}
 							handleNext={(nD) => {
 								setNextDisabled(nD);
