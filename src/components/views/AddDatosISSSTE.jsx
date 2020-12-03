@@ -215,10 +215,12 @@ function AddDatosISSSTE(props) {
 							}}
 							type="file"
 						/>
-						<label htmlFor="antes1">Foto Normal</label>
-						<IconButton color="primary" component="span">
-							<span className="material-icons">add_a_photo</span>
-						</IconButton>
+						<label className="labelImg" htmlFor="antes1">
+							Foto Normal
+							<IconButton color="primary" component="span">
+								<span className="material-icons">add_a_photo</span>
+							</IconButton>
+						</label>
 					</div>
 				)}
 				{fotoSerie ? (
@@ -265,10 +267,12 @@ function AddDatosISSSTE(props) {
 							}}
 							type="file"
 						/>
-						<label htmlFor="antes2">Placa N° de Serie</label>
-						<IconButton color="primary" component="span">
-							<span className="material-icons">add_a_photo</span>
-						</IconButton>
+						<label className="labelImg" htmlFor="antes2">
+							Placa N° de Serie
+							<IconButton color="primary" component="span">
+								<span className="material-icons">add_a_photo</span>
+							</IconButton>
+						</label>
 					</div>
 				)}
 			</div>
@@ -317,10 +321,12 @@ function AddDatosISSSTE(props) {
 							}}
 							type="file"
 						/>
-						<label htmlFor="durante1">Placa N° de Inventario</label>
-						<IconButton color="primary" component="span">
-							<span className="material-icons">add_a_photo</span>
-						</IconButton>
+						<label className="labelImg" htmlFor="durante1">
+							Placa N° de Inventario
+							<IconButton color="primary" component="span">
+								<span className="material-icons">add_a_photo</span>
+							</IconButton>
+						</label>
 					</div>
 				)}
 				{fotoPanoramica ? (
@@ -367,10 +373,12 @@ function AddDatosISSSTE(props) {
 							}}
 							type="file"
 						/>
-						<label htmlFor="durante2">Foto panorámica del bien</label>
-						<IconButton color="primary" component="span">
-							<span className="material-icons">add_a_photo</span>
-						</IconButton>
+						<label className="labelImg" htmlFor="durante2">
+							Foto panorámica del bien
+							<IconButton color="primary" component="span">
+								<span className="material-icons">add_a_photo</span>
+							</IconButton>
+						</label>
 					</div>
 				)}
 			</div>
