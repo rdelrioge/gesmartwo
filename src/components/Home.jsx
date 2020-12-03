@@ -6,8 +6,8 @@ import "moment/locale/es";
 import { MobileStepper, Button, Switch } from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
 
-import Print from "./Print";
-import SkeletorWO from "./SkeletorWO";
+import Print from "./hojas/Print";
+import SkeletorWO from "./hojas/SkeletorWO";
 
 import AddEvidencia from "./views/AddEvidencia";
 import AddDatosISSSTE from "./views/AddDatosISSSTE";
