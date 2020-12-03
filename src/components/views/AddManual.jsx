@@ -21,7 +21,6 @@ function AddManual(props) {
 	const [modelo, setModelo] = useState(props.equipo.modelo);
 	const [sid, setSID] = useState(props.sid);
 	const [serie, setSerie] = useState(props.equipo.serie);
-	const [contrato, setContrato] = useState(props.equipo.contrato);
 
 	useEffect(() => {
 		setSID(props.sid);
@@ -41,7 +40,6 @@ function AddManual(props) {
 					equipo,
 					modelo,
 					serie,
-					contrato,
 					sid,
 				},
 				flag
@@ -81,9 +79,11 @@ function AddManual(props) {
 								id: "selectCliente",
 							}}>
 							<option aria-label="None" value="" />
+							{/* <option aria-label="None" value={""}>
+								
+							</option> */}
 							<option value={"IMSS"}>IMSS</option>
 							<option value={"ISSSTE"}>ISSSTE</option>
-							<option value={"Otro"}>Otro</option>
 						</Select>
 					</FormControl>
 					<TextField
@@ -150,15 +150,6 @@ function AddManual(props) {
 						type="text"
 						onChange={(ev) => setSerie(ev.target.value)}
 						value={serie}
-					/>
-					<TextField
-						label="Contrato"
-						color="secondary"
-						variant="outlined"
-						size="small"
-						type="text"
-						onChange={(ev) => setContrato(ev.target.value)}
-						value={contrato}
 					/>
 					<TextField
 						label="SID"

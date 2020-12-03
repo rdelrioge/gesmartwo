@@ -5,6 +5,7 @@ import { TextField, InputLabel, FormControl, Select } from "@material-ui/core";
 function View3DatosDelServicio(props) {
 	const [tipoDeServicio, setTipoDeServicio] = useState("");
 	const [tipoDeContrato, setTipoDeContrato] = useState("Contrato");
+	const [contrato, setContrato] = useState("");
 	const [sintoma, setSintoma] = useState("");
 	const [descripcion, setDescripcion] = useState("");
 	const [apto, setApto] = useState(true);
@@ -41,6 +42,7 @@ function View3DatosDelServicio(props) {
 			props.onDone(
 				tipoDeServicio,
 				tipoDeContrato,
+				contrato,
 				sintoma,
 				descripcion,
 				apto,
@@ -113,6 +115,20 @@ function View3DatosDelServicio(props) {
 					</Select>
 				</FormControl>
 			</div>
+			{props.equipo &&
+			props.equipo.cliente === "" &&
+			tipoDeContrato === "Contrato" ? (
+				<div className="item3">
+					<TextField
+						label="No. de Contrato"
+						fullWidth
+						variant="outlined"
+						size="small"
+						value={contrato}
+						onChange={(e) => setContrato(e.target.value)}
+					/>
+				</div>
+			) : null}
 			<div className="item3">
 				{tipoDeServicio === "PM (Mantenimiento Preventivo)" ? (
 					<FormControl size="small" fullWidth variant="outlined">

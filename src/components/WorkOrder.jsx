@@ -199,7 +199,7 @@ function WorkOrder(props) {
 						<div>
 							<span>Dependencia:</span>
 							<span>
-								{data.equipo.cliente === "Otro" ? "" : data.equipo.cliente}
+								{data.equipo.cliente === "" ? "" : data.equipo.cliente}
 							</span>
 						</div>
 						<div>

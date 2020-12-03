@@ -105,6 +105,7 @@ function Home() {
 					<div className="views view3">
 						<View3DatosDelServicio
 							step={activeStep}
+							equipo={equipo}
 							flag={activeStep === 3 ? true : false}
 							handleNext={(nD) => {
 								setNextDisabled(nD);
@@ -112,6 +113,7 @@ function Home() {
 							onDone={(
 								tipoDeServicio,
 								tipoDeContrato,
+								contrato,
 								sintoma,
 								descripcion,
 								apto,
@@ -119,17 +121,33 @@ function Home() {
 								observaciones,
 								condiciones
 							) => {
-								setDatos({
-									...datos,
-									tipoDeServicio,
-									tipoDeContrato,
-									sintoma,
-									descripcion,
-									apto,
-									funcionando,
-									observaciones,
-									condiciones,
-								});
+								equipo.cliente === ""
+									? setDatos({
+											...datos,
+											tipoDeServicio,
+											tipoDeContrato,
+											equipo: {
+												...equipo,
+												contrato,
+											},
+											sintoma,
+											descripcion,
+											apto,
+											funcionando,
+											observaciones,
+											condiciones,
+									  })
+									: setDatos({
+											...datos,
+											tipoDeServicio,
+											tipoDeContrato,
+											sintoma,
+											descripcion,
+											apto,
+											funcionando,
+											observaciones,
+											condiciones,
+									  });
 							}}
 						/>
 					</div>
