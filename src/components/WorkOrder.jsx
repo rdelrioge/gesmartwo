@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
+import QRCode from "qrcode.react";
 
 import "./workorder.scss";
 
@@ -13,6 +14,7 @@ function WorkOrder(props) {
 	const [tiempos, setTiempos] = useState(props.data.tiempos);
 	const [herramientas, setHerramientas] = useState(props.data.herramientas);
 	const [refacciones, setRefacciones] = useState(props.data.refacciones);
+	const [shortTDS, setShortTDS] = useState("");
 
 	const calcularFolio = () => {
 		let y = moment(data.tiempos[0][1]).format("YY");
@@ -140,12 +142,44 @@ function WorkOrder(props) {
 		}
 	};
 
+	const compressTipoDeServicio = () => {
+		switch (data.tipoDeServicio) {
+			case "PM (Mantenimiento Preventivo)":
+				setShortTDS("PM");
+				break;
+			case "CM (Mantenimiento Correctivo)":
+				setShortTDS("CM");
+				break;
+			case "FMI":
+				setShortTDS("FMI");
+				break;
+			case "INS (Instalación)":
+				setShortTDS("INS");
+				break;
+			case "Otros":
+				setShortTDS("Otro");
+				break;
+			case "HBS":
+				setShortTDS("HBS");
+				break;
+			case "Aplicaciones":
+				setShortTDS("App");
+				break;
+			case "Desinstalación":
+				setShortTDS("DeINS");
+				break;
+			default:
+				break;
+		}
+	};
+
 	useEffect(() => {
 		calcularFinDeServicio();
 		calcularFolio();
 		displayTiempos();
 		displayHerramientas();
 		displayRefacciones();
+		compressTipoDeServicio();
 	}, []);
 
 	return (
@@ -164,17 +198,31 @@ function WorkOrder(props) {
 					</div>
 					<div className="folios">
 						<p>Hoja de servicio</p>
-						<div>
-							<span>No. De Folio</span>
-							<span className="node nodefolio">{folio}</span>
-						</div>
-						<div>
-							<span>No. De CASE</span>
-							<span className="node">{data.case}</span>
-						</div>
-						<div>
-							<span>No. De WO</span>
-							<span className="node">{data.wo}</span>
+						<div className="foliosAbajo">
+							<div className="numerosFolios">
+								<div>
+									<span>No. De Folio</span>
+									<span className="node nodefolio">{folio}</span>
+								</div>
+								<div>
+									<span>No. De CASE</span>
+									<span className="node">{data.case}</span>
+								</div>
+								<div>
+									<span>No. De WO</span>
+									<span className="node">{data.wo}</span>
+								</div>
+							</div>
+							<div className="qrcode">
+								<QRCode
+									value={`${data.wo} ${data.case} ${shortTDS} ${data.equipo.cliente} ${data.equipo.sid} ${finDelServicio}`}
+									bgColor={"#ffffff"}
+									fgColor={"#000000"}
+									level={"L"}
+									includeMargin={false}
+									renderAs={"svg"}
+								/>
+							</div>
 						</div>
 					</div>
 				</div>

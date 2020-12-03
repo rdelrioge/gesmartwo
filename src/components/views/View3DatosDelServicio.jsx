@@ -88,7 +88,7 @@ function View3DatosDelServicio(props) {
 						<option value={"INS (Instalación)"}>Instalación</option>
 						<option value={"Otros"}>Otros</option>
 						<option value={"HBS"}>HBS</option>
-						<option value={"APlicaciones"}>Aplicaciones</option>
+						<option value={"Aplicaciones"}>Aplicaciones</option>
 						<option value={"Desinstalación"}>Desinstalación</option>
 					</Select>
 				</FormControl>
