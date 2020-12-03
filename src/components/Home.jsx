@@ -60,7 +60,9 @@ function Home() {
 
 	useEffect(() => {
 		console.log(activeStep);
-		if (activeStep !== 7) {
+		if (activeStep === 7) {
+			setFlagFinish(true);
+		} else {
 			setFlagFinish(false);
 		}
 	}, [activeStep]);
@@ -289,7 +291,7 @@ function Home() {
 						<SkeletorWO />
 					</>
 				) : (
-					<Print data={datos} />
+					<Print data={datos} flagAddFotos={flagAddFotos} />
 				)}
 			</div>
 		</div>
