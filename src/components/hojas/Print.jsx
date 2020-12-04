@@ -16,7 +16,7 @@ function Print(props) {
 			<div className="saltodepag"></div>
 			{props.data.equipo.cliente === "IMSS" ? (
 				<>
-					<Evidencia data={props.data} />
+					<Evidencia data={props.data} angulos={props.angulos} />
 					<div className="saltodepag"></div>
 					<Capacitacion data={props.data} />
 				</>
@@ -25,10 +25,10 @@ function Print(props) {
 					<OrdenIssste data={props.data} />
 					<div className="saltodepag"></div>
 					<div className="marginTop"></div>
-					<FichaTecnica data={props.data} />
+					<FichaTecnica data={props.data} angulos={props.angulos} />
 				</>
 			) : props.flagAddFotos ? (
-				<Evidencia data={props.data} />
+				<Evidencia data={props.data} angulos={props.angulos} />
 			) : null}
 		</div>
 	);

@@ -81,26 +81,50 @@ function FichaTecnica(props) {
 				<div className="row c1fr">
 					<b className="grayed">FOTO NORMAL</b>
 					<b className="grayed">PLACA N° DE SERIE</b>
-					<img
-						className="cuadro"
-						alt="foto"
-						src={data.datosISSSTE && data.datosISSSTE.fotoNormal}></img>
-					<img
-						className="cuadro"
-						alt="foto"
-						src={data.datosISSSTE && data.datosISSSTE.fotoSerie}></img>
+					<div className="cuadroContainer">
+						<img
+							className="cuadro"
+							alt="foto"
+							src={data.datosISSSTE && data.datosISSSTE.fotoNormal}
+							style={{
+								transform: `rotate(${props.angulos[0]}deg)`,
+								height: "inherit",
+							}}></img>
+					</div>
+					<div className="cuadroContainer">
+						<img
+							className="cuadro"
+							alt="foto"
+							src={data.datosISSSTE && data.datosISSSTE.fotoSerie}
+							style={{
+								transform: `rotate(${props.angulos[1]}deg)`,
+								height: "inherit",
+							}}></img>
+					</div>
 				</div>
 				<div className="row c1fr">
 					<b className="grayed">PLACA N° DE INVENTARIO</b>
 					<b className="grayed">FOTO PANORÁMICA DEL BIEN</b>
-					<img
-						className="cuadro"
-						alt="foto"
-						src={data.datosISSSTE && data.datosISSSTE.fotoInventario}></img>
-					<img
-						className="cuadro"
-						alt="foto"
-						src={data.datosISSSTE && data.datosISSSTE.fotoPanoramica}></img>
+					<div className="cuadroContainer">
+						<img
+							className="cuadro"
+							alt="foto"
+							src={data.datosISSSTE && data.datosISSSTE.fotoInventario}
+							style={{
+								transform: `rotate(${props.angulos[2]}deg)`,
+								height: "inherit",
+							}}></img>
+					</div>
+					<div className="cuadroContainer">
+						<img
+							className="cuadro"
+							alt="foto"
+							src={data.datosISSSTE && data.datosISSSTE.fotoPanoramica}
+							style={{
+								transform: `rotate(${props.angulos[3]}deg)`,
+								height: "inherit",
+							}}></img>
+					</div>
 				</div>
 				<div className="row c1fr firmas">
 					<span className="borderB">{data.inge.nombre}</span>

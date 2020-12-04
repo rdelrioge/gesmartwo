@@ -53,7 +53,7 @@ function Evidencia(props) {
 					<div className="datosequipo">
 						<div className="sid">
 							<span>SID:</span>
-							<b>{data.sid}</b>
+							<b>{data.equipo.sid}</b>
 						</div>
 						<div className="equipo">
 							<span>Equipo:</span>
@@ -76,18 +76,60 @@ function Evidencia(props) {
 				<div className="row3">
 					<div className="row3row">
 						<span>Antes</span>
-						<img src={data.fotos.fotoAntes1} alt="antes1" />
-						<img src={data.fotos.fotoAntes2} alt="antes2" />
+						<img
+							src={data.fotos.fotoAntes1}
+							alt="antes1"
+							style={{
+								transform: `rotate(${props.angulos[0]}deg)`,
+								height: "inherit",
+							}}
+						/>
+						<img
+							src={data.fotos.fotoAntes2}
+							alt="antes2"
+							style={{
+								transform: `rotate(${props.angulos[1]}deg)`,
+								height: "inherit",
+							}}
+						/>
 					</div>
 					<div className="row3row">
 						<span>Durante</span>
-						<img src={data.fotos.fotoDurante1} alt="durante1" />
-						<img src={data.fotos.fotoDurante2} alt="durante2" />
+						<img
+							src={data.fotos.fotoDurante1}
+							alt="durante1"
+							style={{
+								transform: `rotate(${props.angulos[2]}deg)`,
+								height: "inherit",
+							}}
+						/>
+						<img
+							src={data.fotos.fotoDurante2}
+							alt="durante2"
+							style={{
+								transform: `rotate(${props.angulos[3]}deg)`,
+								height: "inherit",
+							}}
+						/>
 					</div>
 					<div className="row3row">
 						<span>Despues</span>
-						<img src={data.fotos.fotoDespues1} alt="despues1" />
-						<img src={data.fotos.fotoDespues2} alt="despues2" />
+						<img
+							src={data.fotos.fotoDespues1}
+							alt="despues1"
+							style={{
+								transform: `rotate(${props.angulos[4]}deg)`,
+								height: "inherit",
+							}}
+						/>
+						<img
+							src={data.fotos.fotoDespues2}
+							alt="despues2"
+							style={{
+								transform: `rotate(${props.angulos[5]}deg)`,
+								height: "inherit",
+							}}
+						/>
 					</div>
 				</div>
 			</div>

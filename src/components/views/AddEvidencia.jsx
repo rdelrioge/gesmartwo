@@ -27,6 +27,7 @@ function AddEvidencia(props) {
 				fotoDespues1,
 				fotoDespues2,
 			});
+			props.onAngulos([angulo1, angulo2, angulo3, angulo4, angulo5, angulo6]);
 		}
 	}, [props.flag]);
 

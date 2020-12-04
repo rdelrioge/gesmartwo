@@ -26,6 +26,7 @@ function Home() {
 	// multicomponent and conditional
 	const [inge, setInge] = useState(null);
 	const [equipo, setEquipo] = useState(null);
+	const [angulos, setAngulos] = useState([]);
 	// flags
 	const [nextDisabled, setNextDisabled] = useState(true);
 	const [flagAddFotos, setFlagAddFotos] = useState(false);
@@ -202,6 +203,10 @@ function Home() {
 										fotos,
 									});
 								}}
+								onAngulos={(angs) => {
+									console.log(angs);
+									setAngulos(angs);
+								}}
 							/>
 						) : equipo && equipo.cliente === "ISSSTE" ? (
 							<AddDatosISSSTE
@@ -212,6 +217,10 @@ function Home() {
 										...datos,
 										datosISSSTE,
 									});
+								}}
+								onAngulos={(angs) => {
+									console.log(angs);
+									setAngulos(angs);
 								}}
 							/>
 						) : equipo && equipo.cliente === "ISAPEG" ? (
@@ -234,6 +243,10 @@ function Home() {
 												...datos,
 												fotos,
 											});
+										}}
+										onAngulos={(angs) => {
+											console.log(angs);
+											setAngulos(angs);
 										}}
 									/>
 								) : null}
@@ -291,7 +304,7 @@ function Home() {
 						<SkeletorWO />
 					</>
 				) : (
-					<Print data={datos} flagAddFotos={flagAddFotos} />
+					<Print data={datos} flagAddFotos={flagAddFotos} angulos={angulos} />
 				)}
 			</div>
 		</div>

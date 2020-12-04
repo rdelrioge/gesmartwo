@@ -32,6 +32,7 @@ function AddDatosISSSTE(props) {
 				fotoInventario,
 				fotoPanoramica,
 			});
+			props.onAngulos([angulo1, angulo2, angulo3, angulo4]);
 		}
 	}, [props.flag]);
 
