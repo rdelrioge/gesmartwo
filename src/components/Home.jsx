@@ -33,6 +33,8 @@ function Home() {
 	const [flagManual, setFlagManual] = useState(false);
 	const [flagFinish, setFlagFinish] = useState(false);
 	const [loading, setLoading] = useState(true);
+	const [tituloOriginal, setTituloOriginal] = useState(document.title);
+	const [title, setTitle] = useState(document.title);
 
 	const handleNext = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -62,8 +64,17 @@ function Home() {
 			setFlagFinish(true);
 		} else {
 			setFlagFinish(false);
+			setTitle(tituloOriginal);
 		}
 	}, [activeStep]);
+
+	useEffect(() => {
+		console.log(title);
+		document.title = title;
+		if (activeStep === 7) {
+			window.print();
+		}
+	}, [title]);
 
 	return (
 		<div className={activeStep === 7 ? "home scrollHome " : "home"}>
@@ -295,7 +306,19 @@ function Home() {
 					<Button
 						variant="contained"
 						color="primary"
-						onClick={() => window.print()}>
+						onClick={() => {
+							if (title === tituloOriginal) {
+								setTitle(
+									`SmartWO ${datos.wo} ${datos.equipo.hospital} ${
+										datos.equipo.sid
+									} ${datos.tiempos[datos.tiempos.length - 1][3].format(
+										"DD-MMM-YYYY"
+									)}`
+								);
+							} else {
+								window.print();
+							}
+						}}>
 						Print
 					</Button>
 				</div>
