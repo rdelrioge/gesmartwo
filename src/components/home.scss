@@ -1,33 +1,6 @@
 @import "../index.scss";
 
 .home {
-	height: 100vh;
-	overflow: hidden;
-	.nav-bar {
-		width: 100vw;
-		display: flex;
-		background-color: #000000;
-		.logo {
-			background-image: url("../assets/images/icons/icon-384x384.png");
-			background-repeat: no-repeat;
-			background-position: center;
-			background-size: contain;
-			width: 30px;
-			height: 30px;
-			position: absolute;
-			left: 10px;
-			top: 8px;
-		}
-		a {
-			margin: 0 auto;
-			font-size: 1.4em;
-			font-weight: bold;
-			background: -webkit-linear-gradient(275deg, white, $secondary);
-			-webkit-text-fill-color: transparent;
-			-webkit-background-clip: text;
-			background-clip: text;
-		}
-	}
 	.showViews {
 		.views {
 			height: calc(100vh - 93px);

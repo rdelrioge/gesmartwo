@@ -78,10 +78,6 @@ function Home() {
 
 	return (
 		<div className={activeStep === 7 ? "home scrollHome " : "home"}>
-			<div className="nav-bar">
-				<div className="logo"></div>
-				<a href="/">Smart WO</a>
-			</div>
 			<div className={flagFinish ? "hideViews" : "showViews"}>
 				<SwipeableViews disabled index={activeStep}>
 					<div className="views view1">
