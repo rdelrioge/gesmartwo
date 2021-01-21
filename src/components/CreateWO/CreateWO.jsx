@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
-import "./home.scss";
+import "./createWO.scss";
 import moment from "moment";
-import "moment/locale/es";
+import "../../../node_modules/moment/locale/es";
+// import "./CreateWO/views/node_modules/moment/locale/es";
 
 import { MobileStepper, Button, Switch } from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
 
-import Print from "./hojas/Print";
-import SkeletorWO from "./hojas/SkeletorWO";
+import Print from "../hojas/Print";
+import SkeletorWO from "../hojas/SkeletorWO";
 
 import AddEvidencia from "./views/AddEvidencia";
 import AddDatosISSSTE from "./views/AddDatosISSSTE";
-import View1SSO from "./views/View1SSO";
+import View1SSO from "../Layout/SSO";
 import View2DatosIniciales from "./views/View2DatosIniciales";
 import View3DatosDelServicio from "./views/View3DatosDelServicio";
 import View4PeriodoDeServicio from "./views/View4PeriodoDeServicio";
@@ -19,7 +20,7 @@ import View5Herramientas from "./views/View5Herramientas";
 import View6Refacciones from "./views/View6Refacciones";
 
 moment.locale("es");
-function Home() {
+function CreateWO() {
 	// global variables
 	const [activeStep, setActiveStep] = useState(0); //7 para ver print
 	const [datos, setDatos] = useState({});
@@ -80,7 +81,7 @@ function Home() {
 		<div className={activeStep === 7 ? "home scrollHome " : "home"}>
 			<div className={flagFinish ? "hideViews" : "showViews"}>
 				<SwipeableViews disabled index={activeStep}>
-					<div className="views view1">
+					{/* <div className="views view1">
 						<View1SSO
 							step={activeStep}
 							handleNext={(nD) => {
@@ -91,7 +92,7 @@ function Home() {
 								setDatos({ ...datos, inge });
 							}}
 						/>
-					</div>
+					</div> */}
 					<div className="views view2">
 						<View2DatosIniciales
 							step={activeStep}
@@ -330,4 +331,4 @@ function Home() {
 	);
 }
 
-export default Home;
+export default CreateWO;

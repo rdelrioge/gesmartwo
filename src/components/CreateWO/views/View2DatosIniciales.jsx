@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Button, TextField } from "@material-ui/core";
 
 import AddManual from "./AddManual";
-import { db } from "../../index";
+import { db } from "../../../index";
 
 function View2DatosIniciales(props) {
 	const [sid, setSID] = useState("");
