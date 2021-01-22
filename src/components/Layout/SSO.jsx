@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./sso.scss";
-import { Button, TextField, IconButton } from "@material-ui/core";
+import { Button, TextField, IconButton, Drawer } from "@material-ui/core";
 
 import { db } from "../../index";
+import CreateWO from "../CreateWO/CreateWO";
 
 function SSO(props) {
 	const [sso, setSSO] = useState("");
@@ -10,6 +11,7 @@ function SSO(props) {
 	const [animation, setAnimation] = useState(false);
 	const [animation2, setAnimation2] = useState(false);
 	const [animation3, setAnimation3] = useState(false);
+	const [openNew, setOpenNew] = useState(false);
 
 	useEffect(() => {
 		const loggedInUser = localStorage.getItem("user");
@@ -41,14 +43,16 @@ function SSO(props) {
 
 	const changeSSO = (value) => {
 		setSSO(value);
+		if (value && value.length === 9) {
+			validateSSO(value);
+		}
 		if (inge) {
 			setInge(null);
 		}
 	};
-	const validateSSO = () => {
-		console.log(sso);
+	const validateSSO = (value) => {
 		db.collection("users")
-			.where("sso", "==", sso)
+			.where("sso", "==", value)
 			.get()
 			.then((data) => {
 				if (data.empty) {
@@ -72,6 +76,10 @@ function SSO(props) {
 		setSSO("");
 		setInge(null);
 		localStorage.removeItem("user");
+	};
+
+	const handleCloseNew = () => {
+		setOpenNew(false);
 	};
 	return (
 		<div className="ssoC">
@@ -98,34 +106,39 @@ function SSO(props) {
 						<Button
 							className={animation3 ? "animation3" : undefined}
 							variant="contained"
+							onClick={() => setOpenNew(true)}
 							color="primary">
 							<i className="material-icons">note_add</i> Nueva WO
 						</Button>
 					</div>
+					<Drawer
+						anchor="bottom"
+						className="drawerNewWO"
+						open={openNew}
+						onClose={() => setOpenNew(false)}>
+						<IconButton
+							className="closeIcn  material-icons"
+							onClick={() => setOpenNew(false)}>
+							close
+						</IconButton>
+						<CreateWO />
+					</Drawer>
 				</div>
 			) : (
 				<div className="notLogged">
 					<h3>Ingresa tu SSO</h3>
 					<TextField
-						label="SSO"
+						label=""
 						color="secondary"
 						variant="outlined"
 						type="tel"
+						className="txtFldSSO"
 						inputProps={{
 							maxLength: 9,
 						}}
 						onChange={(ev) => changeSSO(ev.target.value)}
 						value={sso}
 					/>
-					<Button
-						className="btnValidate"
-						size="small"
-						variant="contained"
-						disabled={sso.length === 9 ? false : true}
-						color="primary"
-						onClick={() => validateSSO()}>
-						Validar
-					</Button>
 				</div>
 			)}
 			<b className="version">Version 2.0.0</b>

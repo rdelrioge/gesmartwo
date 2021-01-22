@@ -6,7 +6,7 @@
 		row-gap: 1em;
 		height: 100%;
 		.ingeData {
-			background-image: url("../../assets/images/userBG.gif");
+			background-image: url("../../assets/images/userBG2.gif");
 			background-size: cover;
 			p {
 				color: white;
@@ -59,20 +59,41 @@
 		}
 	}
 	.notLogged {
-		justify-content: center;
+		justify-content: flex-end;
 		align-items: center;
 		display: flex;
 		flex-direction: column;
 		height: 100%;
-		.btnValidate {
-			margin-top: 1em;
+		background-image: url("../../assets/images/userBG.gif");
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: top;
+		background-color: #202020;
+		color: white;
+		padding-bottom: 4em;
+		.txtFldSSO {
+			border-bottom: 1px solid #295a84;
+			* {
+				text-align: center;
+				color: whitesmoke;
+			}
 		}
 	}
 	.version {
 		font-size: 0.8em;
-		// position: absolute;
-		// bottom: 2em;
-		display: flex;
-		justify-content: center;
+		display: grid;
+		height: 47px;
+		color: white;
+		align-items: center;
+		text-align: center;
+		background-color: #202020;
+	}
+}
+
+.drawerNewWO {
+	.closeIcn {
+		position: absolute;
+		top: 10px;
+		right: 10px;
 	}
 }
