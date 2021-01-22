@@ -13,7 +13,16 @@
 				font-weight: bold;
 				font-size: larger;
 				margin-left: 1em;
+				opacity: 0;
 			}
+			div {
+				opacity: 0;
+			}
+			.animation {
+				opacity: 1;
+				transition: all 1s ease-in-out;
+			}
+
 			.logoutIcon {
 				color: white;
 				position: absolute;
@@ -25,15 +34,27 @@
 		.tasks {
 			display: grid;
 			grid-template-rows: 1fr 1fr;
-			.taskBtn {
+			button {
 				margin: auto;
 				height: 4em;
 				width: 16em;
 				font-size: 1.1em;
+				opacity: 0;
+				visibility: hidden;
 				i {
 					margin-right: 0.4em;
 					font-size: 2em;
 				}
+			}
+			.animation2 {
+				visibility: visible;
+				opacity: 1;
+				transition: all 1s ease-in;
+			}
+			.animation3 {
+				visibility: visible;
+				opacity: 1;
+				transition: all 1s ease-in;
 			}
 		}
 	}
@@ -42,6 +63,7 @@
 		align-items: center;
 		display: flex;
 		flex-direction: column;
+		height: 100%;
 		.btnValidate {
 			margin-top: 1em;
 		}

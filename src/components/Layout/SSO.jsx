@@ -7,6 +7,9 @@ import { db } from "../../index";
 function SSO(props) {
 	const [sso, setSSO] = useState("");
 	const [inge, setInge] = useState(null);
+	const [animation, setAnimation] = useState(false);
+	const [animation2, setAnimation2] = useState(false);
+	const [animation3, setAnimation3] = useState(false);
 
 	useEffect(() => {
 		const loggedInUser = localStorage.getItem("user");
@@ -20,7 +23,19 @@ function SSO(props) {
 
 	useEffect(() => {
 		if (inge) {
-			console.log(inge);
+			setTimeout(() => {
+				setAnimation(true);
+			}, 200);
+			setTimeout(() => {
+				setAnimation2(true);
+			}, 500);
+			setTimeout(() => {
+				setAnimation3(true);
+			}, 800);
+		} else {
+			setAnimation(false);
+			setAnimation2(false);
+			setAnimation3(false);
 		}
 	}, [inge]);
 
@@ -63,19 +78,27 @@ function SSO(props) {
 			{inge ? (
 				<div className="logged">
 					<div className="ingeData">
-						<p className="nombreInge">{inge.nombre}</p>
-						<p className="nombreInge">{inge.sso}</p>
-						<IconButton
-							className="logoutIcon material-icons"
-							onClick={handleLogout}>
-							power_settings_new
-						</IconButton>
+						<p className={animation ? "animation" : undefined}>{inge.nombre}</p>
+						<p className={animation ? "animation" : undefined}>{inge.sso}</p>
+						<div className={animation ? "animation" : undefined}>
+							<IconButton
+								className="logoutIcon material-icons"
+								onClick={handleLogout}>
+								power_settings_new
+							</IconButton>
+						</div>
 					</div>
 					<div className="tasks">
-						<Button className="taskBtn" variant="contained" color="primary">
+						<Button
+							className={animation2 ? "animation2" : undefined}
+							variant="contained"
+							color="primary">
 							<i className="material-icons">pending_actions</i> Historial
 						</Button>
-						<Button className="taskBtn" variant="contained" color="primary">
+						<Button
+							className={animation3 ? "animation3" : undefined}
+							variant="contained"
+							color="primary">
 							<i className="material-icons">note_add</i> Nueva WO
 						</Button>
 					</div>
@@ -105,7 +128,7 @@ function SSO(props) {
 					</Button>
 				</div>
 			)}
-			<b className="version">Version 1.3.0</b>
+			<b className="version">Version 2.0.0</b>
 		</div>
 	);
 }
