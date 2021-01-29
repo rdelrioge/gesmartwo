@@ -2,7 +2,7 @@
 
 .layoutC {
 	height: 100vh;
-	overflow: hidden;
+	// overflow: hidden;
 	.nav-bar {
 		width: 100vw;
 		display: flex;
@@ -26,6 +26,16 @@
 			-webkit-text-fill-color: transparent;
 			-webkit-background-clip: text;
 			background-clip: text;
+		}
+	}
+}
+
+@media print {
+	.layoutC {
+		.nav-bar,
+		.revHeader {
+			display: none !important;
+			height: 0px;
 		}
 	}
 }

@@ -309,13 +309,3 @@
 		margin: 1em;
 	}
 }
-
-@media print {
-	.home {
-		.nav-bar,
-		.revHeader {
-			display: none !important;
-			height: 0px;
-		}
-	}
-}
