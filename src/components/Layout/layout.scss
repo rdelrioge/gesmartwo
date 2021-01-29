@@ -2,7 +2,6 @@
 
 .layoutC {
 	height: 100vh;
-	z-index: 0;
 	.nav-bar {
 		width: 100vw;
 		display: flex;
@@ -27,5 +26,14 @@
 			-webkit-background-clip: text;
 			background-clip: text;
 		}
+	}
+}
+
+@media print {
+	.nav-bar,
+	.revHeader,
+	.version {
+		display: none !important;
+		height: 0px;
 	}
 }

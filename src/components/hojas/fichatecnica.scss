@@ -52,13 +52,14 @@
 			.cuadroContainer {
 				height: 20em;
 				width: 34.8vw;
-				border: 1px solid black;
+				// border: 1px solid black;
 				display: grid;
 				.cuadro {
 					// height: 10em !important;
 					// width: 10em !important;
-					margin: auto;
-					padding: 4px;
+					margin: 0;
+					// padding: 4px;
+					width: 100%;
 				}
 			}
 			span {
@@ -66,7 +67,7 @@
 			}
 		}
 		.firmas {
-			margin-top: 10em;
+			margin-top: 8em;
 		}
 	}
 
@@ -115,8 +116,5 @@
 			height: 110pt !important;
 			margin: auto;
 		}
-	}
-	@page {
-		margin-bottom: 1cm;
 	}
 }

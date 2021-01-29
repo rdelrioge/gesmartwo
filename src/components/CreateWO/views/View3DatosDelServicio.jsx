@@ -179,6 +179,7 @@ function View3DatosDelServicio(props) {
 								sintoma.split(" ").length === 53 ? sintoma.length : 800,
 						}}
 						onChange={(e) => setSintoma(e.target.value)}
+						value={sintoma}
 					/>
 				)}
 			</div>

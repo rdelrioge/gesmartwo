@@ -192,14 +192,15 @@
 			text-align: center;
 			margin: 0 1em;
 			row-gap: 0.5em;
+			width: 100%;
 			h3 {
 				margin-bottom: 2px;
 			}
 			*:not(h3) {
-				font-size: 0.9em;
+				font-size: 1em;
 			}
 			.MuiFormLabel-root {
-				font-size: 0.9em;
+				font-size: 1em;
 			}
 			.tresFr {
 				display: grid;
@@ -295,15 +296,5 @@
 	.MuiSkeleton-root {
 		height: auto;
 		margin: 1em;
-	}
-}
-
-@media print {
-	.home {
-		.nav-bar,
-		.revHeader {
-			display: none !important;
-			height: 0px;
-		}
 	}
 }

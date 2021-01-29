@@ -617,7 +617,8 @@ function OrdenIssste(props) {
 					{data.datosISSSTE && cortarTexto(data.datosISSSTE.conclusiones)}
 					<div></div>
 					<div></div>
-					<div></div>|<div></div>
+					<div></div>
+					<div></div>
 					<div></div>
 					<div></div>
 					<div></div>

@@ -336,10 +336,11 @@ function CreateWO(props) {
 						color="primary"
 						onClick={() => {
 							if (title === tituloOriginal) {
+								console.log(datos.tiempos[0][3]);
 								setTitle(
 									`SmartWO ${datos.wo} ${datos.equipo.hospital} ${
 										datos.equipo.sid
-									} ${datos.tiempos[datos.tiempos.length - 1][3].format(
+									} ${moment(datos.tiempos[datos.tiempos.length - 1][3]).format(
 										"DD-MMM-YYYY"
 									)}`
 								);

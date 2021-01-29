@@ -27,7 +27,7 @@ function AddDatosISSSTE(props) {
 			setRecomendaciones(props.data.datos.datosISSSTE.recomendaciones);
 			setConclusiones(props.data.datos.datosISSSTE.conclusiones);
 			setFotoNormal(props.data.datos.datosISSSTE.fotoNormal);
-			setFotoSerie(props.data.datos.datosISSSTE.setFotoSerie);
+			setFotoSerie(props.data.datos.datosISSSTE.fotoSerie);
 			setFotoInventario(props.data.datos.datosISSSTE.fotoInventario);
 			setFotoPanoramica(props.data.datos.datosISSSTE.fotoPanoramica);
 			setAngulo1(props.data.angulos.angulo1);
