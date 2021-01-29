@@ -21,7 +21,13 @@ function View4PeriodoDeServicio(props) {
 	const [disableAddBtn, SetDisableAddBtn] = useState(true);
 
 	useEffect(() => {
-		if (props.step === 3) {
+		if (props.edit) {
+			setTiempos(props.data.datos.tiempos);
+		}
+	}, []);
+
+	useEffect(() => {
+		if (props.step === 2) {
 			tiempos.length > 0 ? props.handleNext(false) : props.handleNext(true);
 		}
 	}, [tiempos, props]);

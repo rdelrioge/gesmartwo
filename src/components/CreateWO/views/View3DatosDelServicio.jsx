@@ -14,7 +14,21 @@ function View3DatosDelServicio(props) {
 	const [condiciones, setCondiciones] = useState("Funcionando");
 
 	useEffect(() => {
-		if (props.step === 2) {
+		if (props.edit) {
+			setTipoDeServicio(props.data.datos.tipoDeServicio);
+			setTipoDeContrato(props.data.datos.tipoDeContrato);
+			setContrato(props.data.datos.equipo.contrato);
+			setSintoma(props.data.datos.sintoma);
+			setDescripcion(props.data.datos.descripcion);
+			setApto(props.data.datos.apto);
+			setFuncionando(props.data.datos.funcionando);
+			setObservaciones(props.data.datos.observaciones);
+			setCondiciones(props.data.datos.condiciones);
+		}
+	}, []);
+
+	useEffect(() => {
+		if (props.step === 1) {
 			if (
 				tipoDeServicio !== "" &&
 				tipoDeContrato !== "" &&

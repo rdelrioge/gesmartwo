@@ -16,7 +16,19 @@ function View2DatosIniciales(props) {
 	const [editar, setEditar] = useState(false);
 
 	useEffect(() => {
-		if (props.step === 1) {
+		if (props.edit) {
+			setSID(props.data.datos.equipo.sid);
+			setCaso(props.data.datos.case);
+			setWO(props.data.datos.wo);
+			setEquipo(props.data.datos.equipo);
+			setShowAddManual(props.data.flagManual);
+			setHideInfo(false);
+			setEditar(true);
+		}
+	}, []);
+
+	useEffect(() => {
+		if (props.step === 0) {
 			if (caso !== "" && wo !== "" && equipo) {
 				equipo.hospital !== ""
 					? props.handleNext(false)
@@ -202,14 +214,15 @@ function View2DatosIniciales(props) {
 							<b>Serie: </b>
 							{equipo.serie}
 						</p>
-						<p>
-							<b>Contrato: </b>
-							{equipo.contrato}
-						</p>
+						{showAddManual ? null : (
+							<p>
+								<b>Contrato: </b>
+								{equipo.contrato}
+							</p>
+						)}
 					</>
-				) : (
-					<div className="nada"></div>
-				)}
+				) : // <div className="nada"></div>
+				null}
 			</div>
 		</>
 	);

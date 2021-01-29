@@ -1,9 +1,18 @@
 @import "../../index.scss";
 
 .home {
+	z-index: 100;
+	overflow: hidden;
 	.showViews {
+		margin-bottom: 47px;
+		overflow: hidden;
 		.views {
-			height: calc(100vh - 93px);
+			height: calc(100vh - 47px);
+			// height: 100vh;
+			z-index: 100;
+			overflow: scroll;
+			width: 100%;
+			padding: 1em;
 		}
 		.view2 {
 			justify-content: center;
@@ -32,23 +41,20 @@
 			}
 			.hideinfo {
 				max-height: 0;
+				visibility: hidden;
 				opacity: 0;
 				// transition: opacity 0.5s ease-in-out, max-height 1.5s ease-in-out;
-			}
-			.nada {
-				height: 22em;
-				width: 75vw;
 			}
 		}
 		.view3 {
 			text-align: center;
-			margin: 0 2em;
 			display: grid;
+			row-gap: 2em;
 			h3 {
 				margin: auto;
 			}
 			*:not(h3) {
-				font-size: 0.9em;
+				font-size: 1em;
 			}
 			.item3 {
 				display: flex;
@@ -66,8 +72,8 @@
 		.view6 {
 			display: grid;
 			text-align: center;
-			margin: 0 1em;
 			grid-auto-rows: max-content;
+			height: fit-content;
 			.herrXagregar > *,
 			.refXAgregar > * {
 				margin: 0.5em 0;

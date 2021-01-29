@@ -11,6 +11,12 @@ function View6Refacciones(props) {
 	const [disableAddBtnR, SetDisableAddBtnR] = useState(true);
 
 	useEffect(() => {
+		if (props.edit) {
+			setRefacciones(props.data.datos.refacciones);
+		}
+	}, []);
+
+	useEffect(() => {
 		if (props.flag) {
 			props.onDone(refacciones);
 		}

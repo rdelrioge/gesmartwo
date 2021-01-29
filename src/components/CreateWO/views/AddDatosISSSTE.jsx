@@ -19,6 +19,25 @@ function AddDatosISSSTE(props) {
 	const [angulo4, setAngulo4] = useState(0);
 
 	useEffect(() => {
+		if (props.edit) {
+			setBitacora(props.data.datos.datosISSSTE.bitacora);
+			setHrsReales(props.data.datos.datosISSSTE.hrsReales);
+			setVidaUtil(props.data.datos.datosISSSTE.vidaUtil);
+			setUbicacion(props.data.datos.datosISSSTE.ubicacion);
+			setRecomendaciones(props.data.datos.datosISSSTE.recomendaciones);
+			setConclusiones(props.data.datos.datosISSSTE.conclusiones);
+			setFotoNormal(props.data.datos.datosISSSTE.fotoNormal);
+			setFotoSerie(props.data.datos.datosISSSTE.setFotoSerie);
+			setFotoInventario(props.data.datos.datosISSSTE.fotoInventario);
+			setFotoPanoramica(props.data.datos.datosISSSTE.fotoPanoramica);
+			setAngulo1(props.data.angulos.angulo1);
+			setAngulo2(props.data.angulos.angulo2);
+			setAngulo3(props.data.angulos.angulo3);
+			setAngulo4(props.data.angulos.angulo4);
+		}
+	}, []);
+
+	useEffect(() => {
 		if (props.flag) {
 			props.onDone({
 				bitacora,

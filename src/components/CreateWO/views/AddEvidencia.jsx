@@ -18,6 +18,23 @@ function AddEvidencia(props) {
 	const [angulo6, setAngulo6] = useState(0);
 
 	useEffect(() => {
+		if (props.edit) {
+			setFotoAntes1(props.data.datos.fotos.fotoAntes1);
+			setFotoAntes2(props.data.datos.fotos.fotoAntes2);
+			setFotoDurante1(props.data.datos.fotos.fotoDurante1);
+			setFotoDurante2(props.data.datos.fotos.fotoDurante2);
+			setFotoDespues1(props.data.datos.fotos.fotoDespues1);
+			setFotoDespues2(props.data.datos.fotos.fotoDespues2);
+			setAngulo1(props.data.angulos.angulo1);
+			setAngulo2(props.data.angulos.angulo2);
+			setAngulo3(props.data.angulos.angulo3);
+			setAngulo4(props.data.angulos.angulo4);
+			setAngulo5(props.data.angulos.angulo5);
+			setAngulo6(props.data.angulos.angulo6);
+		}
+	}, []);
+
+	useEffect(() => {
 		if (props.flag) {
 			props.onDone({
 				fotoAntes1,

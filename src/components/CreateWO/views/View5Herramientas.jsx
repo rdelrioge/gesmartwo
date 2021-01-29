@@ -16,6 +16,12 @@ function View5Herramientas(props) {
 	const [disableAddBtnH, SetDisableAddBtnH] = useState(true);
 
 	useEffect(() => {
+		if (props.edit) {
+			setHerramientas(props.data.datos.herramientas);
+		}
+	}, []);
+
+	useEffect(() => {
 		if (props.flag) {
 			props.onDone(herramientas);
 		}

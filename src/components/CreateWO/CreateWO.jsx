@@ -4,7 +4,7 @@ import moment from "moment";
 import "../../../node_modules/moment/locale/es";
 // import "./CreateWO/views/node_modules/moment/locale/es";
 
-import { MobileStepper, Button, Switch } from "@material-ui/core";
+import { MobileStepper, Button, Switch, IconButton } from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
 
 import Print from "../hojas/Print";
@@ -12,7 +12,6 @@ import SkeletorWO from "../hojas/SkeletorWO";
 
 import AddEvidencia from "./views/AddEvidencia";
 import AddDatosISSSTE from "./views/AddDatosISSSTE";
-import View1SSO from "../Layout/SSO";
 import View2DatosIniciales from "./views/View2DatosIniciales";
 import View3DatosDelServicio from "./views/View3DatosDelServicio";
 import View4PeriodoDeServicio from "./views/View4PeriodoDeServicio";
@@ -20,12 +19,12 @@ import View5Herramientas from "./views/View5Herramientas";
 import View6Refacciones from "./views/View6Refacciones";
 
 moment.locale("es");
-function CreateWO() {
+function CreateWO(props) {
 	// global variables
-	const [activeStep, setActiveStep] = useState(0); //7 para ver print
+	const [activeStep, setActiveStep] = useState(0); //6 para ver print
 	const [datos, setDatos] = useState({});
 	// multicomponent and conditional
-	const [inge, setInge] = useState(null);
+	const [inge, setInge] = useState(props.inge);
 	const [equipo, setEquipo] = useState(null);
 	const [angulos, setAngulos] = useState([]);
 	// flags
@@ -37,9 +36,22 @@ function CreateWO() {
 	const [tituloOriginal, setTituloOriginal] = useState(document.title);
 	const [title, setTitle] = useState(document.title);
 
+	useEffect(() => {
+		if (props.edit) {
+			console.log(props.data);
+			setDatos(props.data.datos);
+			setInge(props.data.datos.inge);
+			setEquipo(props.data.datos.equipo);
+			setAngulos(props.data.angulos);
+			setNextDisabled(props.data.nextDisabled);
+			setFlagAddFotos(props.data.flagAddFotos);
+			setFlagManual(props.data.flagManual);
+		}
+	}, []);
+
 	const handleNext = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep + 1);
-		if (activeStep === 6) {
+		if (activeStep === 5) {
 			setLoading(true);
 			const timer = setTimeout(() => {
 				setLoading(false);
@@ -54,14 +66,23 @@ function CreateWO() {
 
 	useEffect(() => {
 		console.log(datos);
-		if (activeStep === 7) {
+		if (activeStep === 6) {
 			setFlagFinish(true);
+			let datosActuales = {
+				datos,
+				angulos,
+				nextDisabled,
+				flagAddFotos,
+				flagManual,
+			};
+			console.log(datosActuales);
+			localStorage.setItem("datosActuales", JSON.stringify(datosActuales));
 		}
 	}, [datos]);
 
 	useEffect(() => {
 		console.log(activeStep);
-		if (activeStep === 7) {
+		if (activeStep === 6) {
 			setFlagFinish(true);
 		} else {
 			setFlagFinish(false);
@@ -72,29 +93,24 @@ function CreateWO() {
 	useEffect(() => {
 		console.log(title);
 		document.title = title;
-		if (activeStep === 7) {
+		if (activeStep === 6) {
 			window.print();
 		}
 	}, [title]);
 
 	return (
-		<div className={activeStep === 7 ? "home scrollHome " : "home"}>
+		<div className={activeStep === 6 ? "home scrollHome " : "home"}>
+			<IconButton
+				className={flagFinish ? "hideViews" : "closeIcn  material-icons"}
+				onClick={() => props.close()}>
+				close
+			</IconButton>
 			<div className={flagFinish ? "hideViews" : "showViews"}>
 				<SwipeableViews disabled index={activeStep}>
-					{/* <div className="views view1">
-						<View1SSO
-							step={activeStep}
-							handleNext={(nD) => {
-								setNextDisabled(nD);
-							}}
-							onDone={(inge) => {
-								setInge(inge);
-								setDatos({ ...datos, inge });
-							}}
-						/>
-					</div> */}
 					<div className="views view2">
 						<View2DatosIniciales
+							edit={props.edit}
+							data={props.data}
 							step={activeStep}
 							handleNext={(nD) => {
 								setNextDisabled(nD);
@@ -108,16 +124,19 @@ function CreateWO() {
 									case: caso,
 									wo,
 									equipo,
+									inge,
 								});
 							}}
 						/>
 					</div>
 					<div className="views view3">
 						<View3DatosDelServicio
+							edit={props.edit}
+							data={props.data}
 							step={activeStep}
 							equipo={equipo}
 							flagManual={flagManual}
-							flag={activeStep === 3 ? true : false}
+							flag={activeStep === 2 ? true : false}
 							handleNext={(nD) => {
 								setNextDisabled(nD);
 							}}
@@ -164,6 +183,8 @@ function CreateWO() {
 					</div>
 					<div className="views view4">
 						<View4PeriodoDeServicio
+							edit={props.edit}
+							data={props.data}
 							tps={datos.tipoDeServicio}
 							step={activeStep}
 							handleNext={(nD) => {
@@ -179,7 +200,9 @@ function CreateWO() {
 					</div>
 					<div className="views view5">
 						<View5Herramientas
-							flag={activeStep === 5 ? true : false}
+							edit={props.edit}
+							data={props.data}
+							flag={activeStep === 4 ? true : false}
 							onDone={(herramientas) => {
 								setDatos({
 									...datos,
@@ -190,7 +213,9 @@ function CreateWO() {
 					</div>
 					<div className="views view6">
 						<View6Refacciones
-							flag={activeStep === 6 ? true : false}
+							edit={props.edit}
+							data={props.data}
+							flag={activeStep === 5 ? true : false}
 							onDone={(refacciones) => {
 								setDatos({
 									...datos,
@@ -202,8 +227,10 @@ function CreateWO() {
 					<div>
 						{equipo && equipo.cliente === "IMSS" ? (
 							<AddEvidencia
+								edit={props.edit}
+								data={props.data}
 								cliente={equipo.cliente}
-								flag={activeStep === 7 ? true : false}
+								flag={activeStep === 6 ? true : false}
 								onDone={(fotos) => {
 									console.log(fotos);
 									setDatos({
@@ -218,7 +245,9 @@ function CreateWO() {
 							/>
 						) : equipo && equipo.cliente === "ISSSTE" ? (
 							<AddDatosISSSTE
-								flag={activeStep === 7 ? true : false}
+								edit={props.edit}
+								data={props.data}
+								flag={activeStep === 6 ? true : false}
 								onDone={(datosISSSTE) => {
 									console.log(datosISSSTE);
 									setDatos({
@@ -243,8 +272,10 @@ function CreateWO() {
 								</div>
 								{equipo && flagAddFotos ? (
 									<AddEvidencia
+										edit={props.edit}
+										data={props.data}
 										cliente={equipo.cliente}
-										flag={activeStep === 7 ? true : false}
+										flag={activeStep === 6 ? true : false}
 										onDone={(fotos) => {
 											console.log(fotos);
 											setDatos({
@@ -264,7 +295,7 @@ function CreateWO() {
 				</SwipeableViews>
 				{inge ? (
 					<MobileStepper
-						steps={7}
+						steps={6}
 						position="bottom"
 						variant="progress"
 						activeStep={activeStep}
@@ -275,7 +306,7 @@ function CreateWO() {
 								color="primary"
 								onClick={handleNext}
 								disabled={nextDisabled}>
-								{activeStep === 6 ? "Finish" : "Next >"}
+								{activeStep === 5 ? "Finish" : "Next >"}
 							</Button>
 						}
 						backButton={
@@ -296,7 +327,7 @@ function CreateWO() {
 					<Button
 						variant="outlined"
 						color="primary"
-						onClick={() => setActiveStep(6)}>
+						onClick={() => setActiveStep(5)}>
 						{"<"}
 					</Button>
 					<b>Revisa la WO </b>
