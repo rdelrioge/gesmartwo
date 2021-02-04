@@ -214,14 +214,14 @@ function WorkOrder(props) {
 								</div>
 							</div>
 							<div className="qrcode">
-								<QRCode
+								{/* <QRCode
 									value={`${data.wo} ${data.case} ${shortTDS} ${data.equipo.cliente} ${data.equipo.sid} ${finDelServicio}`}
 									bgColor={"#ffffff"}
 									fgColor={"#000000"}
 									level={"L"}
 									includeMargin={false}
 									renderAs={"svg"}
-								/>
+								/> */}
 							</div>
 						</div>
 					</div>
