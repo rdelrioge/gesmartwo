@@ -1,8 +1,43 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./fichatecnica.scss";
 
 function FichaTecnica(props) {
 	const data = { ...props.data };
+
+	const [fotoNormal, setFotoNormal] = useState(data.datosISSSTE.fotoNormal);
+	const [fotoSerie, setFotoSerie] = useState(data.datosISSSTE.fotoSerie);
+	const [fotoInventario, setFotoInventario] = useState(
+		data.datosISSSTE.fotoInventario
+	);
+	const [fotoPanoramica, setFotoPanoramica] = useState(
+		data.datosISSSTE.fotoPanoramica
+	);
+
+	const checkIfCachePhotos = () => {
+		if (props.edit) {
+			let fotoNormalCache = JSON.parse(localStorage.getItem("fotoNormalCache"));
+			console.log(fotoNormalCache);
+			let fotoSerieCache = localStorage.getItem("fotoSerieCache");
+			let fotoInventarioCache = localStorage.getItem("fotoInventarioCache");
+			let fotoPanoramicaCache = localStorage.getItem("fotoPanoramicaCache");
+			if (fotoNormalCache) {
+				setFotoNormal(fotoNormalCache);
+			}
+			if (fotoSerieCache) {
+				setFotoSerie(fotoSerieCache);
+			}
+			if (fotoInventarioCache) {
+				setFotoInventario(fotoInventarioCache);
+			}
+			if (fotoPanoramicaCache) {
+				setFotoPanoramica(fotoPanoramicaCache);
+			}
+		}
+	};
+
+	useEffect(() => {
+		// checkIfCachePhotos();
+	}, []);
 
 	return (
 		<div className="fichatecnica">

@@ -103,7 +103,8 @@ function View4PeriodoDeServicio(props) {
 								<option value={"Preventivo"}>Preventivo</option>
 							) : (
 								<>
-									<option value={"Reparacion"}>Reparacion</option>
+									<option value={"Diagnóstico"}>Diagnóstico</option>
+									<option value={"Reparación"}>Reparacion</option>
 									<option value={"Instalación"}>Instalación</option>
 									<option value={"Solución de problemas"}>
 										Solución de problemas

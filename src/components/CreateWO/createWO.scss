@@ -196,15 +196,25 @@
 			h3 {
 				margin-bottom: 2px;
 			}
-			*:not(h3) {
-				font-size: 1em;
-			}
 			.MuiFormLabel-root {
-				font-size: 1m;
+				font-size: 0.8em;
 			}
 			.tresFr {
 				display: grid;
 				grid-template-columns: 1fr 1fr 1fr;
+				column-gap: 1em;
+			}
+			#programado {
+				margin: 0 auto;
+			}
+			#dateError {
+				color: red;
+				font-size: 0.8em;
+				margin: 0 auto;
+			}
+			.timers {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
 				column-gap: 1em;
 			}
 			.row {

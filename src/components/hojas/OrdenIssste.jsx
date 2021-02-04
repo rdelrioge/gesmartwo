@@ -10,12 +10,21 @@ function OrdenIssste(props) {
 	const [finDelServicio, setFinDelServicio] = useState("");
 	const [finDeMes, setFinDeMes] = useState("");
 	const [misRefacciones, setMisRefacciones] = useState([]);
+	const [diferencia, setDiferencia] = useState(0);
 
 	const calcularFinDeServicio = () => {
 		let fin = moment(data.tiempos[data.tiempos.length - 1][3]);
 		let finmes = moment(fin).endOf("month").format("DD");
 		setFinDeMes(finmes);
 		setFinDelServicio(fin);
+		let myDif = fin
+			.endOf("day")
+			.diff(moment(data.datosISSSTE.progEnd).endOf("day"), "days");
+		if (myDif > 0) {
+			setDiferencia(myDif);
+		} else {
+			setDiferencia(0);
+		}
 	};
 
 	const cortarTexto = (mydata) => {
@@ -271,15 +280,11 @@ function OrdenIssste(props) {
 						<div className="fechas">
 							<b className="paddingL">Inicio</b>
 							<div className="dma borderL">
-								{data.tipoDeServicio !== "PM (Mantenimiento Preventivo)" ? (
-									<span>{moment(finDelServicio).format("DD")}</span>
-								) : (
-									<span>01</span>
-								)}
+								<span>{moment(data.datosISSSTE.progStart).format("DD")}</span>
 								<span className="borderR borderL">
-									{moment(finDelServicio).format("MMM")}
+									{moment(data.datosISSSTE.progStart).format("MMM")}
 								</span>
-								<span>{moment(finDelServicio).format("YY")} </span>
+								<span>{moment(data.datosISSSTE.progStart).format("YY")} </span>
 							</div>
 							<div className="dma borderL">
 								<span>{moment(finDelServicio).format("DD")} </span>
@@ -297,15 +302,11 @@ function OrdenIssste(props) {
 						<div className="fechas">
 							<b className="paddingL">Término</b>
 							<div className="dma borderL">
-								{data.tipoDeServicio !== "PM (Mantenimiento Preventivo)" ? (
-									<span>{moment(finDelServicio).format("DD")}</span>
-								) : (
-									<span>{finDeMes}</span>
-								)}
+								<span>{moment(data.datosISSSTE.progEnd).format("DD")}</span>
 								<span className="borderR borderL">
-									{moment(finDelServicio).format("MMM")}
+									{moment(data.datosISSSTE.progEnd).format("MMM")}
 								</span>
-								<span>{moment(finDelServicio).format("YY")} </span>
+								<span>{moment(data.datosISSSTE.progEnd).format("YY")} </span>
 							</div>
 							<div className="dma borderL">
 								<span>{moment(finDelServicio).format("DD")} </span>
@@ -322,7 +323,7 @@ function OrdenIssste(props) {
 						</div>
 						<div className="atraso">
 							<b className="paddingL borderL">Días de atraso</b>
-							<span className="borderL centerText">0</span>
+							<span className="borderL centerText">{diferencia}</span>
 							<span className="borderL"></span>
 						</div>
 						<div className="borderBN"></div>
@@ -516,17 +517,9 @@ function OrdenIssste(props) {
 						<div className="servAnterior">
 							<span>Servicio Anterior por Mantenimiento:</span>
 							<b>Prev.</b>
-							<div className="borderB borderT centerText">
-								{data.tipoDeServicio === "PM (Mantenimiento Preventivo)"
-									? "X"
-									: null}
-							</div>
+							<div className="borderB borderT centerText"></div>
 							<b>Correc.</b>
-							<div className="borderB borderT borderR centerText">
-								{data.tipoDeServicio !== "PM (Mantenimiento Preventivo)"
-									? "X"
-									: null}
-							</div>
+							<div className="borderB borderT borderR centerText"></div>
 							<div></div>
 							<b>Autorización SMEM</b>
 						</div>

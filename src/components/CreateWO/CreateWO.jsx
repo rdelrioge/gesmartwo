@@ -149,7 +149,9 @@ function CreateWO(props) {
 								apto,
 								funcionando,
 								observaciones,
-								condiciones
+								condiciones,
+								reprogramado,
+								fechaDeReprogramacion
 							) => {
 								equipo.cliente === ""
 									? setDatos({
@@ -166,6 +168,8 @@ function CreateWO(props) {
 											funcionando,
 											observaciones,
 											condiciones,
+											reprogramado,
+											fechaDeReprogramacion,
 									  })
 									: setDatos({
 											...datos,
@@ -177,6 +181,8 @@ function CreateWO(props) {
 											funcionando,
 											observaciones,
 											condiciones,
+											reprogramado,
+											fechaDeReprogramacion,
 									  });
 							}}
 						/>
@@ -248,6 +254,10 @@ function CreateWO(props) {
 								edit={props.edit}
 								data={props.data}
 								flag={activeStep === 6 ? true : false}
+								step={activeStep}
+								handleNext={(nD) => {
+									setNextDisabled(nD);
+								}}
 								onDone={(datosISSSTE) => {
 									console.log(datosISSSTE);
 									setDatos({
@@ -356,7 +366,12 @@ function CreateWO(props) {
 						<SkeletorWO />
 					</>
 				) : (
-					<Print data={datos} flagAddFotos={flagAddFotos} angulos={angulos} />
+					<Print
+						data={datos}
+						flagAddFotos={flagAddFotos}
+						angulos={angulos}
+						editFlag={props.edit}
+					/>
 				)}
 			</div>
 		</div>

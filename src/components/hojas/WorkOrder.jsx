@@ -15,6 +15,7 @@ function WorkOrder(props) {
 	const [herramientas, setHerramientas] = useState(props.data.herramientas);
 	const [refacciones, setRefacciones] = useState(props.data.refacciones);
 	const [shortTDS, setShortTDS] = useState("");
+	const [fechaReprogramado, setFechaReprogamado] = useState("");
 
 	const calcularFolio = () => {
 		let y = moment(data.tiempos[0][1]).format("YY");
@@ -173,6 +174,27 @@ function WorkOrder(props) {
 		}
 	};
 
+	const displayReprogramacion = () => {
+		switch (data.reprogramado) {
+			case "Indefinidamente":
+				setFechaReprogamado(
+					"cuando el usuario defina disponibilidad del equipo"
+				);
+				break;
+			case "ProximoMes":
+				setFechaReprogamado(
+					`en ${moment().add(1, "months").format("MMMM-YYYY")}`
+				);
+				break;
+			case "FechaTentativa":
+				setFechaReprogamado(`tentativamente el 
+					${moment(data.fechaDeReprogramacion).format("DD-MMM-YYYY")}`);
+				break;
+			default:
+				break;
+		}
+	};
+
 	useEffect(() => {
 		calcularFinDeServicio();
 		calcularFolio();
@@ -180,6 +202,7 @@ function WorkOrder(props) {
 		displayHerramientas();
 		displayRefacciones();
 		compressTipoDeServicio();
+		displayReprogramacion();
 	}, []);
 
 	return (
@@ -240,10 +263,12 @@ function WorkOrder(props) {
 									: data.equipo.ciudad}
 							</span>
 						</div>
-						<div>
-							<span>Delegación:</span>
-							<span>{data.equipo.delegacion}</span>
-						</div>
+						{data.equipo.cliente === "ISSSTE" ? null : (
+							<div>
+								<span>Delegación:</span>
+								<span>{data.equipo.delegacion}</span>
+							</div>
+						)}
 						<div>
 							<span>Dependencia:</span>
 							<span>
@@ -388,7 +413,9 @@ function WorkOrder(props) {
 					<b className="reprogTitle">Reprogramación del servicio:</b>
 					<b className="reprog">
 						{data.condiciones === "Reprogramado"
-							? "En vista de la imposibilidad de realización del mantenimiento preventivo en el periodo designado por el manual, y tomando en consideración la solicitud del cliente, el mantenimiento previsto originalmente para el día:_____________, ahora será llevado a cabo el día:____________."
+							? `En vista de la imposibilidad de realización del mantenimiento preventivo en el periodo designado por el manual, y tomando en consideración la solicitud del cliente, el mantenimiento previsto originalmente para el día ${moment().format(
+									"DD-MMM-YYYY"
+							  )} , ahora será llevado a cabo ${fechaReprogramado} `
 							: "N/A"}
 					</b>
 					<div className="condiciones">

@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 
 import { TextField, InputLabel, FormControl, Select } from "@material-ui/core";
 
+import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
+import MomentUtils from "@date-io/moment";
+
 function View3DatosDelServicio(props) {
 	const [tipoDeServicio, setTipoDeServicio] = useState("");
 	const [tipoDeContrato, setTipoDeContrato] = useState("Contrato");
@@ -12,6 +15,8 @@ function View3DatosDelServicio(props) {
 	const [funcionando, setFuncionando] = useState(true);
 	const [observaciones, setObservaciones] = useState("");
 	const [condiciones, setCondiciones] = useState("Funcionando");
+	const [reprogramado, setReprogramado] = useState("ProximoMes");
+	const [fechaDeReprogramacion, setFechaDeReprogramacion] = useState("");
 
 	useEffect(() => {
 		if (props.edit) {
@@ -24,6 +29,8 @@ function View3DatosDelServicio(props) {
 			setFuncionando(props.data.datos.funcionando);
 			setObservaciones(props.data.datos.observaciones);
 			setCondiciones(props.data.datos.condiciones);
+			setReprogramado(props.data.datos.reprogramado);
+			setFechaDeReprogramacion(props.data.datos.fechaDeReprogramacion);
 		}
 	}, []);
 
@@ -62,7 +69,9 @@ function View3DatosDelServicio(props) {
 				apto,
 				funcionando,
 				observaciones,
-				condiciones
+				condiciones,
+				reprogramado,
+				fechaDeReprogramacion
 			);
 		}
 	}, [props.flag]);
@@ -84,7 +93,7 @@ function View3DatosDelServicio(props) {
 		<>
 			<h3>Datos del Servicio</h3>
 			<div className="item3">
-				<FormControl size="small" fullWidth variant="outlined">
+				<FormControl size="small" fullWidth required variant="outlined">
 					<InputLabel htmlFor="selectTipoDeServ">Tipo de servicio</InputLabel>
 					<Select
 						native
@@ -145,7 +154,7 @@ function View3DatosDelServicio(props) {
 			) : null}
 			<div className="item3">
 				{tipoDeServicio === "PM (Mantenimiento Preventivo)" ? (
-					<FormControl size="small" fullWidth variant="outlined">
+					<FormControl size="small" fullWidth required variant="outlined">
 						<InputLabel htmlFor="numeroPM">Síntoma</InputLabel>
 						<Select
 							native
@@ -171,6 +180,7 @@ function View3DatosDelServicio(props) {
 						label="Síntoma"
 						fullWidth
 						multiline
+						required
 						rows={3}
 						variant="outlined"
 						helperText={`${sintoma.split(" ").length - 1}/52`}
@@ -188,6 +198,7 @@ function View3DatosDelServicio(props) {
 					label="Descripción del servicio"
 					fullWidth
 					multiline
+					required
 					rows={4}
 					value={descripcion}
 					helperText={`${descripcion.split(" ").length - 1}/52`}
@@ -259,6 +270,53 @@ function View3DatosDelServicio(props) {
 					</Select>
 				</FormControl>
 			</div>
+			{condiciones === "Reprogramado" ? (
+				<div className="item3">
+					<FormControl size="small" fullWidth variant="outlined">
+						<InputLabel htmlFor="selectReprogramación">
+							Reprogramado para:
+						</InputLabel>
+						<Select
+							native
+							value={reprogramado}
+							onChange={(e) => setReprogramado(e.target.value)}
+							label="Reprogramado para:"
+							inputProps={{
+								name: "reprogramado",
+								id: "selectReprogramación",
+							}}>
+							<option value={"ProximoMes"}>Próximo Mes</option>
+							<option value={"Indefinidamente"}>Indefinidamente</option>
+							<option value={"FechaTentativa"}>Fecha Tentativa</option>
+						</Select>
+					</FormControl>
+				</div>
+			) : null}
+			{condiciones === "Reprogramado" && reprogramado === "FechaTentativa" ? (
+				<>
+					<MuiPickersUtilsProvider utils={MomentUtils}>
+						<DatePicker
+							margin="dense"
+							inputVariant="outlined"
+							autoOk
+							disableToolbar
+							showTodayButton
+							todayLabel="hoy"
+							clearable
+							clearLabel="borrar"
+							okLabel=""
+							cancelLabel=""
+							format="DD/MM/YY"
+							id="reprogDate"
+							label="fecha tentativa"
+							value={fechaDeReprogramacion}
+							onChange={(e) => {
+								setFechaDeReprogramacion(e);
+							}}
+						/>
+					</MuiPickersUtilsProvider>
+				</>
+			) : null}
 		</>
 	);
 }

@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
 
+import moment from "moment";
+import "moment/locale/es";
+
 import { TextField, IconButton } from "@material-ui/core";
+import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
+import MomentUtils from "@date-io/moment";
 
 function AddDatosISSSTE(props) {
 	const [bitacora, setBitacora] = useState("");
 	const [hrsReales, setHrsReales] = useState("");
 	const [vidaUtil, setVidaUtil] = useState("");
+	const [progStart, setProgStart] = useState(null);
+	const [progEnd, setProgEnd] = useState(null);
 	const [ubicacion, setUbicacion] = useState("");
 	const [recomendaciones, setRecomendaciones] = useState("");
 	const [conclusiones, setConclusiones] = useState("");
@@ -17,12 +24,15 @@ function AddDatosISSSTE(props) {
 	const [angulo2, setAngulo2] = useState(0);
 	const [angulo3, setAngulo3] = useState(0);
 	const [angulo4, setAngulo4] = useState(0);
+	const [dateError, setDateError] = useState(false);
 
 	useEffect(() => {
 		if (props.edit) {
 			setBitacora(props.data.datos.datosISSSTE.bitacora);
 			setHrsReales(props.data.datos.datosISSSTE.hrsReales);
 			setVidaUtil(props.data.datos.datosISSSTE.vidaUtil);
+			setProgStart(props.data.datos.datosISSSTE.progStart);
+			setProgEnd(props.data.datos.datosISSSTE.progEnd);
 			setUbicacion(props.data.datos.datosISSSTE.ubicacion);
 			setRecomendaciones(props.data.datos.datosISSSTE.recomendaciones);
 			setConclusiones(props.data.datos.datosISSSTE.conclusiones);
@@ -38,11 +48,32 @@ function AddDatosISSSTE(props) {
 	}, []);
 
 	useEffect(() => {
+		console.log(props);
+		if (props.step === 5) {
+			props.handleNext(true);
+			if (progStart !== null && progEnd !== null) {
+				let sdts = moment(progStart).startOf("day").valueOf();
+				let edts = moment(progEnd).startOf("day").valueOf();
+				console.log(sdts);
+				console.log(edts);
+				if (edts < sdts) {
+					setDateError(true);
+				} else {
+					props.handleNext(false);
+					setDateError(false);
+				}
+			}
+		}
+	}, [progStart, progEnd]);
+
+	useEffect(() => {
 		if (props.flag) {
 			props.onDone({
 				bitacora,
 				hrsReales,
 				vidaUtil,
+				progStart,
+				progEnd,
 				ubicacion,
 				recomendaciones,
 				conclusiones,
@@ -58,8 +89,11 @@ function AddDatosISSSTE(props) {
 	const subirFotoNormal = (e) => {
 		if (e !== null) {
 			let photo = new Image();
+			console.log(e.target.files[0]);
 			photo.src = URL.createObjectURL(e.target.files[0]);
 			setFotoNormal(photo.src);
+
+			// localStorage.setItem("fotoNormalCache", JSON.stringify(photo.src));
 			// URL.revokeObjectURL(photo.src);
 		} else {
 			setFotoNormal(e);
@@ -71,6 +105,7 @@ function AddDatosISSSTE(props) {
 			let photo = new Image();
 			photo.src = URL.createObjectURL(e.target.files[0]);
 			setFotoSerie(photo.src);
+			localStorage.setItem("fotoSerieCache", photo.src);
 			// URL.revokeObjectURL(photo.src);
 		} else {
 			setFotoSerie(e);
@@ -106,9 +141,10 @@ function AddDatosISSSTE(props) {
 					label="N° Bitacora"
 					fullWidth
 					variant="outlined"
-					type="tel"
+					type="text"
 					inputProps={{
-						maxLength: 8,
+						maxLength: 4,
+						inputMode: "numeric",
 					}}
 					size="small"
 					value={bitacora}
@@ -120,9 +156,10 @@ function AddDatosISSSTE(props) {
 					label="Hrs reales"
 					fullWidth
 					variant="outlined"
-					type="tel"
+					type="text"
 					inputProps={{
-						maxLength: 2,
+						maxLength: 5,
+						inputMode: "decimal",
 					}}
 					size="small"
 					value={hrsReales}
@@ -131,12 +168,14 @@ function AddDatosISSSTE(props) {
 					}}
 				/>
 				<TextField
-					label="Vida útil"
+					label="Vida útil (años)"
 					fullWidth
 					variant="outlined"
-					type="tel"
+					id="vidaUtil"
+					type="text"
 					inputProps={{
 						maxLength: 2,
+						inputMode: "numeric",
 					}}
 					size="small"
 					value={vidaUtil}
@@ -145,6 +184,58 @@ function AddDatosISSSTE(props) {
 					}}
 				/>
 			</div>
+			<p id="programado">Programado:</p>
+			<div className="timers">
+				<div className="inicio">
+					<MuiPickersUtilsProvider utils={MomentUtils}>
+						<DatePicker
+							margin="dense"
+							inputVariant="outlined"
+							autoOk
+							disableToolbar
+							showTodayButton
+							todayLabel="hoy"
+							clearable
+							clearLabel="borrar"
+							okLabel=""
+							cancelLabel=""
+							format="DD/MM/YY"
+							id="progStartProg"
+							label="fecha inicio"
+							value={progStart}
+							onChange={(e) => {
+								setProgStart(e);
+							}}
+						/>
+					</MuiPickersUtilsProvider>
+				</div>
+				<div className="final">
+					<MuiPickersUtilsProvider utils={MomentUtils}>
+						<DatePicker
+							margin="dense"
+							inputVariant="outlined"
+							autoOk
+							disableToolbar
+							showTodayButton
+							todayLabel="hoy"
+							clearable
+							clearLabel="borrar"
+							okLabel=""
+							cancelLabel=""
+							format="DD/MM/YY"
+							id="progEndProg"
+							label="fecha final"
+							value={progEnd}
+							onChange={(e) => {
+								setProgEnd(e);
+							}}
+						/>
+					</MuiPickersUtilsProvider>
+				</div>
+			</div>
+			{dateError ? (
+				<p id="dateError">Verifica que las fechas sean correctas</p>
+			) : null}
 			<TextField
 				label="Ubicación"
 				fullWidth

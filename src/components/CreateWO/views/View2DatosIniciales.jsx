@@ -103,11 +103,13 @@ function View2DatosIniciales(props) {
 			<TextField
 				label="Case"
 				fullWidth
+				required
 				variant="outlined"
-				type="tel"
+				type="text"
 				size="small"
 				inputProps={{
 					maxLength: 8,
+					inputMode: "numeric",
 				}}
 				value={caso}
 				onChange={(e) => setCaso(e.target.value)}
@@ -115,10 +117,12 @@ function View2DatosIniciales(props) {
 			<TextField
 				label="Work Order"
 				fullWidth
+				required
 				variant="outlined"
-				type="tel"
+				type="text"
 				inputProps={{
 					maxLength: 11,
+					inputMode: "numeric",
 				}}
 				size="small"
 				value={wo}
