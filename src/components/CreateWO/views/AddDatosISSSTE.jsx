@@ -88,12 +88,18 @@ function AddDatosISSSTE(props) {
 
 	const subirFotoNormal = (e) => {
 		if (e !== null) {
+			let canvas = document.createElement("canvas");
+			let ctx = canvas.getContext("2d");
 			let photo = new Image();
-			console.log(e.target.files[0]);
+			photo.onload = () => {
+				canvas.width = photo.width;
+				canvas.height = photo.height;
+				ctx.drawImage(photo, 0, 0);
+				let dataURL = canvas.toDataURL("image/png");
+				localStorage.setItem("fotoNormalCache", dataURL);
+			};
 			photo.src = URL.createObjectURL(e.target.files[0]);
 			setFotoNormal(photo.src);
-
-			// localStorage.setItem("fotoNormalCache", JSON.stringify(photo.src));
 			// URL.revokeObjectURL(photo.src);
 		} else {
 			setFotoNormal(e);
@@ -105,7 +111,6 @@ function AddDatosISSSTE(props) {
 			let photo = new Image();
 			photo.src = URL.createObjectURL(e.target.files[0]);
 			setFotoSerie(photo.src);
-			localStorage.setItem("fotoSerieCache", photo.src);
 			// URL.revokeObjectURL(photo.src);
 		} else {
 			setFotoSerie(e);

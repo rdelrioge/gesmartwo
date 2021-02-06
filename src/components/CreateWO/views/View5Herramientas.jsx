@@ -17,7 +17,9 @@ function View5Herramientas(props) {
 
 	useEffect(() => {
 		if (props.edit) {
-			setHerramientas(props.data.datos.herramientas);
+			if (props.data) {
+				setHerramientas(props.data.datos.herramientas);
+			}
 		}
 	}, []);
 

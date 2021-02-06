@@ -20,17 +20,19 @@ function View3DatosDelServicio(props) {
 
 	useEffect(() => {
 		if (props.edit) {
-			setTipoDeServicio(props.data.datos.tipoDeServicio);
-			setTipoDeContrato(props.data.datos.tipoDeContrato);
-			setContrato(props.data.datos.equipo.contrato);
-			setSintoma(props.data.datos.sintoma);
-			setDescripcion(props.data.datos.descripcion);
-			setApto(props.data.datos.apto);
-			setFuncionando(props.data.datos.funcionando);
-			setObservaciones(props.data.datos.observaciones);
-			setCondiciones(props.data.datos.condiciones);
-			setReprogramado(props.data.datos.reprogramado);
-			setFechaDeReprogramacion(props.data.datos.fechaDeReprogramacion);
+			if (props.data) {
+				setTipoDeServicio(props.data.datos.tipoDeServicio);
+				setTipoDeContrato(props.data.datos.tipoDeContrato);
+				setContrato(props.data.datos.equipo.contrato);
+				setSintoma(props.data.datos.sintoma);
+				setDescripcion(props.data.datos.descripcion);
+				setApto(props.data.datos.apto);
+				setFuncionando(props.data.datos.funcionando);
+				setObservaciones(props.data.datos.observaciones);
+				setCondiciones(props.data.datos.condiciones);
+				setReprogramado(props.data.datos.reprogramado);
+				setFechaDeReprogramacion(props.data.datos.fechaDeReprogramacion);
+			}
 		}
 	}, []);
 

@@ -22,7 +22,9 @@ function View4PeriodoDeServicio(props) {
 
 	useEffect(() => {
 		if (props.edit) {
-			setTiempos(props.data.datos.tiempos);
+			if (props.data) {
+				setTiempos(props.data.datos.tiempos);
+			}
 		}
 	}, []);
 

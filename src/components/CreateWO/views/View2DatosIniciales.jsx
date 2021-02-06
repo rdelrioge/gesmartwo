@@ -17,13 +17,15 @@ function View2DatosIniciales(props) {
 
 	useEffect(() => {
 		if (props.edit) {
-			setSID(props.data.datos.equipo.sid);
-			setCaso(props.data.datos.case);
-			setWO(props.data.datos.wo);
-			setEquipo(props.data.datos.equipo);
-			setShowAddManual(props.data.flagManual);
-			setHideInfo(false);
-			setEditar(true);
+			if (props.data) {
+				setSID(props.data.datos.equipo.sid);
+				setCaso(props.data.datos.case);
+				setWO(props.data.datos.wo);
+				setEquipo(props.data.datos.equipo);
+				setShowAddManual(props.data.flagManual);
+				setHideInfo(false);
+				setEditar(true);
+			}
 		}
 	}, []);
 

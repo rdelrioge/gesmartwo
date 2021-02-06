@@ -38,14 +38,16 @@ function CreateWO(props) {
 
 	useEffect(() => {
 		if (props.edit) {
-			console.log(props.data);
-			setDatos(props.data.datos);
-			setInge(props.data.datos.inge);
-			setEquipo(props.data.datos.equipo);
-			setAngulos(props.data.angulos);
-			setNextDisabled(props.data.nextDisabled);
-			setFlagAddFotos(props.data.flagAddFotos);
-			setFlagManual(props.data.flagManual);
+			if (props.data) {
+				console.log(props.data);
+				setDatos(props.data.datos);
+				setInge(props.data.datos.inge);
+				setEquipo(props.data.datos.equipo);
+				setAngulos(props.data.angulos);
+				setNextDisabled(props.data.nextDisabled);
+				setFlagAddFotos(props.data.flagAddFotos);
+				setFlagManual(props.data.flagManual);
+			}
 		}
 	}, []);
 

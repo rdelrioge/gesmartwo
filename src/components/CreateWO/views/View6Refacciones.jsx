@@ -12,7 +12,9 @@ function View6Refacciones(props) {
 
 	useEffect(() => {
 		if (props.edit) {
-			setRefacciones(props.data.datos.refacciones);
+			if (props.data) {
+				setRefacciones(props.data.datos.refacciones);
+			}
 		}
 	}, []);
 
