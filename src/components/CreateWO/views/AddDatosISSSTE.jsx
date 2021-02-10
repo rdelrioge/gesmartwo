@@ -3,11 +3,16 @@ import React, { useState, useEffect } from "react";
 import moment from "moment";
 import "moment/locale/es";
 
+import { localdb } from "../../../index";
+
 import { TextField, IconButton } from "@material-ui/core";
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 
 function AddDatosISSSTE(props) {
+	const datosISSSTE = { ...props.data?.datos.datosISSSTE };
+	const angulos = { ...props.data?.angulos };
+
 	const [bitacora, setBitacora] = useState("");
 	const [hrsReales, setHrsReales] = useState("");
 	const [vidaUtil, setVidaUtil] = useState("");
@@ -28,22 +33,46 @@ function AddDatosISSSTE(props) {
 
 	useEffect(() => {
 		if (props.edit) {
-			setBitacora(props.data.datos.datosISSSTE.bitacora);
-			setHrsReales(props.data.datos.datosISSSTE.hrsReales);
-			setVidaUtil(props.data.datos.datosISSSTE.vidaUtil);
-			setProgStart(props.data.datos.datosISSSTE.progStart);
-			setProgEnd(props.data.datos.datosISSSTE.progEnd);
-			setUbicacion(props.data.datos.datosISSSTE.ubicacion);
-			setRecomendaciones(props.data.datos.datosISSSTE.recomendaciones);
-			setConclusiones(props.data.datos.datosISSSTE.conclusiones);
-			setFotoNormal(props.data.datos.datosISSSTE.fotoNormal);
-			setFotoSerie(props.data.datos.datosISSSTE.fotoSerie);
-			setFotoInventario(props.data.datos.datosISSSTE.fotoInventario);
-			setFotoPanoramica(props.data.datos.datosISSSTE.fotoPanoramica);
-			setAngulo1(props.data.angulos.angulo1);
-			setAngulo2(props.data.angulos.angulo2);
-			setAngulo3(props.data.angulos.angulo3);
-			setAngulo4(props.data.angulos.angulo4);
+			setBitacora(datosISSSTE.bitacora);
+			setHrsReales(datosISSSTE.hrsReales);
+			setVidaUtil(datosISSSTE.vidaUtil);
+			setProgStart(datosISSSTE.progStart);
+			setProgEnd(datosISSSTE.progEnd);
+			setUbicacion(datosISSSTE.ubicacion);
+			setRecomendaciones(datosISSSTE.recomendaciones);
+			setConclusiones(datosISSSTE.conclusiones);
+			// setFotoNormal(fotoNormalCache ? fotoNormalCache : null);
+			localdb.fotos
+				.where("name")
+				.equals("fotoNormalCache")
+				.first((foto) => {
+					foto ? setFotoNormal(foto.value) : setFotoNormal(null);
+				});
+			localdb.fotos
+				.where("name")
+				.equals("fotoSerieCache")
+				.first((foto) => {
+					foto ? setFotoSerie(foto.value) : setFotoSerie(null);
+				});
+			localdb.fotos
+				.where("name")
+				.equals("fotoInventarioCache")
+				.first((foto) => {
+					foto ? setFotoInventario(foto.value) : setFotoInventario(null);
+				});
+			localdb.fotos
+				.where("name")
+				.equals("fotoPanoramicaCache")
+				.first((foto) => {
+					foto ? setFotoPanoramica(foto.value) : setFotoPanoramica(null);
+				});
+			// setFotoSerie(datosISSSTE.fotoSerie);
+			// setFotoInventario(datosISSSTE.fotoInventario);
+			// setFotoPanoramica(datosISSSTE.fotoPanoramica);
+			setAngulo1(angulos[0]);
+			setAngulo2(angulos[1]);
+			setAngulo3(angulos[2]);
+			setAngulo4(angulos[3]);
 		}
 	}, []);
 
@@ -64,7 +93,7 @@ function AddDatosISSSTE(props) {
 				}
 			}
 		}
-	}, [progStart, progEnd]);
+	}, [props, progStart, progEnd]);
 
 	useEffect(() => {
 		if (props.flag) {
@@ -86,7 +115,7 @@ function AddDatosISSSTE(props) {
 		}
 	}, [props.flag]);
 
-	const subirFotoNormal = (e) => {
+	const subirFoto = (e, cualFoto) => {
 		if (e !== null) {
 			let canvas = document.createElement("canvas");
 			let ctx = canvas.getContext("2d");
@@ -96,47 +125,87 @@ function AddDatosISSSTE(props) {
 				canvas.height = photo.height;
 				ctx.drawImage(photo, 0, 0);
 				let dataURL = canvas.toDataURL("image/png");
-				localStorage.setItem("fotoNormalCache", dataURL);
+				if (cualFoto === "fotoNormal") {
+					localdb.fotos.put({ name: "fotoNormalCache", value: dataURL });
+					setFotoNormal(photo.src);
+				}
+				if (cualFoto === "fotoSerie") {
+					localdb.fotos.put({ name: "fotoSerieCache", value: dataURL });
+					setFotoSerie(photo.src);
+				}
+				if (cualFoto === "fotoInventario") {
+					localdb.fotos.put({
+						name: "fotoInventarioCache",
+						value: dataURL,
+					});
+					setFotoInventario(photo.src);
+				}
+				if (cualFoto === "fotoPanoramica") {
+					localdb.fotos.put({
+						name: "fotoPanoramicaCache",
+						value: dataURL,
+					});
+					setFotoPanoramica(photo.src);
+				}
 			};
 			photo.src = URL.createObjectURL(e.target.files[0]);
-			setFotoNormal(photo.src);
-			// URL.revokeObjectURL(photo.src);
 		} else {
-			setFotoNormal(e);
+			if (cualFoto === "fotoNormal") {
+				localdb.fotos.put({ name: "fotoNormalCache", value: null });
+				setFotoNormal(e);
+			}
+			if (cualFoto === "fotoSerie") {
+				localdb.fotos.put({ name: "fotoSerieCache", value: null });
+				setFotoSerie(e);
+			}
+			if (cualFoto === "fotoInventario") {
+				localdb.fotos.put({
+					name: "fotoInventarioCache",
+					value: null,
+				});
+				setFotoInventario(e);
+			}
+			if (cualFoto === "fotoPanoramica") {
+				localdb.fotos.put({
+					name: "fotoPanoramicaCache",
+					value: null,
+				});
+				setFotoPanoramica(e);
+			}
 		}
 	};
 
-	const subirFotoSerie = (e) => {
-		if (e !== null) {
-			let photo = new Image();
-			photo.src = URL.createObjectURL(e.target.files[0]);
-			setFotoSerie(photo.src);
-			// URL.revokeObjectURL(photo.src);
-		} else {
-			setFotoSerie(e);
-		}
-	};
+	// const subirFotoSerie = (e) => {
+	// 	if (e !== null) {
+	// 		let photo = new Image();
+	// 		photo.src = URL.createObjectURL(e.target.files[0]);
+	// 		setFotoSerie(photo.src);
+	// 		// URL.revokeObjectURL(photo.src);
+	// 	} else {
+	// 		setFotoSerie(e);
+	// 	}
+	// };
 
-	const subirFotoInventario = (e) => {
-		if (e !== null) {
-			let photo = new Image();
-			photo.src = URL.createObjectURL(e.target.files[0]);
-			setFotoInventario(photo.src);
-			// URL.revokeObjectURL(photo.src);
-		} else {
-			setFotoInventario(e);
-		}
-	};
-	const subirFotoPanoramica = (e) => {
-		if (e !== null) {
-			let photo = new Image();
-			photo.src = URL.createObjectURL(e.target.files[0]);
-			setFotoPanoramica(photo.src);
-			// URL.revokeObjectURL(photo.src);
-		} else {
-			setFotoPanoramica(e);
-		}
-	};
+	// const subirFotoInventario = (e) => {
+	// 	if (e !== null) {
+	// 		let photo = new Image();
+	// 		photo.src = URL.createObjectURL(e.target.files[0]);
+	// 		setFotoInventario(photo.src);
+	// 		// URL.revokeObjectURL(photo.src);
+	// 	} else {
+	// 		setFotoInventario(e);
+	// 	}
+	// };
+	// const subirFotoPanoramica = (e) => {
+	// 	if (e !== null) {
+	// 		let photo = new Image();
+	// 		photo.src = URL.createObjectURL(e.target.files[0]);
+	// 		setFotoPanoramica(photo.src);
+	// 		// URL.revokeObjectURL(photo.src);
+	// 	} else {
+	// 		setFotoPanoramica(e);
+	// 	}
+	// };
 
 	return (
 		<div className="views ISSSTE">
@@ -197,6 +266,7 @@ function AddDatosISSSTE(props) {
 							margin="dense"
 							inputVariant="outlined"
 							autoOk
+							required
 							disableToolbar
 							showTodayButton
 							todayLabel="hoy"
@@ -209,7 +279,7 @@ function AddDatosISSSTE(props) {
 							label="fecha inicio"
 							value={progStart}
 							onChange={(e) => {
-								setProgStart(e);
+								setProgStart(e.startOf("day").valueOf());
 							}}
 						/>
 					</MuiPickersUtilsProvider>
@@ -220,6 +290,7 @@ function AddDatosISSSTE(props) {
 							margin="dense"
 							inputVariant="outlined"
 							autoOk
+							required
 							disableToolbar
 							showTodayButton
 							todayLabel="hoy"
@@ -232,7 +303,7 @@ function AddDatosISSSTE(props) {
 							label="fecha final"
 							value={progEnd}
 							onChange={(e) => {
-								setProgEnd(e);
+								setProgEnd(e.startOf("day").valueOf());
 							}}
 						/>
 					</MuiPickersUtilsProvider>
@@ -307,7 +378,9 @@ function AddDatosISSSTE(props) {
 							}>
 							R
 						</b>
-						<b className="btnDelete" onClick={() => subirFotoNormal(null)}>
+						<b
+							className="btnDelete"
+							onClick={() => subirFoto(null, "fotoNormal")}>
 							X
 						</b>
 						<img
@@ -327,7 +400,7 @@ function AddDatosISSSTE(props) {
 							className="inputPhoto"
 							id="antes1"
 							onChange={(e) => {
-								subirFotoNormal(e);
+								subirFoto(e, "fotoNormal");
 							}}
 							type="file"
 						/>
@@ -359,7 +432,9 @@ function AddDatosISSSTE(props) {
 							}>
 							R
 						</b>
-						<b className="btnDelete" onClick={() => subirFotoSerie(null)}>
+						<b
+							className="btnDelete"
+							onClick={() => subirFoto(null, "fotoSerie")}>
 							X
 						</b>
 						<img
@@ -379,7 +454,7 @@ function AddDatosISSSTE(props) {
 							className="inputPhoto"
 							id="antes2"
 							onChange={(e) => {
-								subirFotoSerie(e);
+								subirFoto(e, "fotoSerie");
 							}}
 							type="file"
 						/>
@@ -413,7 +488,9 @@ function AddDatosISSSTE(props) {
 							}>
 							R
 						</b>
-						<b className="btnDelete" onClick={() => subirFotoInventario(null)}>
+						<b
+							className="btnDelete"
+							onClick={() => subirFoto(null, "fotoInventario")}>
 							X
 						</b>
 						<img
@@ -433,7 +510,7 @@ function AddDatosISSSTE(props) {
 							className="inputPhoto"
 							id="durante1"
 							onChange={(e) => {
-								subirFotoInventario(e);
+								subirFoto(e, "fotoInventario");
 							}}
 							type="file"
 						/>
@@ -465,7 +542,9 @@ function AddDatosISSSTE(props) {
 							}>
 							R
 						</b>
-						<b className="btnDelete" onClick={() => subirFotoPanoramica(null)}>
+						<b
+							className="btnDelete"
+							onClick={() => subirFoto(null, "fotoPanoramica")}>
 							X
 						</b>
 						<img
@@ -485,7 +564,7 @@ function AddDatosISSSTE(props) {
 							className="inputPhoto"
 							id="durante2"
 							onChange={(e) => {
-								subirFotoPanoramica(e);
+								subirFoto(e, "fotoPanoramica");
 							}}
 							type="file"
 						/>

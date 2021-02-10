@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 
 import { db } from "../../index";
+import { localdb } from "../../index";
 import CreateWO from "../CreateWO/CreateWO";
 
 function SSO(props) {
@@ -19,6 +20,7 @@ function SSO(props) {
 	const [animation3, setAnimation3] = useState(false);
 	const [openNew, setOpenNew] = useState(false);
 	const [editWO, setEditWO] = useState(false);
+	const [cacheData, setCacheData] = useState(null);
 
 	useEffect(() => {
 		const loggedInUser = localStorage.getItem("user");
@@ -29,6 +31,16 @@ function SSO(props) {
 			setSSO(foundUser.sso);
 		}
 	}, []);
+
+	useEffect(() => {
+		localdb.datosRecientes
+			.where("name")
+			.equals("reciente")
+			.first((data) => {
+				console.log(data);
+				data ? setCacheData(data.value) : setCacheData(null);
+			});
+	}, [localdb]);
 
 	useEffect(() => {
 		if (inge) {
@@ -85,9 +97,6 @@ function SSO(props) {
 		localStorage.removeItem("user");
 	};
 
-	const handleCloseNew = () => {
-		setOpenNew(false);
-	};
 	return (
 		<div className="ssoC">
 			{inge ? (
@@ -152,7 +161,7 @@ function SSO(props) {
 							inge={inge}
 							close={() => setOpenNew(false)}
 							edit={editWO}
-							data={JSON.parse(localStorage.getItem("datosActuales"))}
+							data={cacheData}
 						/>
 					</Dialog>
 				</div>

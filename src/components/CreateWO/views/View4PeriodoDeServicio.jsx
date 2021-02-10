@@ -60,7 +60,7 @@ function View4PeriodoDeServicio(props) {
 				alert("Revisa que las horas sean correctas");
 			} else {
 				let arrTemp = [...tiempos];
-				arrTemp.push([tipoDeTrabajo, startDate, startTime, endDate, endTime]);
+				arrTemp.push([tipoDeTrabajo, sdts, stts, edts, etts]);
 				setTiempos(arrTemp);
 				setTipoDeTrabajo("");
 				setStartDate(null);

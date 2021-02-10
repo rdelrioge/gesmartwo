@@ -4,6 +4,8 @@ import moment from "moment";
 import "../../../node_modules/moment/locale/es";
 // import "./CreateWO/views/node_modules/moment/locale/es";
 
+import { localdb } from "../../index";
+
 import { MobileStepper, Button, Switch, IconButton } from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
 
@@ -78,7 +80,12 @@ function CreateWO(props) {
 				flagManual,
 			};
 			console.log(datosActuales);
-			localStorage.setItem("datosActuales", JSON.stringify(datosActuales));
+			localdb.datosRecientes.put({
+				id: 1,
+				name: "reciente",
+				value: datosActuales,
+			});
+			// localStorage.setItem("datosActuales", JSON.stringify(datosActuales));
 		}
 	}, [datos]);
 
