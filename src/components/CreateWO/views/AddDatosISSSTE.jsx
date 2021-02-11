@@ -19,7 +19,7 @@ function AddDatosISSSTE(props) {
 	const [progStart, setProgStart] = useState(null);
 	const [progEnd, setProgEnd] = useState(null);
 	const [ubicacion, setUbicacion] = useState("");
-	const [recomendaciones, setRecomendaciones] = useState("");
+	const [recomendaciones, setRecomendaciones] = useState("Ninguna");
 	const [conclusiones, setConclusiones] = useState("");
 	const [fotoNormal, setFotoNormal] = useState(null);
 	const [fotoSerie, setFotoSerie] = useState(null);
@@ -124,29 +124,33 @@ function AddDatosISSSTE(props) {
 				canvas.width = photo.width;
 				canvas.height = photo.height;
 				ctx.drawImage(photo, 0, 0);
-				let dataURL = canvas.toDataURL("image/png");
-				if (cualFoto === "fotoNormal") {
-					localdb.fotos.put({ name: "fotoNormalCache", value: dataURL });
-					setFotoNormal(photo.src);
-				}
-				if (cualFoto === "fotoSerie") {
-					localdb.fotos.put({ name: "fotoSerieCache", value: dataURL });
-					setFotoSerie(photo.src);
-				}
-				if (cualFoto === "fotoInventario") {
-					localdb.fotos.put({
-						name: "fotoInventarioCache",
-						value: dataURL,
-					});
-					setFotoInventario(photo.src);
-				}
-				if (cualFoto === "fotoPanoramica") {
-					localdb.fotos.put({
-						name: "fotoPanoramicaCache",
-						value: dataURL,
-					});
-					setFotoPanoramica(photo.src);
-				}
+				let prevImg64 = canvas.toDataURL("image/png");
+
+				resizeBase64Img(prevImg64, 300, 150).then((dataURL) => {
+					console.log(dataURL);
+					if (cualFoto === "fotoNormal") {
+						localdb.fotos.put({ name: "fotoNormalCache", value: dataURL });
+						setFotoNormal(photo.src);
+					}
+					if (cualFoto === "fotoSerie") {
+						localdb.fotos.put({ name: "fotoSerieCache", value: dataURL });
+						setFotoSerie(photo.src);
+					}
+					if (cualFoto === "fotoInventario") {
+						localdb.fotos.put({
+							name: "fotoInventarioCache",
+							value: dataURL,
+						});
+						setFotoInventario(photo.src);
+					}
+					if (cualFoto === "fotoPanoramica") {
+						localdb.fotos.put({
+							name: "fotoPanoramicaCache",
+							value: dataURL,
+						});
+						setFotoPanoramica(photo.src);
+					}
+				});
 			};
 			photo.src = URL.createObjectURL(e.target.files[0]);
 		} else {
@@ -173,6 +177,22 @@ function AddDatosISSSTE(props) {
 				setFotoPanoramica(e);
 			}
 		}
+	};
+
+	const resizeBase64Img = (base64, newWidth, newHeight) => {
+		return new Promise((resolve, reject) => {
+			var canvas = document.createElement("canvas");
+			canvas.style.width = newWidth.toString() + "px";
+			canvas.style.height = newHeight.toString() + "px";
+			let context = canvas.getContext("2d");
+			let img = document.createElement("img");
+			img.src = base64;
+			img.onload = function () {
+				context.scale(newWidth / img.width, newHeight / img.height);
+				context.drawImage(img, 0, 0);
+				resolve(canvas.toDataURL());
+			};
+		});
 	};
 
 	// const subirFotoSerie = (e) => {

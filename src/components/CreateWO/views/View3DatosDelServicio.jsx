@@ -15,8 +15,10 @@ function View3DatosDelServicio(props) {
 	const [funcionando, setFuncionando] = useState(true);
 	const [observaciones, setObservaciones] = useState("");
 	const [condiciones, setCondiciones] = useState("Funcionando");
-	const [reprogramado, setReprogramado] = useState("ProximoMes");
-	const [fechaDeReprogramacion, setFechaDeReprogramacion] = useState("");
+	const [reprogramado, setReprogramado] = useState("");
+	const [fechaDeReprogramacion, setFechaDeReprogramacion] = useState(
+		Date.now()
+	);
 
 	useEffect(() => {
 		if (props.edit) {
@@ -59,6 +61,11 @@ function View3DatosDelServicio(props) {
 		condiciones,
 	]);
 
+	useEffect(() => {
+		if (condiciones === "Reprogramado") {
+			setReprogramado("ProximoMes");
+		}
+	}, [condiciones]);
 	useEffect(() => {
 		console.log(props);
 		if (props.flag) {
@@ -288,7 +295,6 @@ function View3DatosDelServicio(props) {
 								id: "selectReprogramación",
 							}}>
 							<option value={"ProximoMes"}>Próximo Mes</option>
-							<option value={"Indefinidamente"}>Indefinidamente</option>
 							<option value={"FechaTentativa"}>Fecha Tentativa</option>
 						</Select>
 					</FormControl>
@@ -313,7 +319,7 @@ function View3DatosDelServicio(props) {
 							label="fecha tentativa"
 							value={fechaDeReprogramacion}
 							onChange={(e) => {
-								setFechaDeReprogramacion(e);
+								setFechaDeReprogramacion(e.startOf("day").valueOf());
 							}}
 						/>
 					</MuiPickersUtilsProvider>

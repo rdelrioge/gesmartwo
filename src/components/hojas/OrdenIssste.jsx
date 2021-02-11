@@ -357,7 +357,9 @@ function OrdenIssste(props) {
 					</div>
 					{cortarTexto(data.sintoma)}
 					{cortarTexto(data.descripcion)}
-					<div></div>
+					<div className="funcionando100">
+						{data.funcionando ? "Equipo funcionando al 100% " : null}{" "}
+					</div>
 					<div className="grayed">
 						Condiciones en las que se deja el Equipo:
 					</div>
