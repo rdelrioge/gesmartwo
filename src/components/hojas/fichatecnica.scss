@@ -52,13 +52,13 @@
 			.cuadroContainer {
 				height: 20em;
 				width: 34.8vw;
-				border: 1px solid black;
+				// border: 1px solid black;
 				display: grid;
 				.cuadro {
-					// height: 10em !important;
-					// width: 10em !important;
-					margin: auto;
-					padding: 4px;
+					height: 20em;
+					width: 34.8vw;
+					// margin: auto;
+					// padding: 4px;
 				}
 			}
 			span {
@@ -107,16 +107,15 @@
 @media print {
 	.fichatecnica {
 		font-size: 2.2vw;
+		margin-bottom: 0 !important;
 		.rows {
 			margin-top: 0;
 		}
 		img {
 			width: 169pt !important;
 			height: 110pt !important;
-			margin: auto;
+			// margin: auto;
+			margin-top: 0 !important;
 		}
-	}
-	@page {
-		margin-bottom: 1cm;
 	}
 }

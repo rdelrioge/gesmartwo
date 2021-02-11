@@ -74,7 +74,7 @@ function View1SSO(props) {
 					Validar
 				</Button>
 			)}
-			<b className="version">Version 1.2.5</b>
+			<b className="version">Version 1.2.7</b>
 		</>
 	);
 }

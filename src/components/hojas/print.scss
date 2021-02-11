@@ -1,20 +1,28 @@
 .printable {
-  .saltodepag {
-    border-bottom: 1px dashed black;
-  }
+	.saltodepag {
+		border-bottom: 1px dashed black;
+	}
 }
 
 @media print {
-  .printable {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-      "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-      "Helvetica Neue", sans-serif !important;
-    .saltodepag {
-      height: 10pt;
-      border-bottom: none !important;
-    }
-    .marginTop {
-      margin-top: 10em;
-    }
-  }
+	.printable {
+		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+			"Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+			"Helvetica Neue", sans-serif !important;
+		.saltodepag {
+			margin-top: 20em !important;
+			border-bottom: none !important;
+		}
+		.marginTop {
+			margin-top: 300pt !important;
+		}
+	}
+	@page {
+		margin: 0 !important;
+		size: auto;
+	}
+	// body {
+	// 	padding-top: 5cm !important;
+	// 	padding-bottom: 5cm !important;
+	// }
 }
