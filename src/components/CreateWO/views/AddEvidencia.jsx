@@ -111,7 +111,7 @@ function AddEvidencia(props) {
 	};
 
 	return (
-		<div className="views IMSS">
+		<div className="IMSS">
 			{cliente === "IMSS" ? <h3>Evidencia IMSS</h3> : <b></b>}
 			<div className="row antes">
 				{fotoAntes1 ? (

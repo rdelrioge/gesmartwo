@@ -32,6 +32,7 @@ function CreateWO(props) {
 	// flags
 	const [nextDisabled, setNextDisabled] = useState(true);
 	const [flagAddFotos, setFlagAddFotos] = useState(false);
+	const [flagAddCapacitacion, setFlagAddCapacitacion] = useState(false);
 	const [flagManual, setFlagManual] = useState(false);
 	const [flagFinish, setFlagFinish] = useState(false);
 	const [loading, setLoading] = useState(true);
@@ -48,6 +49,7 @@ function CreateWO(props) {
 				setAngulos(props.data.angulos);
 				setNextDisabled(props.data.nextDisabled);
 				setFlagAddFotos(props.data.flagAddFotos);
+				setFlagAddCapacitacion(props.data.flagAddCapacitacion);
 				setFlagManual(props.data.flagManual);
 			}
 		}
@@ -77,6 +79,7 @@ function CreateWO(props) {
 				angulos,
 				nextDisabled,
 				flagAddFotos,
+				flagAddCapacitacion,
 				flagManual,
 			};
 			console.log(datosActuales);
@@ -239,25 +242,33 @@ function CreateWO(props) {
 							}}
 						/>
 					</div>
-					<div>
+					<div className=" views viewPorCliente">
 						{equipo && equipo.cliente === "IMSS" ? (
-							<AddEvidencia
-								edit={props.edit}
-								data={props.data}
-								cliente={equipo.cliente}
-								flag={activeStep === 6 ? true : false}
-								onDone={(fotos) => {
-									console.log(fotos);
-									setDatos({
-										...datos,
-										fotos,
-									});
-								}}
-								onAngulos={(angs) => {
-									console.log(angs);
-									setAngulos(angs);
-								}}
-							/>
+							<>
+								<AddEvidencia
+									edit={props.edit}
+									data={props.data}
+									cliente={equipo.cliente}
+									flag={activeStep === 6 ? true : false}
+									onDone={(fotos) => {
+										console.log(fotos);
+										setDatos({
+											...datos,
+											fotos,
+										});
+									}}
+									onAngulos={(angs) => {
+										console.log(angs);
+										setAngulos(angs);
+									}}
+								/>
+								<div className="switchHojaCapacitacion">
+									<b>Desea incluir la hoja de Capacitacion?</b>
+									<Switch
+										onChange={(e) => setFlagAddCapacitacion(e.target.checked)}
+									/>
+								</div>
+							</>
 						) : equipo && equipo.cliente === "ISSSTE" ? (
 							<AddDatosISSSTE
 								edit={props.edit}
@@ -378,6 +389,7 @@ function CreateWO(props) {
 					<Print
 						data={datos}
 						flagAddFotos={flagAddFotos}
+						flagAddCapacitacion={flagAddCapacitacion}
 						angulos={angulos}
 						editFlag={props.edit}
 					/>

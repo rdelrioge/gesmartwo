@@ -19,7 +19,9 @@ function Print(props) {
 				<>
 					<Evidencia data={props.data} angulos={props.angulos} />
 					<div className="saltodepag"></div>
-					<Capacitacion data={props.data} />
+					{props.flagAddCapacitacion ? (
+						<Capacitacion data={props.data} />
+					) : null}
 				</>
 			) : props.data.equipo.cliente === "ISSSTE" ? (
 				<>

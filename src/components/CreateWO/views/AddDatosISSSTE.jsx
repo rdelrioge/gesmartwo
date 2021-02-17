@@ -228,7 +228,7 @@ function AddDatosISSSTE(props) {
 	// };
 
 	return (
-		<div className="views ISSSTE">
+		<div className="ISSSTE">
 			<h3>Datos ISSSTE</h3>
 			<div className="tresFr">
 				<TextField

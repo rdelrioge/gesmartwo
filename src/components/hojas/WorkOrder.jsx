@@ -230,7 +230,9 @@ function WorkOrder(props) {
 										</span>
 									</div>
 								</>
-							) : null}
+							) : (
+								<span></span>
+							)}
 							<span className="tituloHoja"> Hoja de servicio</span>
 						</div>
 						<div className="foliosAbajo">
