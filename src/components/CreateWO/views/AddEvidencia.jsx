@@ -411,7 +411,7 @@ function AddEvidencia(props) {
 							type="file"
 						/>
 						<label htmlFor="despues2">
-							Despues
+							Etiqueta
 							<IconButton color="primary" component="span">
 								<span className="material-icons">add_a_photo</span>
 							</IconButton>
