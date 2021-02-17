@@ -16,9 +16,7 @@ function View3DatosDelServicio(props) {
 	const [observaciones, setObservaciones] = useState("");
 	const [condiciones, setCondiciones] = useState("Funcionando");
 	const [reprogramado, setReprogramado] = useState("");
-	const [fechaDeReprogramacion, setFechaDeReprogramacion] = useState(
-		Date.now()
-	);
+	const [fechaDeReprogramacion, setFechaDeReprogramacion] = useState("");
 
 	useEffect(() => {
 		if (props.edit) {
@@ -62,10 +60,25 @@ function View3DatosDelServicio(props) {
 	]);
 
 	useEffect(() => {
-		if (condiciones === "Reprogramado") {
-			setReprogramado("ProximoMes");
+		if (condiciones !== "Funcionando") {
+			setApto(false);
+			setFuncionando(false);
+			setDescripcion("");
+			if (condiciones === "Reprogramado") {
+				setDescripcion(
+					"El equipo no se encontró disponible para realizar el servicio debido a"
+				);
+				setReprogramado("ProximoMes");
+				setFechaDeReprogramacion(Date.now);
+			}
+		} else {
+			setApto(true);
+			setFuncionando(true);
+			setReprogramado("");
+			setFechaDeReprogramacion("");
 		}
 	}, [condiciones]);
+
 	useEffect(() => {
 		console.log(props);
 		if (props.flag) {
