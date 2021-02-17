@@ -220,7 +220,19 @@ function WorkOrder(props) {
 						<p>Atención a Clientes Servicio 01 800 904 3400</p>
 					</div>
 					<div className="folios">
-						<p>Hoja de servicio</p>
+						<div className="tituloHojaContainer">
+							{data.equipo.consecutivo && data.equipo.consecutivo !== "" ? (
+								<>
+									<div className="consecutivo">
+										<span className="consecutivoTitle">Consecutivo: </span>
+										<span className="noDeConsecutivo">
+											{data.equipo.consecutivo}
+										</span>
+									</div>
+								</>
+							) : null}
+							<span className="tituloHoja"> Hoja de servicio</span>
+						</div>
 						<div className="foliosAbajo">
 							<div className="numerosFolios">
 								<div>

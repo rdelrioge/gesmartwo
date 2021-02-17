@@ -24,10 +24,22 @@
 			.folios {
 				display: grid;
 				grid-template-rows: 1fr 3fr;
-				p {
-					margin: 0;
-					font-weight: bold;
-					text-align: right;
+				.tituloHojaContainer {
+					display: grid;
+					grid-template-columns: 3fr 1fr;
+					.consecutivo {
+						display: grid;
+						grid-template-columns: 1fr 2fr;
+						.noDeConsecutivo {
+							text-align: center;
+							font-weight: bold;
+						}
+					}
+					.tituloHoja {
+						margin: 0;
+						font-weight: bold;
+						text-align: right;
+					}
 				}
 				.foliosAbajo {
 					display: grid;
