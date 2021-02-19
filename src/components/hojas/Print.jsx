@@ -35,11 +35,13 @@ function Print(props) {
 					<OrdenIssste data={props.data} />
 					<div className="saltodepag"></div>
 					<div className="marginTop"></div>
-					<FichaTecnica
-						data={props.data}
-						angulos={props.angulos}
-						edit={props.editFlag}
-					/>
+					{props.data.condiciones === "Reprogramado" ? null : (
+						<FichaTecnica
+							data={props.data}
+							angulos={props.angulos}
+							edit={props.editFlag}
+						/>
+					)}
 				</>
 			) : props.flagAddFotos ? (
 				<Evidencia data={props.data} angulos={props.angulos} />

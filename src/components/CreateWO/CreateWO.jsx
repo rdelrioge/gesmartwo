@@ -98,8 +98,11 @@ function CreateWO(props) {
 			setLoading(true);
 			const timer = setTimeout(() => {
 				setLoading(false);
+				setActiveStep(6);
 			}, 2500);
-			return () => clearTimeout(timer);
+			return () => {
+				clearTimeout(timer);
+			};
 		}
 
 		if (activeStep === 6) {

@@ -198,10 +198,10 @@ function WorkOrder(props) {
 				break;
 			case "FechaTentativa":
 				if (data.equipo.cliente === "IMSS") {
-					setFechaReprogamado(`tentativamente en la semana 
+					setFechaReprogamado(`en la semana 
 					${moment(data.fechaDeReprogramacion).week()}`);
 				} else {
-					setFechaReprogamado(`tentativamente el 
+					setFechaReprogamado(`el 
 						${moment(data.fechaDeReprogramacion).format("DD-MMM-YYYY")}`);
 				}
 				break;

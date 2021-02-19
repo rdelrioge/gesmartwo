@@ -22,7 +22,12 @@ function OrdenIssste(props) {
 		setFinDelServicio(fin);
 		let myDif = fin
 			.endOf("day")
-			.diff(moment(data.datosISSSTE.progEnd).endOf("day"), "days");
+			.diff(
+				moment(data.datosISSSTE ? data.datosISSSTE.progEnd : Date.now()).endOf(
+					"day"
+				),
+				"days"
+			);
 		if (myDif > 0) {
 			setDiferencia(myDif);
 		} else {
@@ -80,69 +85,78 @@ function OrdenIssste(props) {
 	};
 
 	const displayRefacciones = () => {
-		let arrTemp = [
-			["", "", "", ""],
-			["", "", "", ""],
-			["", "", "", ""],
-		];
-		switch (data.refacciones.length) {
-			case 0:
-				break;
-			case 1:
-				arrTemp = [
-					[
-						data.refacciones[0][1],
-						data.refacciones[0][2],
-						data.refacciones[0][0],
-						"pza",
-					],
-					["", "", "", ""],
-					["", "", "", ""],
-				];
-				break;
-			case 2:
-				arrTemp = [
-					[
-						data.refacciones[0][1],
-						data.refacciones[0][2],
-						data.refacciones[0][0],
-						"pza",
-					],
-					[
-						data.refacciones[1][1],
-						data.refacciones[1][2],
-						data.refacciones[1][0],
-						"pza",
-					],
-					["", "", "", ""],
-				];
-				break;
-			case 3:
-				arrTemp = [
-					[
-						data.refacciones[0][1],
-						data.refacciones[0][2],
-						data.refacciones[0][0],
-						"pza",
-					],
-					[
-						data.refacciones[1][1],
-						data.refacciones[1][2],
-						data.refacciones[1][0],
-						"pza",
-					],
-					[
-						data.refacciones[2][1],
-						data.refacciones[2][2],
-						data.refacciones[2][0],
-						"pza",
-					],
-				];
-				break;
-			default:
-				break;
+		if (data.refacciones) {
+			let arrTemp = [
+				["", "", "", ""],
+				["", "", "", ""],
+				["", "", "", ""],
+			];
+			switch (data.refacciones.length) {
+				case 0:
+					break;
+				case 1:
+					arrTemp = [
+						[
+							data.refacciones[0][1],
+							data.refacciones[0][2],
+							data.refacciones[0][0],
+							"pza",
+						],
+						["", "", "", ""],
+						["", "", "", ""],
+					];
+					break;
+				case 2:
+					arrTemp = [
+						[
+							data.refacciones[0][1],
+							data.refacciones[0][2],
+							data.refacciones[0][0],
+							"pza",
+						],
+						[
+							data.refacciones[1][1],
+							data.refacciones[1][2],
+							data.refacciones[1][0],
+							"pza",
+						],
+						["", "", "", ""],
+					];
+					break;
+				case 3:
+					arrTemp = [
+						[
+							data.refacciones[0][1],
+							data.refacciones[0][2],
+							data.refacciones[0][0],
+							"pza",
+						],
+						[
+							data.refacciones[1][1],
+							data.refacciones[1][2],
+							data.refacciones[1][0],
+							"pza",
+						],
+						[
+							data.refacciones[2][1],
+							data.refacciones[2][2],
+							data.refacciones[2][0],
+							"pza",
+						],
+					];
+					break;
+				default:
+					break;
+			}
+			setMisRefacciones(arrTemp);
+		} else {
+			let arrTemp = [
+				["", "", "", ""],
+				["", "", "", ""],
+				["", "", "", ""],
+			];
+			setMisRefacciones(arrTemp);
 		}
-		setMisRefacciones(arrTemp);
 	};
 
 	const esReprogramado = () => {
@@ -309,11 +323,33 @@ function OrdenIssste(props) {
 						<div className="fechas">
 							<b className="paddingL">Inicio</b>
 							<div className="dma borderL">
-								<span>{moment(data.datosISSSTE.progStart).format("DD")}</span>
-								<span className="borderR borderL">
-									{moment(data.datosISSSTE.progStart).format("MMM")}
+								<span>
+									{moment(
+										data.datosISSSTE
+											? data.datosISSSTE.progStart !== null
+												? data.datosISSSTE.progStart
+												: Date.now()
+											: Date.now()
+									).format("DD")}
 								</span>
-								<span>{moment(data.datosISSSTE.progStart).format("YY")} </span>
+								<span className="borderR borderL">
+									{moment(
+										data.datosISSSTE
+											? data.datosISSSTE.progStart !== null
+												? data.datosISSSTE.progStart
+												: Date.now()
+											: Date.now()
+									).format("MMM")}
+								</span>
+								<span>
+									{moment(
+										data.datosISSSTE
+											? data.datosISSSTE.progStart !== null
+												? data.datosISSSTE.progStart
+												: Date.now()
+											: Date.now()
+									).format("YY")}
+								</span>
 							</div>
 							<div className="dma borderL">
 								<span>{moment(finDelServicio).format("DD")} </span>
@@ -331,11 +367,33 @@ function OrdenIssste(props) {
 						<div className="fechas">
 							<b className="paddingL">Término</b>
 							<div className="dma borderL">
-								<span>{moment(data.datosISSSTE.progEnd).format("DD")}</span>
-								<span className="borderR borderL">
-									{moment(data.datosISSSTE.progEnd).format("MMM")}
+								<span>
+									{moment(
+										data.datosISSSTE
+											? data.datosISSSTE.progEnd !== null
+												? data.datosISSSTE.progEnd
+												: Date.now()
+											: Date.now()
+									).format("DD")}
 								</span>
-								<span>{moment(data.datosISSSTE.progEnd).format("YY")} </span>
+								<span className="borderR borderL">
+									{moment(
+										data.datosISSSTE
+											? data.datosISSSTE.progEnd !== null
+												? data.datosISSSTE.progEnd
+												: Date.now()
+											: Date.now()
+									).format("MMM")}
+								</span>
+								<span>
+									{moment(
+										data.datosISSSTE
+											? data.datosISSSTE.progEnd !== null
+												? data.datosISSSTE.progEnd
+												: Date.now()
+											: Date.now()
+									).format("YY")}{" "}
+								</span>
 							</div>
 							<div className="dma borderL">
 								<span>{moment(finDelServicio).format("DD")} </span>
@@ -472,7 +530,7 @@ function OrdenIssste(props) {
 								HORAS REALES UTILIZADAS EN LA REPARACIÓN
 							</b>
 							<span className="centerText">
-								{data.datosISSSTE && data.datosISSSTE.hrsReales}
+								{data.datosISSSTE ? data.datosISSSTE.hrsReales : 1}
 							</span>
 							<b className="centerText">HRS.</b>
 						</div>
