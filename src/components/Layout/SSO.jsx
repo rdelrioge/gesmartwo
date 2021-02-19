@@ -182,7 +182,7 @@ function SSO(props) {
 					/>
 				</div>
 			)}
-			<b className="version">Version 2.0.0</b>
+			<b className="version">Version 2.0.3</b>
 		</div>
 	);
 }

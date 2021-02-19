@@ -1,8 +1,33 @@
 @import "../../index.scss";
 
+.week {
+	position: absolute;
+	color: gray;
+	margin: 8px 0 0 0;
+	left: 0;
+	text-align: center;
+	// z-index: 10000000999999999999;
+	// border: 1px solid gray;
+	// padding: 4px 9px;
+	// border-radius: 20px;
+	// background-color: gray;
+	// font-weight: bold;
+}
+.MuiPickersModal-dialog:first-child {
+	margin: 1em;
+}
+.MuiPickersCalendarHeader-daysHeader,
+.MuiPickersCalendar-week {
+	margin-left: 1.5em;
+}
+.MuiPickersModal-dialogRoot {
+	margin: 0 !important;
+}
+
 .home {
 	z-index: 100;
 	overflow: hidden;
+
 	.showViews {
 		margin-bottom: 47px;
 		overflow: hidden;
@@ -46,6 +71,7 @@
 				// transition: opacity 0.5s ease-in-out, max-height 1.5s ease-in-out;
 			}
 		}
+
 		.view3 {
 			text-align: center;
 			display: grid;

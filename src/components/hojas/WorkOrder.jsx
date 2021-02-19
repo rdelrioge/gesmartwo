@@ -187,8 +187,13 @@ function WorkOrder(props) {
 				);
 				break;
 			case "FechaTentativa":
-				setFechaReprogamado(`tentativamente el 
-					${moment(data.fechaDeReprogramacion).format("DD-MMM-YYYY")}`);
+				if (data.equipo.cliente === "IMSS") {
+					setFechaReprogamado(`tentativamente en la semana 
+					${moment(data.fechaDeReprogramacion).week()}`);
+				} else {
+					setFechaReprogamado(`tentativamente el 
+						${moment(data.fechaDeReprogramacion).format("DD-MMM-YYYY")}`);
+				}
 				break;
 			default:
 				break;
@@ -429,7 +434,11 @@ function WorkOrder(props) {
 						{data.condiciones === "Reprogramado"
 							? `En vista de la imposibilidad de realización del mantenimiento preventivo en el periodo designado por el manual, y tomando en consideración la solicitud del cliente, el mantenimiento previsto originalmente para el día ${moment().format(
 									"DD-MMM-YYYY"
-							  )} , ahora será llevado a cabo ${fechaReprogramado} `
+							  )} ${
+									data.equipo.cliente === "IMSS"
+										? `(semana ${moment().week()})`
+										: ""
+							  } , ahora será llevado a cabo ${fechaReprogramado} `
 							: "N/A"}
 					</b>
 					<div className="condiciones">

@@ -1,9 +1,22 @@
 import React, { useState, useEffect } from "react";
+// import { createPortal } from "react-dom";
 
 import { TextField, InputLabel, FormControl, Select } from "@material-ui/core";
 
-import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
+// import Calendar from "rc-calendar";
+// import "rc-calendar/assets/index.css";
+
+// import WeekPicker from "react-datepicker";
+// import "react-datepicker/dist/react-datepicker.css";
+// import { registerLocale, setDefaultLocale } from "react-datepicker";
+// import esMX from "date-fns/locale/es";
+
+import { MuiPickersUtilsProvider, DatePicker, Day } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
+
+import moment from "moment";
+
+// registerLocale("es", esMX);
 
 function View3DatosDelServicio(props) {
 	const [tipoDeServicio, setTipoDeServicio] = useState("");
@@ -110,6 +123,26 @@ function View3DatosDelServicio(props) {
 			setSintoma("");
 		}
 	};
+
+	const renderDay = (date, selectedDate, dayInCurrentMonth) => {
+		return (
+			<div
+				style={date.day() === 1 ? { borderLeft: "1px solid lightgray" } : null}>
+				{date.day() === 1 && <div className={"week"}>{date.week()}</div>}
+				<Day
+					disabled={date.day() === 0 || date.day() === 6}
+					current={date.isSame(moment(), "day")}
+					hidden={!dayInCurrentMonth}
+					selected={date.isSame(selectedDate, "day")}>
+					{date.date()}
+				</Day>
+			</div>
+		);
+	};
+
+	function disableWeekends(date) {
+		return date.day() === 0 || date.day() === 6;
+	}
 
 	return (
 		<>
@@ -327,6 +360,8 @@ function View3DatosDelServicio(props) {
 							clearLabel="borrar"
 							okLabel=""
 							cancelLabel=""
+							shouldDisableDate={disableWeekends}
+							renderDay={renderDay}
 							format="DD/MM/YY"
 							id="reprogDate"
 							label="fecha tentativa"
