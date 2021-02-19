@@ -93,7 +93,6 @@ function View2DatosIniciales(props) {
 		if (flag) {
 			setEquipo(eq);
 			setHideInfo(false);
-			console.log(equipo);
 			props.onDone(caso, wo, eq, showAddManual);
 		}
 		setOpenAddManualDrawer(false);

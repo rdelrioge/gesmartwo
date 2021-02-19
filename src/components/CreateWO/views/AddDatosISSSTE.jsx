@@ -81,8 +81,6 @@ function AddDatosISSSTE(props) {
 					if (progStart !== null && progEnd !== null) {
 						let sdts = moment(progStart).startOf("day").valueOf();
 						let edts = moment(progEnd).startOf("day").valueOf();
-						console.log(sdts);
-						console.log(edts);
 						if (edts < sdts) {
 							setDateError(true);
 						} else {
@@ -104,8 +102,6 @@ function AddDatosISSSTE(props) {
 					if (progStart !== null && progEnd !== null) {
 						let sdts = moment(progStart).startOf("day").valueOf();
 						let edts = moment(progEnd).startOf("day").valueOf();
-						console.log(sdts);
-						console.log(edts);
 						if (edts < sdts) {
 							setDateError(true);
 						} else {
@@ -161,7 +157,6 @@ function AddDatosISSSTE(props) {
 				let prevImg64 = canvas.toDataURL("image/png");
 
 				resizeBase64Img(prevImg64, 300, 150).then((dataURL) => {
-					console.log(dataURL);
 					if (cualFoto === "fotoNormal") {
 						localdb.fotos.put({ name: "fotoNormalCache", value: dataURL });
 						setFotoNormal(photo.src);

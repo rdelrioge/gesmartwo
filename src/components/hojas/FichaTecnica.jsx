@@ -16,7 +16,6 @@ function FichaTecnica(props) {
 	const checkIfCachePhotos = () => {
 		if (props.edit) {
 			let fotoNormalCache = JSON.parse(localStorage.getItem("fotoNormalCache"));
-			console.log(fotoNormalCache);
 			let fotoSerieCache = localStorage.getItem("fotoSerieCache");
 			let fotoInventarioCache = localStorage.getItem("fotoInventarioCache");
 			let fotoPanoramicaCache = localStorage.getItem("fotoPanoramicaCache");

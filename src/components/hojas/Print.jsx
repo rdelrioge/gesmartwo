@@ -10,7 +10,6 @@ import CartaReprogramacionIMSS from "./CartaReprogramacionIMSS";
 
 function Print(props) {
 	console.log(props);
-	console.log(Math.round(Date.now() / 1000));
 
 	return (
 		<div className="printable">

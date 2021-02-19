@@ -71,7 +71,6 @@ function OrdenIssste(props) {
 			midesc.push(des2.join(" "));
 			midesc.push(des3.join(" "));
 		}
-		console.log(midesc);
 		return (
 			<>
 				{midesc.map((desc, index) => (

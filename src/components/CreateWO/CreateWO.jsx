@@ -100,7 +100,6 @@ function CreateWO(props) {
 	}, [datos]);
 
 	useEffect(() => {
-		console.log(activeStep);
 		if (equipo && equipo.cliente === "ISSSTE") {
 			if (datos.condiciones === "Reprogramado") {
 				if (activeStep === 3) {
@@ -130,7 +129,6 @@ function CreateWO(props) {
 	}, [activeStep]);
 
 	useEffect(() => {
-		console.log(title);
 		document.title = title;
 		if (activeStep === 6) {
 			window.print();
@@ -156,7 +154,6 @@ function CreateWO(props) {
 							}}
 							onDone={(caso, wo, equipo, manualFlag) => {
 								setEquipo(equipo);
-								console.log(manualFlag);
 								setFlagManual(manualFlag);
 								setDatos({
 									...datos,
@@ -287,14 +284,12 @@ function CreateWO(props) {
 									cliente={equipo.cliente}
 									flag={activeStep === 6 ? true : false}
 									onDone={(fotos) => {
-										console.log(fotos);
 										setDatos({
 											...datos,
 											fotos,
 										});
 									}}
 									onAngulos={(angs) => {
-										console.log(angs);
 										setAngulos(angs);
 									}}
 								/>
@@ -322,7 +317,6 @@ function CreateWO(props) {
 									});
 								}}
 								onAngulos={(angs) => {
-									console.log(angs);
 									setAngulos(angs);
 								}}
 							/>
@@ -343,14 +337,12 @@ function CreateWO(props) {
 										cliente={equipo.cliente}
 										flag={activeStep === 6 ? true : false}
 										onDone={(fotos) => {
-											console.log(fotos);
 											setDatos({
 												...datos,
 												fotos,
 											});
 										}}
 										onAngulos={(angs) => {
-											console.log(angs);
 											setAngulos(angs);
 										}}
 									/>
@@ -412,7 +404,6 @@ function CreateWO(props) {
 						color="primary"
 						onClick={() => {
 							if (title === tituloOriginal) {
-								console.log(datos.tiempos[0][3]);
 								setTitle(
 									`SmartWO ${datos.wo} ${datos.equipo.hospital} ${
 										datos.equipo.sid
