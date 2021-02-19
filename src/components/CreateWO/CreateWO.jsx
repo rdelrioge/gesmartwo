@@ -67,7 +67,15 @@ function CreateWO(props) {
 	};
 
 	const handleBack = () => {
-		setActiveStep((prevActiveStep) => prevActiveStep - 1);
+		if (
+			equipo?.cliente === "ISSSTE" &&
+			datos.condiciones === "Reprogramado" &&
+			activeStep === 5
+		) {
+			setActiveStep(2);
+		} else {
+			setActiveStep((prevActiveStep) => prevActiveStep - 1);
+		}
 	};
 
 	useEffect(() => {
@@ -93,16 +101,24 @@ function CreateWO(props) {
 
 	useEffect(() => {
 		console.log(activeStep);
-		if (activeStep === 3 && datos.condiciones === "Reprogramado") {
-			setFlagFinish(true);
-			setLoading(true);
-			const timer = setTimeout(() => {
-				setLoading(false);
-				setActiveStep(6);
-			}, 2500);
-			return () => {
-				clearTimeout(timer);
-			};
+		if (equipo && equipo.cliente === "ISSSTE") {
+			if (datos.condiciones === "Reprogramado") {
+				if (activeStep === 3) {
+					setActiveStep(5);
+				}
+			}
+		} else {
+			if (activeStep === 3 && datos.condiciones === "Reprogramado") {
+				setFlagFinish(true);
+				setLoading(true);
+				const timer = setTimeout(() => {
+					setLoading(false);
+					setActiveStep(6);
+				}, 2500);
+				return () => {
+					clearTimeout(timer);
+				};
+			}
 		}
 
 		if (activeStep === 6) {
@@ -356,11 +372,11 @@ function CreateWO(props) {
 								color="primary"
 								onClick={handleNext}
 								disabled={nextDisabled}>
-								{activeStep === 5
+								{equipo?.cliente === "IMSS" &&
+								datos.condiciones === "Reprogramado" &&
+								activeStep === 2
 									? "Finish"
-									: datos &&
-									  datos.condiciones === "Reprogramado" &&
-									  activeStep === 2
+									: activeStep === 5
 									? "Finish"
 									: "Next >"}
 							</Button>
@@ -384,7 +400,7 @@ function CreateWO(props) {
 						variant="outlined"
 						color="primary"
 						onClick={() => {
-							datos.condiciones === "Reprogramado"
+							equipo.cliente === "IMSS" && datos.condiciones === "Reprogramado"
 								? setActiveStep(2)
 								: setActiveStep(5);
 						}}>

@@ -76,25 +76,42 @@ function AddDatosISSSTE(props) {
 		console.log(props);
 		if (props.step === 5) {
 			props.handleNext(true);
-			if (
-				bitacora !== "" &&
-				hrsReales !== "" &&
-				vidaUtil !== "" &&
-				fotoNormal !== null &&
-				fotoSerie !== null &&
-				fotoInventario !== null &&
-				fotoPanoramica !== null
-			) {
-				if (progStart !== null && progEnd !== null) {
-					let sdts = moment(progStart).startOf("day").valueOf();
-					let edts = moment(progEnd).startOf("day").valueOf();
-					console.log(sdts);
-					console.log(edts);
-					if (edts < sdts) {
-						setDateError(true);
-					} else {
-						props.handleNext(false);
-						setDateError(false);
+			if (props.data?.datos.condiciones === "Reprogramado") {
+				if (bitacora !== "" && hrsReales !== "") {
+					if (progStart !== null && progEnd !== null) {
+						let sdts = moment(progStart).startOf("day").valueOf();
+						let edts = moment(progEnd).startOf("day").valueOf();
+						console.log(sdts);
+						console.log(edts);
+						if (edts < sdts) {
+							setDateError(true);
+						} else {
+							props.handleNext(false);
+							setDateError(false);
+						}
+					}
+				}
+			} else {
+				if (
+					bitacora !== "" &&
+					hrsReales !== "" &&
+					vidaUtil !== "" &&
+					fotoNormal !== null &&
+					fotoSerie !== null &&
+					fotoInventario !== null &&
+					fotoPanoramica !== null
+				) {
+					if (progStart !== null && progEnd !== null) {
+						let sdts = moment(progStart).startOf("day").valueOf();
+						let edts = moment(progEnd).startOf("day").valueOf();
+						console.log(sdts);
+						console.log(edts);
+						if (edts < sdts) {
+							setDateError(true);
+						} else {
+							props.handleNext(false);
+							setDateError(false);
+						}
 					}
 				}
 			}
@@ -248,23 +265,25 @@ function AddDatosISSSTE(props) {
 						setHrsReales(e.target.value);
 					}}
 				/>
-				<TextField
-					label="Vida útil (años)"
-					fullWidth
-					required
-					variant="outlined"
-					id="vidaUtil"
-					type="text"
-					inputProps={{
-						maxLength: 2,
-						inputMode: "numeric",
-					}}
-					size="small"
-					value={vidaUtil}
-					onChange={(e) => {
-						setVidaUtil(e.target.value);
-					}}
-				/>
+				{props.data?.datos.condiciones === "Reprogramado" ? null : (
+					<TextField
+						label="Vida útil (años)"
+						fullWidth
+						required
+						variant="outlined"
+						id="vidaUtil"
+						type="text"
+						inputProps={{
+							maxLength: 2,
+							inputMode: "numeric",
+						}}
+						size="small"
+						value={vidaUtil}
+						onChange={(e) => {
+							setVidaUtil(e.target.value);
+						}}
+					/>
+				)}
 			</div>
 			<p id="programado">Programado:</p>
 			<div className="timers">
@@ -287,7 +306,7 @@ function AddDatosISSSTE(props) {
 							label="fecha inicio"
 							value={progStart}
 							onChange={(e) => {
-								setProgStart(e.startOf("day").valueOf());
+								setProgStart(e?.startOf("day").valueOf());
 							}}
 						/>
 					</MuiPickersUtilsProvider>
@@ -311,7 +330,7 @@ function AddDatosISSSTE(props) {
 							label="fecha final"
 							value={progEnd}
 							onChange={(e) => {
-								setProgEnd(e.startOf("day").valueOf());
+								setProgEnd(e?.startOf("day").valueOf());
 							}}
 						/>
 					</MuiPickersUtilsProvider>
@@ -365,226 +384,230 @@ function AddDatosISSSTE(props) {
 					setConclusiones(e.target.value);
 				}}
 			/>
-			<div className="row">
-				{fotoNormal ? (
-					<div className="cell">
-						<b
-							className="btnRotateLeft"
-							onClick={() =>
-								setAngulo1((prevAngulo) =>
-									prevAngulo === -270 ? (prevAngulo = 0) : prevAngulo - 90
-								)
-							}>
-							L
-						</b>
-						<b
-							className="btnRotateRight"
-							onClick={() =>
-								setAngulo1((prevAngulo) =>
-									prevAngulo === 270 ? (prevAngulo = 0) : prevAngulo + 90
-								)
-							}>
-							R
-						</b>
-						<b
-							className="btnDelete"
-							onClick={() => subirFoto(null, "fotoNormal")}>
-							X
-						</b>
-						<img
-							src={fotoNormal}
-							alt="antes1"
-							style={{
-								transform: `rotate(${angulo1}deg)`,
-								width: "inherit",
-								height: "inherit",
-							}}
-						/>
+			{props.data?.datos.condiciones === "Reprogramado" ? null : (
+				<>
+					<div className="row">
+						{fotoNormal ? (
+							<div className="cell">
+								<b
+									className="btnRotateLeft"
+									onClick={() =>
+										setAngulo1((prevAngulo) =>
+											prevAngulo === -270 ? (prevAngulo = 0) : prevAngulo - 90
+										)
+									}>
+									L
+								</b>
+								<b
+									className="btnRotateRight"
+									onClick={() =>
+										setAngulo1((prevAngulo) =>
+											prevAngulo === 270 ? (prevAngulo = 0) : prevAngulo + 90
+										)
+									}>
+									R
+								</b>
+								<b
+									className="btnDelete"
+									onClick={() => subirFoto(null, "fotoNormal")}>
+									X
+								</b>
+								<img
+									src={fotoNormal}
+									alt="antes1"
+									style={{
+										transform: `rotate(${angulo1}deg)`,
+										width: "inherit",
+										height: "inherit",
+									}}
+								/>
+							</div>
+						) : (
+							<div className="cell">
+								<input
+									accept="image/*"
+									className="inputPhoto"
+									id="antes1"
+									onChange={(e) => {
+										subirFoto(e, "fotoNormal");
+									}}
+									type="file"
+								/>
+								<label className="labelImg" htmlFor="antes1">
+									Foto Normal
+									<IconButton color="primary" component="span">
+										<span className="material-icons">add_a_photo</span>
+									</IconButton>
+								</label>
+							</div>
+						)}
+						{fotoSerie ? (
+							<div className="cell">
+								<b
+									className="btnRotateLeft"
+									onClick={() =>
+										setAngulo2((prevAngulo) =>
+											prevAngulo === -270 ? (prevAngulo = 0) : prevAngulo - 90
+										)
+									}>
+									L
+								</b>
+								<b
+									className="btnRotateRight"
+									onClick={() =>
+										setAngulo2((prevAngulo) =>
+											prevAngulo === 270 ? (prevAngulo = 0) : prevAngulo + 90
+										)
+									}>
+									R
+								</b>
+								<b
+									className="btnDelete"
+									onClick={() => subirFoto(null, "fotoSerie")}>
+									X
+								</b>
+								<img
+									src={fotoSerie}
+									alt="antes2"
+									style={{
+										transform: `rotate(${angulo2}deg)`,
+										width: "inherit",
+										height: "inherit",
+									}}
+								/>
+							</div>
+						) : (
+							<div className="cell">
+								<input
+									accept="image/*"
+									className="inputPhoto"
+									id="antes2"
+									onChange={(e) => {
+										subirFoto(e, "fotoSerie");
+									}}
+									type="file"
+								/>
+								<label className="labelImg" htmlFor="antes2">
+									Placa N° de Serie
+									<IconButton color="primary" component="span">
+										<span className="material-icons">add_a_photo</span>
+									</IconButton>
+								</label>
+							</div>
+						)}
 					</div>
-				) : (
-					<div className="cell">
-						<input
-							accept="image/*"
-							className="inputPhoto"
-							id="antes1"
-							onChange={(e) => {
-								subirFoto(e, "fotoNormal");
-							}}
-							type="file"
-						/>
-						<label className="labelImg" htmlFor="antes1">
-							Foto Normal
-							<IconButton color="primary" component="span">
-								<span className="material-icons">add_a_photo</span>
-							</IconButton>
-						</label>
+					<div className="row">
+						{fotoInventario ? (
+							<div className="cell">
+								<b
+									className="btnRotateLeft"
+									onClick={() =>
+										setAngulo3((prevAngulo) =>
+											prevAngulo === -270 ? (prevAngulo = 0) : prevAngulo - 90
+										)
+									}>
+									L
+								</b>
+								<b
+									className="btnRotateRight"
+									onClick={() =>
+										setAngulo3((prevAngulo) =>
+											prevAngulo === 270 ? (prevAngulo = 0) : prevAngulo + 90
+										)
+									}>
+									R
+								</b>
+								<b
+									className="btnDelete"
+									onClick={() => subirFoto(null, "fotoInventario")}>
+									X
+								</b>
+								<img
+									src={fotoInventario}
+									alt="durante1"
+									style={{
+										transform: `rotate(${angulo3}deg)`,
+										width: "inherit",
+										height: "inherit",
+									}}
+								/>
+							</div>
+						) : (
+							<div className="cell">
+								<input
+									accept="image/*"
+									className="inputPhoto"
+									id="durante1"
+									onChange={(e) => {
+										subirFoto(e, "fotoInventario");
+									}}
+									type="file"
+								/>
+								<label className="labelImg" htmlFor="durante1">
+									Placa N° de Inventario
+									<IconButton color="primary" component="span">
+										<span className="material-icons">add_a_photo</span>
+									</IconButton>
+								</label>
+							</div>
+						)}
+						{fotoPanoramica ? (
+							<div className="cell">
+								<b
+									className="btnRotateLeft"
+									onClick={() =>
+										setAngulo4((prevAngulo) =>
+											prevAngulo === -270 ? (prevAngulo = 0) : prevAngulo - 90
+										)
+									}>
+									L
+								</b>
+								<b
+									className="btnRotateRight"
+									onClick={() =>
+										setAngulo4((prevAngulo) =>
+											prevAngulo === 270 ? (prevAngulo = 0) : prevAngulo + 90
+										)
+									}>
+									R
+								</b>
+								<b
+									className="btnDelete"
+									onClick={() => subirFoto(null, "fotoPanoramica")}>
+									X
+								</b>
+								<img
+									src={fotoPanoramica}
+									alt="durante2"
+									style={{
+										transform: `rotate(${angulo4}deg)`,
+										width: "inherit",
+										height: "inherit",
+									}}
+								/>
+							</div>
+						) : (
+							<div className="cell">
+								<input
+									accept="image/*"
+									className="inputPhoto"
+									id="durante2"
+									onChange={(e) => {
+										subirFoto(e, "fotoPanoramica");
+									}}
+									type="file"
+								/>
+								<label className="labelImg" htmlFor="durante2">
+									Foto panorámica del bien
+									<IconButton color="primary" component="span">
+										<span className="material-icons">add_a_photo</span>
+									</IconButton>
+								</label>
+							</div>
+						)}
 					</div>
-				)}
-				{fotoSerie ? (
-					<div className="cell">
-						<b
-							className="btnRotateLeft"
-							onClick={() =>
-								setAngulo2((prevAngulo) =>
-									prevAngulo === -270 ? (prevAngulo = 0) : prevAngulo - 90
-								)
-							}>
-							L
-						</b>
-						<b
-							className="btnRotateRight"
-							onClick={() =>
-								setAngulo2((prevAngulo) =>
-									prevAngulo === 270 ? (prevAngulo = 0) : prevAngulo + 90
-								)
-							}>
-							R
-						</b>
-						<b
-							className="btnDelete"
-							onClick={() => subirFoto(null, "fotoSerie")}>
-							X
-						</b>
-						<img
-							src={fotoSerie}
-							alt="antes2"
-							style={{
-								transform: `rotate(${angulo2}deg)`,
-								width: "inherit",
-								height: "inherit",
-							}}
-						/>
-					</div>
-				) : (
-					<div className="cell">
-						<input
-							accept="image/*"
-							className="inputPhoto"
-							id="antes2"
-							onChange={(e) => {
-								subirFoto(e, "fotoSerie");
-							}}
-							type="file"
-						/>
-						<label className="labelImg" htmlFor="antes2">
-							Placa N° de Serie
-							<IconButton color="primary" component="span">
-								<span className="material-icons">add_a_photo</span>
-							</IconButton>
-						</label>
-					</div>
-				)}
-			</div>
-			<div className="row">
-				{fotoInventario ? (
-					<div className="cell">
-						<b
-							className="btnRotateLeft"
-							onClick={() =>
-								setAngulo3((prevAngulo) =>
-									prevAngulo === -270 ? (prevAngulo = 0) : prevAngulo - 90
-								)
-							}>
-							L
-						</b>
-						<b
-							className="btnRotateRight"
-							onClick={() =>
-								setAngulo3((prevAngulo) =>
-									prevAngulo === 270 ? (prevAngulo = 0) : prevAngulo + 90
-								)
-							}>
-							R
-						</b>
-						<b
-							className="btnDelete"
-							onClick={() => subirFoto(null, "fotoInventario")}>
-							X
-						</b>
-						<img
-							src={fotoInventario}
-							alt="durante1"
-							style={{
-								transform: `rotate(${angulo3}deg)`,
-								width: "inherit",
-								height: "inherit",
-							}}
-						/>
-					</div>
-				) : (
-					<div className="cell">
-						<input
-							accept="image/*"
-							className="inputPhoto"
-							id="durante1"
-							onChange={(e) => {
-								subirFoto(e, "fotoInventario");
-							}}
-							type="file"
-						/>
-						<label className="labelImg" htmlFor="durante1">
-							Placa N° de Inventario
-							<IconButton color="primary" component="span">
-								<span className="material-icons">add_a_photo</span>
-							</IconButton>
-						</label>
-					</div>
-				)}
-				{fotoPanoramica ? (
-					<div className="cell">
-						<b
-							className="btnRotateLeft"
-							onClick={() =>
-								setAngulo4((prevAngulo) =>
-									prevAngulo === -270 ? (prevAngulo = 0) : prevAngulo - 90
-								)
-							}>
-							L
-						</b>
-						<b
-							className="btnRotateRight"
-							onClick={() =>
-								setAngulo4((prevAngulo) =>
-									prevAngulo === 270 ? (prevAngulo = 0) : prevAngulo + 90
-								)
-							}>
-							R
-						</b>
-						<b
-							className="btnDelete"
-							onClick={() => subirFoto(null, "fotoPanoramica")}>
-							X
-						</b>
-						<img
-							src={fotoPanoramica}
-							alt="durante2"
-							style={{
-								transform: `rotate(${angulo4}deg)`,
-								width: "inherit",
-								height: "inherit",
-							}}
-						/>
-					</div>
-				) : (
-					<div className="cell">
-						<input
-							accept="image/*"
-							className="inputPhoto"
-							id="durante2"
-							onChange={(e) => {
-								subirFoto(e, "fotoPanoramica");
-							}}
-							type="file"
-						/>
-						<label className="labelImg" htmlFor="durante2">
-							Foto panorámica del bien
-							<IconButton color="primary" component="span">
-								<span className="material-icons">add_a_photo</span>
-							</IconButton>
-						</label>
-					</div>
-				)}
-			</div>
+				</>
+			)}
 		</div>
 	);
 }
