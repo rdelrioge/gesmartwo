@@ -77,7 +77,7 @@ function Evidencia(props) {
 					<div className="row3row">
 						<span>Antes</span>
 						<img
-							src={data.fotos.fotoAntes1}
+							src={data.fotos ? data.fotos.fotoAntes1 : ""}
 							alt="antes1"
 							style={{
 								transform: `rotate(${props.angulos[0]}deg)`,
@@ -85,7 +85,7 @@ function Evidencia(props) {
 							}}
 						/>
 						<img
-							src={data.fotos.fotoAntes2}
+							src={data.fotos ? data.fotos.fotoAntes2 : ""}
 							alt="antes2"
 							style={{
 								transform: `rotate(${props.angulos[1]}deg)`,
@@ -96,7 +96,7 @@ function Evidencia(props) {
 					<div className="row3row">
 						<span>Durante</span>
 						<img
-							src={data.fotos.fotoDurante1}
+							src={data.fotos ? data.fotos.fotoDurante1 : ""}
 							alt="durante1"
 							style={{
 								transform: `rotate(${props.angulos[2]}deg)`,
@@ -104,7 +104,7 @@ function Evidencia(props) {
 							}}
 						/>
 						<img
-							src={data.fotos.fotoDurante2}
+							src={data.fotos ? data.fotos.fotoDurante2 : ""}
 							alt="durante2"
 							style={{
 								transform: `rotate(${props.angulos[3]}deg)`,
@@ -115,7 +115,7 @@ function Evidencia(props) {
 					<div className="row3row">
 						<span>Despues</span>
 						<img
-							src={data.fotos.fotoDespues1}
+							src={data.fotos ? data.fotos.fotoDespues1 : ""}
 							alt="despues1"
 							style={{
 								transform: `rotate(${props.angulos[4]}deg)`,
@@ -123,7 +123,7 @@ function Evidencia(props) {
 							}}
 						/>
 						<img
-							src={data.fotos.fotoDespues2}
+							src={data.fotos ? data.fotos.fotoDespues2 : ""}
 							alt="despues2"
 							style={{
 								transform: `rotate(${props.angulos[5]}deg)`,

@@ -84,62 +84,72 @@ function WorkOrder(props) {
 	};
 
 	const displayHerramientas = () => {
-		let arrTemp = [...data.herramientas];
-		switch (data.herramientas.length) {
-			case 0:
-				arrTemp.push([]);
-				arrTemp.push([]);
-				arrTemp.push([]);
-				arrTemp.push([]);
-				setHerramientas(arrTemp);
-				break;
-			case 1:
-				arrTemp.push([]);
-				arrTemp.push([]);
-				arrTemp.push([]);
-				setHerramientas(arrTemp);
-				break;
-			case 2:
-				arrTemp.push([]);
-				arrTemp.push([]);
-				setHerramientas(arrTemp);
-				break;
-			case 3:
-				arrTemp.push([]);
-				setHerramientas(arrTemp);
-				break;
-			case 4:
-				setHerramientas(arrTemp);
-				break;
-			default:
-				break;
+		if (data.herramientas) {
+			let arrTemp = [...data.herramientas];
+			switch (data.herramientas.length) {
+				case 0:
+					arrTemp.push([]);
+					arrTemp.push([]);
+					arrTemp.push([]);
+					arrTemp.push([]);
+					setHerramientas(arrTemp);
+					break;
+				case 1:
+					arrTemp.push([]);
+					arrTemp.push([]);
+					arrTemp.push([]);
+					setHerramientas(arrTemp);
+					break;
+				case 2:
+					arrTemp.push([]);
+					arrTemp.push([]);
+					setHerramientas(arrTemp);
+					break;
+				case 3:
+					arrTemp.push([]);
+					setHerramientas(arrTemp);
+					break;
+				case 4:
+					setHerramientas(arrTemp);
+					break;
+				default:
+					break;
+			}
+		} else {
+			let arrTemp = [[], [], [], []];
+			setHerramientas(arrTemp);
 		}
 	};
 
 	const displayRefacciones = () => {
-		let arrTemp = [...data.refacciones];
+		if (data.refacciones) {
+			let arrTemp = [...data.refacciones];
 
-		switch (data.refacciones.length) {
-			case 0:
-				arrTemp.push([]);
-				arrTemp.push([]);
-				arrTemp.push([]);
-				setRefacciones(arrTemp);
-				break;
-			case 1:
-				arrTemp.push([]);
-				arrTemp.push([]);
-				setRefacciones(arrTemp);
-				break;
-			case 2:
-				arrTemp.push([]);
-				setRefacciones(arrTemp);
-				break;
-			case 3:
-				setRefacciones(arrTemp);
-				break;
-			default:
-				break;
+			switch (data.refacciones.length) {
+				case 0:
+					arrTemp.push([]);
+					arrTemp.push([]);
+					arrTemp.push([]);
+					setRefacciones(arrTemp);
+					break;
+				case 1:
+					arrTemp.push([]);
+					arrTemp.push([]);
+					setRefacciones(arrTemp);
+					break;
+				case 2:
+					arrTemp.push([]);
+					setRefacciones(arrTemp);
+					break;
+				case 3:
+					setRefacciones(arrTemp);
+					break;
+				default:
+					break;
+			}
+		} else {
+			let arrTemp = [[], [], []];
+			setRefacciones(arrTemp);
 		}
 	};
 

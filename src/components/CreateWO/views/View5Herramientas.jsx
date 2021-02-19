@@ -19,6 +19,8 @@ function View5Herramientas(props) {
 		if (props.edit) {
 			if (props.data) {
 				setHerramientas(props.data.datos.herramientas);
+			} else {
+				setHerramienta([]);
 			}
 		}
 	}, []);
@@ -111,7 +113,7 @@ function View5Herramientas(props) {
 				</div>
 			</div>
 			<div className="herrAgregadas">
-				{herramientas.length > 0 ? (
+				{herramientas && herramientas.length > 0 ? (
 					<>
 						<ul className="ulherr">
 							<li>Sig. Calibración</li>

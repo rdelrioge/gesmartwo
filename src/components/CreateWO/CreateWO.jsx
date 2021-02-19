@@ -88,12 +88,20 @@ function CreateWO(props) {
 				name: "reciente",
 				value: datosActuales,
 			});
-			// localStorage.setItem("datosActuales", JSON.stringify(datosActuales));
 		}
 	}, [datos]);
 
 	useEffect(() => {
 		console.log(activeStep);
+		if (activeStep === 3 && datos.condiciones === "Reprogramado") {
+			setFlagFinish(true);
+			setLoading(true);
+			const timer = setTimeout(() => {
+				setLoading(false);
+			}, 2500);
+			return () => clearTimeout(timer);
+		}
+
 		if (activeStep === 6) {
 			setFlagFinish(true);
 		} else {
@@ -216,6 +224,7 @@ function CreateWO(props) {
 							}}
 						/>
 					</div>
+
 					<div className="views view5">
 						<View5Herramientas
 							edit={props.edit}
@@ -344,7 +353,13 @@ function CreateWO(props) {
 								color="primary"
 								onClick={handleNext}
 								disabled={nextDisabled}>
-								{activeStep === 5 ? "Finish" : "Next >"}
+								{activeStep === 5
+									? "Finish"
+									: datos &&
+									  datos.condiciones === "Reprogramado" &&
+									  activeStep === 2
+									? "Finish"
+									: "Next >"}
 							</Button>
 						}
 						backButton={
@@ -365,7 +380,11 @@ function CreateWO(props) {
 					<Button
 						variant="outlined"
 						color="primary"
-						onClick={() => setActiveStep(5)}>
+						onClick={() => {
+							datos.condiciones === "Reprogramado"
+								? setActiveStep(2)
+								: setActiveStep(5);
+						}}>
 						{"<"}
 					</Button>
 					<b>Revisa la WO </b>

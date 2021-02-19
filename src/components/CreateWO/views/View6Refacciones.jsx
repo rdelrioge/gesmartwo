@@ -107,7 +107,7 @@ function View6Refacciones(props) {
 				</div>
 			</div>
 			<div className="refAgregadas">
-				{refacciones.length > 0 ? (
+				{refacciones && refacciones.length > 0 ? (
 					<>
 						<ul className="ulref">
 							<li>Cant.</li>

@@ -6,6 +6,7 @@ import Capacitacion from "./Capacitacion";
 import Evidencia from "./Evidencia";
 import OrdenIssste from "./OrdenIssste";
 import FichaTecnica from "./FichaTecnica";
+import CartaReprogramacionIMSS from "./CartaReprogramacionIMSS";
 
 function Print(props) {
 	console.log(props);
@@ -16,13 +17,19 @@ function Print(props) {
 			<WorkOrder data={props.data} />
 			<div className="saltodepag"></div>
 			{props.data.equipo.cliente === "IMSS" ? (
-				<>
-					<Evidencia data={props.data} angulos={props.angulos} />
-					<div className="saltodepag"></div>
-					{props.flagAddCapacitacion ? (
-						<Capacitacion data={props.data} />
-					) : null}
-				</>
+				props.data.condiciones === "Reprogramado" ? (
+					<>
+						<CartaReprogramacionIMSS />
+					</>
+				) : (
+					<>
+						<Evidencia data={props.data} angulos={props.angulos} />
+						<div className="saltodepag"></div>
+						{props.flagAddCapacitacion ? (
+							<Capacitacion data={props.data} />
+						) : null}
+					</>
+				)
 			) : props.data.equipo.cliente === "ISSSTE" ? (
 				<>
 					<OrdenIssste data={props.data} />

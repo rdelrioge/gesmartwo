@@ -131,7 +131,7 @@ function View2DatosIniciales(props) {
 				onFocus={() => {
 					wo === "" ? setWO("WO-") : console.log();
 				}}
-				onChange={(e) => setWO(e.target.value.toUpperCase())}
+				onChange={(e) => setWO(e.target.value.toUpperCase().trim())}
 			/>
 			<TextField
 				label="SID"
@@ -143,7 +143,7 @@ function View2DatosIniciales(props) {
 					maxLength: 20,
 				}}
 				type="text"
-				onChange={(ev) => changeSID(ev.target.value.toUpperCase())}
+				onChange={(ev) => changeSID(ev.target.value.toUpperCase().trim())}
 				value={sid}
 			/>
 			<div className="searchAddBtns">
