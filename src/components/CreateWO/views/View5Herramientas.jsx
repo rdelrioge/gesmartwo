@@ -27,7 +27,10 @@ function View5Herramientas(props) {
 		if (props.flag) {
 			props.onDone(herramientas);
 		}
-	}, [props.flag]);
+		if (props.step === 3) {
+			props.handleNext(false);
+		}
+	}, [props.flag, props.step]);
 
 	useEffect(() => {
 		if (barcode !== "" && herramienta !== "" && calibracion !== null) {

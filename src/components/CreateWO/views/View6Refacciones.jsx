@@ -22,7 +22,10 @@ function View6Refacciones(props) {
 		if (props.flag) {
 			props.onDone(refacciones);
 		}
-	}, [props.flag]);
+		if (props.step === 4) {
+			props.handleNext(false);
+		}
+	}, [props.flag, props.step]);
 
 	useEffect(() => {
 		if (

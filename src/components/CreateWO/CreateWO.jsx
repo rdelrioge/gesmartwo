@@ -220,6 +220,10 @@ function CreateWO(props) {
 						<View5Herramientas
 							edit={props.edit}
 							data={props.data}
+							step={activeStep}
+							handleNext={(nD) => {
+								setNextDisabled(nD);
+							}}
 							flag={activeStep === 4 ? true : false}
 							onDone={(herramientas) => {
 								setDatos({
@@ -233,6 +237,10 @@ function CreateWO(props) {
 						<View6Refacciones
 							edit={props.edit}
 							data={props.data}
+							step={activeStep}
+							handleNext={(nD) => {
+								setNextDisabled(nD);
+							}}
 							flag={activeStep === 5 ? true : false}
 							onDone={(refacciones) => {
 								setDatos({

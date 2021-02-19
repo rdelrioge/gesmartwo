@@ -41,7 +41,6 @@ function AddDatosISSSTE(props) {
 			setUbicacion(datosISSSTE.ubicacion);
 			setRecomendaciones(datosISSSTE.recomendaciones);
 			setConclusiones(datosISSSTE.conclusiones);
-			// setFotoNormal(fotoNormalCache ? fotoNormalCache : null);
 			localdb.fotos
 				.where("name")
 				.equals("fotoNormalCache")
@@ -66,9 +65,6 @@ function AddDatosISSSTE(props) {
 				.first((foto) => {
 					foto ? setFotoPanoramica(foto.value) : setFotoPanoramica(null);
 				});
-			// setFotoSerie(datosISSSTE.fotoSerie);
-			// setFotoInventario(datosISSSTE.fotoInventario);
-			// setFotoPanoramica(datosISSSTE.fotoPanoramica);
 			setAngulo1(angulos[0]);
 			setAngulo2(angulos[1]);
 			setAngulo3(angulos[2]);
@@ -80,20 +76,41 @@ function AddDatosISSSTE(props) {
 		console.log(props);
 		if (props.step === 5) {
 			props.handleNext(true);
-			if (progStart !== null && progEnd !== null) {
-				let sdts = moment(progStart).startOf("day").valueOf();
-				let edts = moment(progEnd).startOf("day").valueOf();
-				console.log(sdts);
-				console.log(edts);
-				if (edts < sdts) {
-					setDateError(true);
-				} else {
-					props.handleNext(false);
-					setDateError(false);
+			if (
+				bitacora !== "" &&
+				hrsReales !== "" &&
+				vidaUtil !== "" &&
+				fotoNormal !== null &&
+				fotoSerie !== null &&
+				fotoInventario !== null &&
+				fotoPanoramica !== null
+			) {
+				if (progStart !== null && progEnd !== null) {
+					let sdts = moment(progStart).startOf("day").valueOf();
+					let edts = moment(progEnd).startOf("day").valueOf();
+					console.log(sdts);
+					console.log(edts);
+					if (edts < sdts) {
+						setDateError(true);
+					} else {
+						props.handleNext(false);
+						setDateError(false);
+					}
 				}
 			}
 		}
-	}, [props, progStart, progEnd]);
+	}, [
+		props,
+		progStart,
+		progEnd,
+		bitacora,
+		hrsReales,
+		vidaUtil,
+		fotoNormal,
+		fotoSerie,
+		fotoInventario,
+		fotoPanoramica,
+	]);
 
 	useEffect(() => {
 		if (props.flag) {
@@ -195,38 +212,6 @@ function AddDatosISSSTE(props) {
 		});
 	};
 
-	// const subirFotoSerie = (e) => {
-	// 	if (e !== null) {
-	// 		let photo = new Image();
-	// 		photo.src = URL.createObjectURL(e.target.files[0]);
-	// 		setFotoSerie(photo.src);
-	// 		// URL.revokeObjectURL(photo.src);
-	// 	} else {
-	// 		setFotoSerie(e);
-	// 	}
-	// };
-
-	// const subirFotoInventario = (e) => {
-	// 	if (e !== null) {
-	// 		let photo = new Image();
-	// 		photo.src = URL.createObjectURL(e.target.files[0]);
-	// 		setFotoInventario(photo.src);
-	// 		// URL.revokeObjectURL(photo.src);
-	// 	} else {
-	// 		setFotoInventario(e);
-	// 	}
-	// };
-	// const subirFotoPanoramica = (e) => {
-	// 	if (e !== null) {
-	// 		let photo = new Image();
-	// 		photo.src = URL.createObjectURL(e.target.files[0]);
-	// 		setFotoPanoramica(photo.src);
-	// 		// URL.revokeObjectURL(photo.src);
-	// 	} else {
-	// 		setFotoPanoramica(e);
-	// 	}
-	// };
-
 	return (
 		<div className="ISSSTE">
 			<h3>Datos ISSSTE</h3>
@@ -236,6 +221,7 @@ function AddDatosISSSTE(props) {
 					fullWidth
 					variant="outlined"
 					type="text"
+					required
 					inputProps={{
 						maxLength: 4,
 						inputMode: "numeric",
@@ -251,6 +237,7 @@ function AddDatosISSSTE(props) {
 					fullWidth
 					variant="outlined"
 					type="text"
+					required
 					inputProps={{
 						maxLength: 5,
 						inputMode: "decimal",
@@ -264,6 +251,7 @@ function AddDatosISSSTE(props) {
 				<TextField
 					label="Vida útil (años)"
 					fullWidth
+					required
 					variant="outlined"
 					id="vidaUtil"
 					type="text"
