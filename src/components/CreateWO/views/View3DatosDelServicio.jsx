@@ -82,7 +82,6 @@ function View3DatosDelServicio(props) {
 					"El equipo no se encontró disponible para realizar el servicio debido a"
 				);
 				setReprogramado("ProximoMes");
-				setFechaDeReprogramacion(Date.now);
 			}
 		} else {
 			setApto(true);
@@ -91,6 +90,14 @@ function View3DatosDelServicio(props) {
 			setFechaDeReprogramacion("");
 		}
 	}, [condiciones]);
+
+	useEffect(() => {
+		if (reprogramado === "FechaTentativa") {
+			setFechaDeReprogramacion(moment().startOf("day").valueOf());
+		} else {
+			setFechaDeReprogramacion("");
+		}
+	}, [reprogramado]);
 
 	useEffect(() => {
 		console.log(props);

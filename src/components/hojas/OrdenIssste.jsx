@@ -11,6 +11,9 @@ function OrdenIssste(props) {
 	const [finDeMes, setFinDeMes] = useState("");
 	const [misRefacciones, setMisRefacciones] = useState([]);
 	const [diferencia, setDiferencia] = useState(0);
+	const [observacionesISSSTE, setObservacionesISSSTE] = useState(
+		data.observaciones
+	);
 
 	const calcularFinDeServicio = () => {
 		let fin = moment(data.tiempos[data.tiempos.length - 1][3]);
@@ -141,9 +144,35 @@ function OrdenIssste(props) {
 		}
 		setMisRefacciones(arrTemp);
 	};
+
+	const esReprogramado = () => {
+		let myFecha = "";
+		switch (data.reprogramado) {
+			case "ProximoMes":
+				myFecha = `en ${moment().add(1, "months").format("MMMM-YYYY")}`;
+				break;
+			case "FechaTentativa":
+				myFecha = `tentativamente el
+						${moment(data.fechaDeReprogramacion).format("DD-MMM-YYYY")}`;
+
+				break;
+			default:
+				break;
+		}
+
+		if (data.condiciones === "Reprogramado") {
+			setObservacionesISSSTE(
+				`En vista de la imposibilidad de realización del mantenimiento preventivo en el periodo designado por el manual, y tomando en consideración la solicitud del cliente, el mantenimiento previsto originalmente para el día ${moment().format(
+					"DD-MMM-YYYY"
+				)}, ahora será llevado a cabo ${myFecha} `
+			);
+		}
+	};
+
 	useEffect(() => {
 		calcularFinDeServicio();
 		displayRefacciones();
+		esReprogramado();
 	}, []);
 
 	return (
@@ -400,7 +429,7 @@ function OrdenIssste(props) {
 							<div></div>
 							<div className="borderBN"></div>
 						</div>
-						<div className="obsDer">{cortarTexto(data.observaciones)}</div>
+						<div className="obsDer">{cortarTexto(observacionesISSSTE)}</div>
 					</div>
 				</div>
 				<div className="row4">
