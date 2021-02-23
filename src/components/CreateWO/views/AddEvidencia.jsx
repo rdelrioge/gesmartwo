@@ -2,14 +2,19 @@ import React, { useState, useEffect } from "react";
 
 import { IconButton } from "@material-ui/core";
 
+import { localdb } from "../../../index";
+
 function AddEvidencia(props) {
+	const fotos = { ...props.data.datos.fotos };
+	const angulos = { ...props.data.datos.angulos };
+
 	const cliente = props.cliente;
-	const [fotoAntes1, setFotoAntes1] = useState(null);
-	const [fotoAntes2, setFotoAntes2] = useState(null);
-	const [fotoDurante1, setFotoDurante1] = useState(null);
-	const [fotoDurante2, setFotoDurante2] = useState(null);
-	const [fotoDespues1, setFotoDespues1] = useState(null);
-	const [fotoDespues2, setFotoDespues2] = useState(null);
+	const [fotoAntes1, setFotoAntes1] = useState("");
+	const [fotoAntes2, setFotoAntes2] = useState("");
+	const [fotoDurante1, setFotoDurante1] = useState("");
+	const [fotoDurante2, setFotoDurante2] = useState("");
+	const [fotoDespues1, setFotoDespues1] = useState("");
+	const [fotoDespues2, setFotoDespues2] = useState("");
 	const [angulo1, setAngulo1] = useState(0);
 	const [angulo2, setAngulo2] = useState(0);
 	const [angulo3, setAngulo3] = useState(0);
@@ -19,18 +24,48 @@ function AddEvidencia(props) {
 
 	useEffect(() => {
 		if (props.edit) {
-			setFotoAntes1(props.data.datos.fotos.fotoAntes1);
-			setFotoAntes2(props.data.datos.fotos.fotoAntes2);
-			setFotoDurante1(props.data.datos.fotos.fotoDurante1);
-			setFotoDurante2(props.data.datos.fotos.fotoDurante2);
-			setFotoDespues1(props.data.datos.fotos.fotoDespues1);
-			setFotoDespues2(props.data.datos.fotos.fotoDespues2);
-			setAngulo1(props.data.angulos.angulo1);
-			setAngulo2(props.data.angulos.angulo2);
-			setAngulo3(props.data.angulos.angulo3);
-			setAngulo4(props.data.angulos.angulo4);
-			setAngulo5(props.data.angulos.angulo5);
-			setAngulo6(props.data.angulos.angulo6);
+			localdb.fotos
+				.where("name")
+				.equals("fotoAntes1")
+				.first((foto) => {
+					foto ? setFotoAntes1(foto.value) : setFotoAntes1(null);
+				});
+			localdb.fotos
+				.where("name")
+				.equals("fotoAntes2")
+				.first((foto) => {
+					foto ? setFotoAntes2(foto.value) : setFotoAntes2(null);
+				});
+			localdb.fotos
+				.where("name")
+				.equals("fotoDurante1")
+				.first((foto) => {
+					foto ? setFotoDurante1(foto.value) : setFotoDurante1(null);
+				});
+			localdb.fotos
+				.where("name")
+				.equals("fotoDurante2")
+				.first((foto) => {
+					foto ? setFotoDurante2(foto.value) : setFotoDurante2(null);
+				});
+			localdb.fotos
+				.where("name")
+				.equals("fotoDespues1")
+				.first((foto) => {
+					foto ? setFotoDespues1(foto.value) : setFotoDespues1(null);
+				});
+			localdb.fotos
+				.where("name")
+				.equals("fotoDespues2")
+				.first((foto) => {
+					foto ? setFotoDespues2(foto.value) : setFotoDespues2(null);
+				});
+			setAngulo1(angulos.angulo1 ? angulos.angulo1 : "");
+			setAngulo2(angulos.angulo2 ? angulos.angulo2 : "");
+			setAngulo3(angulos.angulo3 ? angulos.angulo3 : "");
+			setAngulo4(angulos.angulo4 ? angulos.angulo4 : "");
+			setAngulo5(angulos.angulo5 ? angulos.angulo5 : "");
+			setAngulo6(angulos.angulo6 ? angulos.angulo6 : "");
 		}
 	}, []);
 
@@ -48,66 +83,95 @@ function AddEvidencia(props) {
 		}
 	}, [props.flag]);
 
-	const subirFotoAntes1 = (e) => {
+	const subirFoto = (e, cualFoto) => {
 		if (e !== null) {
+			let canvas = document.createElement("canvas");
+			let ctx = canvas.getContext("2d");
 			let photo = new Image();
+			photo.onload = () => {
+				canvas.width = photo.width;
+				canvas.height = photo.height;
+				ctx.drawImage(photo, 0, 0);
+				let prevImg64 = canvas.toDataURL("image/png");
+
+				resizeBase64Img(prevImg64, 300, 150).then((dataURL) => {
+					switch (cualFoto) {
+						case "fotoAntes1":
+							localdb.fotos.put({ name: "fotoAntes1", value: dataURL });
+							setFotoAntes1(photo.src);
+							break;
+						case "fotoAntes2":
+							localdb.fotos.put({ name: "fotoAntes2", value: dataURL });
+							setFotoAntes2(photo.src);
+							break;
+						case "fotoDurante1":
+							localdb.fotos.put({ name: "fotoDurante1", value: dataURL });
+							setFotoDurante1(photo.src);
+							break;
+						case "fotoDurante2":
+							localdb.fotos.put({ name: "fotoDurante2", value: dataURL });
+							setFotoDurante2(photo.src);
+							break;
+						case "fotoDespues1":
+							localdb.fotos.put({ name: "fotoDespues1", value: dataURL });
+							setFotoDespues1(photo.src);
+							break;
+						case "fotoDespues2":
+							localdb.fotos.put({ name: "fotoDespues2", value: dataURL });
+							setFotoDespues2(photo.src);
+							break;
+						default:
+							break;
+					}
+				});
+			};
 			photo.src = URL.createObjectURL(e.target.files[0]);
-			setFotoAntes1(photo.src);
-			// URL.revokeObjectURL(photo.src);
 		} else {
-			setFotoAntes1(e);
-		}
-	};
-	const subirFotoAntes2 = (e) => {
-		if (e !== null) {
-			let photo = new Image();
-			photo.src = URL.createObjectURL(e.target.files[0]);
-			setFotoAntes2(photo.src);
-			// URL.revokeObjectURL(photo.src);
-		} else {
-			setFotoAntes2(e);
+			switch (cualFoto) {
+				case "fotoAntes1":
+					localdb.fotos.put({ name: "fotoAntes1", value: null });
+					setFotoAntes1(e);
+					break;
+				case "fotoAntes2":
+					localdb.fotos.put({ name: "fotoAntes2", value: null });
+					setFotoAntes2(e);
+					break;
+				case "fotoDurante1":
+					localdb.fotos.put({ name: "fotoDurante1", value: null });
+					setFotoDurante1(e);
+					break;
+				case "fotoDurante2":
+					localdb.fotos.put({ name: "fotoDurante2", value: null });
+					setFotoDurante2(e);
+					break;
+				case "fotoDespues1":
+					localdb.fotos.put({ name: "fotoDespues1", value: null });
+					setFotoDespues1(e);
+					break;
+				case "fotoDespues2":
+					localdb.fotos.put({ name: "fotoDespues2", value: null });
+					setFotoDespues2(e);
+					break;
+				default:
+					break;
+			}
 		}
 	};
 
-	const subirFotoDurante1 = (e) => {
-		if (e !== null) {
-			let photo = new Image();
-			photo.src = URL.createObjectURL(e.target.files[0]);
-			setFotoDurante1(photo.src);
-			// URL.revokeObjectURL(photo.src);
-		} else {
-			setFotoDurante1(e);
-		}
-	};
-	const subirFotoDurante2 = (e) => {
-		if (e !== null) {
-			let photo = new Image();
-			photo.src = URL.createObjectURL(e.target.files[0]);
-			setFotoDurante2(photo.src);
-			// URL.revokeObjectURL(photo.src);
-		} else {
-			setFotoDurante2(e);
-		}
-	};
-	const subirFotoDespues1 = (e) => {
-		if (e !== null) {
-			let photo = new Image();
-			photo.src = URL.createObjectURL(e.target.files[0]);
-			setFotoDespues1(photo.src);
-			// URL.revokeObjectURL(photo.src);
-		} else {
-			setFotoDespues1(e);
-		}
-	};
-	const subirFotoDespues2 = (e) => {
-		if (e !== null) {
-			let photo = new Image();
-			photo.src = URL.createObjectURL(e.target.files[0]);
-			setFotoDespues2(photo.src);
-			// URL.revokeObjectURL(photo.src);
-		} else {
-			setFotoDespues2(e);
-		}
+	const resizeBase64Img = (base64, newWidth, newHeight) => {
+		return new Promise((resolve, reject) => {
+			var canvas = document.createElement("canvas");
+			canvas.style.width = newWidth.toString() + "px";
+			canvas.style.height = newHeight.toString() + "px";
+			let context = canvas.getContext("2d");
+			let img = document.createElement("img");
+			img.src = base64;
+			img.onload = function () {
+				context.scale(newWidth / img.width, newHeight / img.height);
+				context.drawImage(img, 0, 0);
+				resolve(canvas.toDataURL());
+			};
+		});
 	};
 
 	return (
@@ -134,7 +198,9 @@ function AddEvidencia(props) {
 							}>
 							R
 						</b>
-						<b className="btnDelete" onClick={() => subirFotoAntes1(null)}>
+						<b
+							className="btnDelete"
+							onClick={() => subirFoto(null, "fotoAntes1")}>
 							X
 						</b>
 						<img
@@ -153,7 +219,7 @@ function AddEvidencia(props) {
 							accept="image/*"
 							className="inputPhoto"
 							id="antes1"
-							onChange={(e) => subirFotoAntes1(e)}
+							onChange={(e) => subirFoto(e, "fotoAntes1")}
 							type="file"
 						/>
 						<label htmlFor="antes1">
@@ -184,7 +250,9 @@ function AddEvidencia(props) {
 							}>
 							R
 						</b>
-						<b className="btnDelete" onClick={() => subirFotoAntes2(null)}>
+						<b
+							className="btnDelete"
+							onClick={() => subirFoto(null, "fotoAntes2")}>
 							X
 						</b>
 						<img
@@ -203,7 +271,7 @@ function AddEvidencia(props) {
 							accept="image/*"
 							className="inputPhoto"
 							id="antes2"
-							onChange={(e) => subirFotoAntes2(e)}
+							onChange={(e) => subirFoto(e, "fotoAntes2")}
 							type="file"
 						/>
 						<label htmlFor="antes2">
@@ -236,7 +304,9 @@ function AddEvidencia(props) {
 							}>
 							R
 						</b>
-						<b className="btnDelete" onClick={() => subirFotoDurante1(null)}>
+						<b
+							className="btnDelete"
+							onClick={() => subirFoto(null, "fotoDurante1")}>
 							X
 						</b>
 						<img
@@ -255,7 +325,7 @@ function AddEvidencia(props) {
 							accept="image/*"
 							className="inputPhoto"
 							id="durante1"
-							onChange={(e) => subirFotoDurante1(e)}
+							onChange={(e) => subirFoto(e, "fotoDurante1")}
 							type="file"
 						/>
 						<label htmlFor="durante1">
@@ -286,7 +356,9 @@ function AddEvidencia(props) {
 							}>
 							R
 						</b>
-						<b className="btnDelete" onClick={() => subirFotoDurante2(null)}>
+						<b
+							className="btnDelete"
+							onClick={() => subirFoto(null, "fotoDurante2")}>
 							X
 						</b>
 						<img
@@ -305,7 +377,7 @@ function AddEvidencia(props) {
 							accept="image/*"
 							className="inputPhoto"
 							id="durante2"
-							onChange={(e) => subirFotoDurante2(e)}
+							onChange={(e) => subirFoto(e, "fotoDurante2")}
 							type="file"
 						/>
 						<label htmlFor="durante2">
@@ -338,7 +410,9 @@ function AddEvidencia(props) {
 							}>
 							R
 						</b>
-						<b className="btnDelete" onClick={() => subirFotoDespues1(null)}>
+						<b
+							className="btnDelete"
+							onClick={() => subirFoto(null, "fotoDespues1")}>
 							X
 						</b>
 						<img
@@ -357,7 +431,7 @@ function AddEvidencia(props) {
 							accept="image/*"
 							className="inputPhoto"
 							id="despues1"
-							onChange={(e) => subirFotoDespues1(e)}
+							onChange={(e) => subirFoto(e, "fotoDespues1")}
 							type="file"
 						/>
 						<label htmlFor="despues1">
@@ -388,7 +462,9 @@ function AddEvidencia(props) {
 							}>
 							R
 						</b>
-						<b className="btnDelete" onClick={() => subirFotoDespues2(null)}>
+						<b
+							className="btnDelete"
+							onClick={() => subirFoto(null, "fotoDespues2")}>
 							X
 						</b>
 						<img
@@ -407,7 +483,7 @@ function AddEvidencia(props) {
 							accept="image/*"
 							className="inputPhoto"
 							id="despues2"
-							onChange={(e) => subirFotoDespues2(e)}
+							onChange={(e) => subirFoto(e, "fotoDespues2")}
 							type="file"
 						/>
 						<label htmlFor="despues2">
