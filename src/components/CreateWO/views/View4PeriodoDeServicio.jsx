@@ -14,9 +14,9 @@ import MomentUtils from "@date-io/moment";
 function View4PeriodoDeServicio(props) {
 	const [tiempos, setTiempos] = useState([]);
 	const [tipoDeTrabajo, setTipoDeTrabajo] = useState("");
-	const [startDate, setStartDate] = useState(null);
+	const [startDate, setStartDate] = useState(moment());
 	const [startTime, setStartTime] = useState(null);
-	const [endDate, setEndDate] = useState(null);
+	const [endDate, setEndDate] = useState(moment());
 	const [endTime, setEndTime] = useState(null);
 	const [disableAddBtn, SetDisableAddBtn] = useState(true);
 
@@ -63,9 +63,9 @@ function View4PeriodoDeServicio(props) {
 				arrTemp.push([tipoDeTrabajo, sdts, stts, edts, etts]);
 				setTiempos(arrTemp);
 				setTipoDeTrabajo("");
-				setStartDate(null);
+				setStartDate(moment());
 				setStartTime(null);
-				setEndDate(null);
+				setEndDate(moment());
 				setEndTime(null);
 				props.onDone(arrTemp);
 			}

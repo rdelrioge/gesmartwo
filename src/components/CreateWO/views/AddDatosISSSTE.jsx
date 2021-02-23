@@ -78,6 +78,9 @@ function AddDatosISSSTE(props) {
 		if (props.datos.tipoDeServicio === "PM (Mantenimiento Preventivo)") {
 			setProgStart(moment().startOf("month").valueOf());
 			setProgEnd(moment().endOf("month").valueOf());
+		} else {
+			setProgStart(null);
+			setProgEnd(null);
 		}
 	}, [props.datos]);
 
