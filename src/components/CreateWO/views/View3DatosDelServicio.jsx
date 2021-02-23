@@ -18,7 +18,7 @@ function View3DatosDelServicio(props) {
 	const [observaciones, setObservaciones] = useState("");
 	const [condiciones, setCondiciones] = useState("Funcionando");
 	const [reprogramado, setReprogramado] = useState("");
-	const [fechaDeReprogramacion, setFechaDeReprogramacion] = useState("");
+	const [fechaDeReprogramacion, setFechaDeReprogramacion] = useState(null);
 
 	useEffect(() => {
 		if (props.edit) {
@@ -44,10 +44,13 @@ function View3DatosDelServicio(props) {
 				tipoDeServicio !== "" &&
 				tipoDeContrato !== "" &&
 				sintoma !== "" &&
-				descripcion !== "" &&
-				condiciones !== ""
+				descripcion !== ""
 			) {
-				props.handleNext(false);
+				if (condiciones === "Reprogramado" && fechaDeReprogramacion === null) {
+					props.handleNext(true);
+				} else {
+					props.handleNext(false);
+				}
 			} else {
 				props.handleNext(true);
 			}
@@ -59,6 +62,7 @@ function View3DatosDelServicio(props) {
 		sintoma,
 		descripcion,
 		condiciones,
+		fechaDeReprogramacion,
 	]);
 
 	useEffect(() => {
@@ -70,23 +74,23 @@ function View3DatosDelServicio(props) {
 				setDescripcion(
 					"El equipo no se encontró disponible para realizar el servicio debido a"
 				);
-				setReprogramado("ProximoMes");
+				setReprogramado("FechaTentativa");
 			}
 		} else {
 			setApto(true);
 			setFuncionando(true);
 			setReprogramado("");
-			setFechaDeReprogramacion("");
+			setFechaDeReprogramacion(null);
 		}
 	}, [condiciones]);
 
-	useEffect(() => {
-		if (reprogramado === "FechaTentativa") {
-			setFechaDeReprogramacion(moment().startOf("day").valueOf());
-		} else {
-			setFechaDeReprogramacion("");
-		}
-	}, [reprogramado]);
+	// useEffect(() => {
+	// 	if (reprogramado === "FechaTentativa") {
+	// 		setFechaDeReprogramacion("");
+	// 	} else {
+	// 		setFechaDeReprogramacion("");
+	// 	}
+	// }, [reprogramado]);
 
 	useEffect(() => {
 		if (props.flag) {
@@ -125,7 +129,12 @@ function View3DatosDelServicio(props) {
 				style={date.day() === 1 ? { borderLeft: "1px solid lightgray" } : null}>
 				{date.day() === 1 && <div className={"week"}>{date.week()}</div>}
 				<Day
-					disabled={date.day() === 0 || date.day() === 6}
+					disabled={
+						date.day() === 0 ||
+						date.day() === 6 ||
+						date.isSame(moment(), "day") ||
+						date.isBefore(moment(), "day")
+					}
 					current={date.isSame(moment(), "day")}
 					hidden={!dayInCurrentMonth}
 					selected={date.isSame(selectedDate, "day")}>
@@ -136,7 +145,12 @@ function View3DatosDelServicio(props) {
 	};
 
 	function disableWeekends(date) {
-		return date.day() === 0 || date.day() === 6;
+		return (
+			date.day() === 0 ||
+			date.day() === 6 ||
+			date.isSame(moment(), "day") ||
+			date.isBefore(moment(), "day")
+		);
 	}
 
 	return (
@@ -349,13 +363,13 @@ function View3DatosDelServicio(props) {
 							inputVariant="outlined"
 							autoOk
 							disableToolbar
-							showTodayButton
-							todayLabel="hoy"
-							clearable
-							clearLabel="borrar"
 							okLabel=""
 							cancelLabel=""
 							shouldDisableDate={disableWeekends}
+							disablePast
+							DialogProps={{
+								className: "weekPicker",
+							}}
 							renderDay={renderDay}
 							format="DD/MM/YY"
 							id="reprogDate"
