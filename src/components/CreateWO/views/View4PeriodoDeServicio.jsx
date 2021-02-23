@@ -22,8 +22,8 @@ function View4PeriodoDeServicio(props) {
 
 	useEffect(() => {
 		if (props.edit) {
-			if (props.data) {
-				setTiempos(props.data.datos.tiempos);
+			if (props.datos) {
+				setTiempos(props.datos.tiempos);
 			}
 		}
 	}, []);
@@ -102,7 +102,10 @@ function View4PeriodoDeServicio(props) {
 							<option value={"En espera"}>En Espera</option>
 							<option value={"Administración"}>Administración</option>
 							{props.tps === "PM (Mantenimiento Preventivo)" ? (
-								<option value={"Preventivo"}>Preventivo</option>
+								props.datos.condiciones === "Funcionando" ||
+								props.datos.condiciones === "Parcialmente funcionando" ? (
+									<option value={"Preventivo"}>Preventivo</option>
+								) : null
 							) : (
 								<>
 									<option value={"Diagnóstico"}>Diagnóstico</option>
@@ -127,7 +130,7 @@ function View4PeriodoDeServicio(props) {
 									</option>
 									<option
 										value={"Rcarga de helio / mantenimiento de Cryogenos"}>
-										Rcarga de helio / mantenimiento de Cryogenos
+										Recarga de helio / mantenimiento de Cryogenos
 									</option>
 									<option value={"OJT en entrenamiento de trabajo"}>
 										OJT en entrenamiento de trabajo

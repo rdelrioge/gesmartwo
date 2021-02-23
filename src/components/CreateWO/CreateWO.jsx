@@ -213,7 +213,7 @@ function CreateWO(props) {
 					<div className="views view4">
 						<View4PeriodoDeServicio
 							edit={props.edit}
-							data={props.data}
+							datos={datos}
 							tps={datos.tipoDeServicio}
 							step={activeStep}
 							handleNext={(nD) => {

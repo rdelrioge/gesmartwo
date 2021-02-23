@@ -75,6 +75,13 @@ function AddDatosISSSTE(props) {
 	}, []);
 
 	useEffect(() => {
+		if (props.datos.tipoDeServicio === "PM (Mantenimiento Preventivo)") {
+			setProgStart(moment().startOf("month").valueOf());
+			setProgEnd(moment().endOf("month").valueOf());
+		}
+	}, [props.datos]);
+
+	useEffect(() => {
 		if (props.step === 5) {
 			props.handleNext(true);
 			if (props.datos.condiciones === "Reprogramado") {
