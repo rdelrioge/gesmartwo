@@ -16,6 +16,7 @@ function View2DatosIniciales(props) {
 	const [editar, setEditar] = useState(false);
 
 	useEffect(() => {
+		console.log(props);
 		if (props.edit) {
 			if (props.data) {
 				setSID(props.data.datos.equipo.sid);

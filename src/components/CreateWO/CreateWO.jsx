@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./createWO.scss";
 import moment from "moment";
 import "../../../node_modules/moment/locale/es";
-// import "./CreateWO/views/node_modules/moment/locale/es";
 
 import { localdb } from "../../index";
 
@@ -79,25 +78,13 @@ function CreateWO(props) {
 	};
 
 	useEffect(() => {
-		console.log(datos);
-		if (activeStep === 6) {
-			setFlagFinish(true);
-			let datosActuales = {
-				datos,
-				angulos,
-				nextDisabled,
-				flagAddFotos,
-				flagAddCapacitacion,
-				flagManual,
-			};
-			console.log(datosActuales);
-			localdb.datosRecientes.put({
-				id: 1,
-				name: "reciente",
-				value: datosActuales,
-			});
+		if (equipo && equipo.cliente === "ISSSTE") {
+			setDatos((prevDatos) => ({ ...prevDatos, fotos: "" }));
 		}
-	}, [datos]);
+		if (equipo && equipo.cliente === "IMSS") {
+			setDatos((prevDatos) => ({ ...prevDatos, datosISSSTE: "" }));
+		}
+	}, [equipo]);
 
 	useEffect(() => {
 		if (equipo && equipo.cliente === "ISSSTE") {
@@ -122,6 +109,20 @@ function CreateWO(props) {
 
 		if (activeStep === 6) {
 			setFlagFinish(true);
+			let datosActuales = {
+				datos,
+				angulos,
+				nextDisabled,
+				flagAddFotos,
+				flagAddCapacitacion,
+				flagManual,
+			};
+			console.log(datosActuales);
+			localdb.datosRecientes.put({
+				id: 1,
+				name: "reciente",
+				value: datosActuales,
+			});
 		} else {
 			setFlagFinish(false);
 			setTitle(tituloOriginal);
@@ -189,37 +190,23 @@ function CreateWO(props) {
 								reprogramado,
 								fechaDeReprogramacion
 							) => {
-								equipo.cliente === ""
-									? setDatos({
-											...datos,
-											tipoDeServicio,
-											tipoDeContrato,
-											equipo: {
-												...equipo,
-												contrato,
-											},
-											sintoma,
-											descripcion,
-											apto,
-											funcionando,
-											observaciones,
-											condiciones,
-											reprogramado,
-											fechaDeReprogramacion,
-									  })
-									: setDatos({
-											...datos,
-											tipoDeServicio,
-											tipoDeContrato,
-											sintoma,
-											descripcion,
-											apto,
-											funcionando,
-											observaciones,
-											condiciones,
-											reprogramado,
-											fechaDeReprogramacion,
-									  });
+								setDatos({
+									...datos,
+									tipoDeServicio,
+									tipoDeContrato,
+									equipo: {
+										...equipo,
+										contrato,
+									},
+									sintoma,
+									descripcion,
+									apto,
+									funcionando,
+									observaciones,
+									condiciones,
+									reprogramado,
+									fechaDeReprogramacion,
+								});
 							}}
 						/>
 					</div>
@@ -303,7 +290,8 @@ function CreateWO(props) {
 						) : equipo && equipo.cliente === "ISSSTE" ? (
 							<AddDatosISSSTE
 								edit={props.edit}
-								data={props.data}
+								datos={datos}
+								angulos={props.data.angulos}
 								flag={activeStep === 6 ? true : false}
 								step={activeStep}
 								handleNext={(nD) => {

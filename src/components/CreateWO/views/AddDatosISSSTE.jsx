@@ -10,8 +10,8 @@ import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 
 function AddDatosISSSTE(props) {
-	const datosISSSTE = { ...props.data?.datos.datosISSSTE };
-	const angulos = { ...props.data?.angulos };
+	const datosISSSTE = { ...props.datos.datosISSSTE };
+	const angulos = { ...props.angulos };
 
 	const [bitacora, setBitacora] = useState("");
 	const [hrsReales, setHrsReales] = useState("");
@@ -33,14 +33,16 @@ function AddDatosISSSTE(props) {
 
 	useEffect(() => {
 		if (props.edit) {
-			setBitacora(datosISSSTE.bitacora);
-			setHrsReales(datosISSSTE.hrsReales);
-			setVidaUtil(datosISSSTE.vidaUtil);
-			setProgStart(datosISSSTE.progStart);
-			setProgEnd(datosISSSTE.progEnd);
-			setUbicacion(datosISSSTE.ubicacion);
-			setRecomendaciones(datosISSSTE.recomendaciones);
-			setConclusiones(datosISSSTE.conclusiones);
+			setBitacora(datosISSSTE.bitacora ? datosISSSTE.bitacora : "");
+			setHrsReales(datosISSSTE.hrsReales ? datosISSSTE.hrsReales : "");
+			setVidaUtil(datosISSSTE.vidaUtil ? datosISSSTE.vidaUtil : "");
+			setProgStart(datosISSSTE.progStart ? datosISSSTE.progStart : null);
+			setProgEnd(datosISSSTE.progEnd ? datosISSSTE.progEnd : null);
+			setUbicacion(datosISSSTE.ubicacion ? datosISSSTE.ubicacion : "");
+			setRecomendaciones(
+				datosISSSTE.recomendaciones ? datosISSSTE.recomendaciones : "Ninguna"
+			);
+			setConclusiones(datosISSSTE.conclusiones ? datosISSSTE.conclusiones : "");
 			localdb.fotos
 				.where("name")
 				.equals("fotoNormalCache")
@@ -73,10 +75,9 @@ function AddDatosISSSTE(props) {
 	}, []);
 
 	useEffect(() => {
-		console.log(props);
 		if (props.step === 5) {
 			props.handleNext(true);
-			if (props.data?.datos.condiciones === "Reprogramado") {
+			if (props.datos.condiciones === "Reprogramado") {
 				if (bitacora !== "" && hrsReales !== "") {
 					if (progStart !== null && progEnd !== null) {
 						let sdts = moment(progStart).startOf("day").valueOf();
@@ -260,7 +261,7 @@ function AddDatosISSSTE(props) {
 						setHrsReales(e.target.value);
 					}}
 				/>
-				{props.data?.datos.condiciones === "Reprogramado" ? null : (
+				{props.datos.condiciones === "Reprogramado" ? null : (
 					<TextField
 						label="Vida útil (años)"
 						fullWidth
@@ -379,7 +380,7 @@ function AddDatosISSSTE(props) {
 					setConclusiones(e.target.value);
 				}}
 			/>
-			{props.data?.datos.condiciones === "Reprogramado" ? null : (
+			{props.datos.condiciones === "Reprogramado" ? null : (
 				<>
 					<div className="row">
 						{fotoNormal ? (

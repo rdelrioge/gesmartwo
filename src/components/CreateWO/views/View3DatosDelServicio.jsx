@@ -1,22 +1,11 @@
 import React, { useState, useEffect } from "react";
-// import { createPortal } from "react-dom";
 
 import { TextField, InputLabel, FormControl, Select } from "@material-ui/core";
-
-// import Calendar from "rc-calendar";
-// import "rc-calendar/assets/index.css";
-
-// import WeekPicker from "react-datepicker";
-// import "react-datepicker/dist/react-datepicker.css";
-// import { registerLocale, setDefaultLocale } from "react-datepicker";
-// import esMX from "date-fns/locale/es";
 
 import { MuiPickersUtilsProvider, DatePicker, Day } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 
 import moment from "moment";
-
-// registerLocale("es", esMX);
 
 function View3DatosDelServicio(props) {
 	const [tipoDeServicio, setTipoDeServicio] = useState("");
@@ -100,7 +89,6 @@ function View3DatosDelServicio(props) {
 	}, [reprogramado]);
 
 	useEffect(() => {
-		console.log(props);
 		if (props.flag) {
 			props.onDone(
 				tipoDeServicio,
@@ -202,7 +190,7 @@ function View3DatosDelServicio(props) {
 					</FormControl>
 				</div>
 			) : null}
-			{props.flagManual && tipoDeContrato === "Contrato" ? (
+			{tipoDeContrato === "Contrato" ? (
 				<div className="item3">
 					<TextField
 						label="No. de Contrato"

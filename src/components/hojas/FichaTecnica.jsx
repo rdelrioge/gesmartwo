@@ -4,40 +4,6 @@ import "./fichatecnica.scss";
 function FichaTecnica(props) {
 	const data = { ...props.data };
 
-	const [fotoNormal, setFotoNormal] = useState(data.datosISSSTE.fotoNormal);
-	const [fotoSerie, setFotoSerie] = useState(data.datosISSSTE.fotoSerie);
-	const [fotoInventario, setFotoInventario] = useState(
-		data.datosISSSTE.fotoInventario
-	);
-	const [fotoPanoramica, setFotoPanoramica] = useState(
-		data.datosISSSTE.fotoPanoramica
-	);
-
-	const checkIfCachePhotos = () => {
-		if (props.edit) {
-			let fotoNormalCache = JSON.parse(localStorage.getItem("fotoNormalCache"));
-			let fotoSerieCache = localStorage.getItem("fotoSerieCache");
-			let fotoInventarioCache = localStorage.getItem("fotoInventarioCache");
-			let fotoPanoramicaCache = localStorage.getItem("fotoPanoramicaCache");
-			if (fotoNormalCache) {
-				setFotoNormal(fotoNormalCache);
-			}
-			if (fotoSerieCache) {
-				setFotoSerie(fotoSerieCache);
-			}
-			if (fotoInventarioCache) {
-				setFotoInventario(fotoInventarioCache);
-			}
-			if (fotoPanoramicaCache) {
-				setFotoPanoramica(fotoPanoramicaCache);
-			}
-		}
-	};
-
-	useEffect(() => {
-		// checkIfCachePhotos();
-	}, []);
-
 	return (
 		<div className="fichatecnica">
 			<div className="rows">
@@ -119,7 +85,7 @@ function FichaTecnica(props) {
 						<img
 							className="cuadro"
 							alt="foto"
-							src={data.datosISSSTE && data.datosISSSTE.fotoNormal}
+							src={data.datosISSSTE ? data.datosISSSTE.fotoNormal : ""}
 							style={{
 								transform: `rotate(${props.angulos[0]}deg)`,
 								height: "inherit",
@@ -129,7 +95,7 @@ function FichaTecnica(props) {
 						<img
 							className="cuadro"
 							alt="foto"
-							src={data.datosISSSTE && data.datosISSSTE.fotoSerie}
+							src={data.datosISSSTE ? data.datosISSSTE.fotoSerie : ""}
 							style={{
 								transform: `rotate(${props.angulos[1]}deg)`,
 								height: "inherit",
@@ -143,7 +109,7 @@ function FichaTecnica(props) {
 						<img
 							className="cuadro"
 							alt="foto"
-							src={data.datosISSSTE && data.datosISSSTE.fotoInventario}
+							src={data.datosISSSTE ? data.datosISSSTE.fotoInventario : ""}
 							style={{
 								transform: `rotate(${props.angulos[2]}deg)`,
 								height: "inherit",
@@ -153,7 +119,7 @@ function FichaTecnica(props) {
 						<img
 							className="cuadro"
 							alt="foto"
-							src={data.datosISSSTE && data.datosISSSTE.fotoPanoramica}
+							src={data.datosISSSTE ? data.datosISSSTE.fotoPanoramica : ""}
 							style={{
 								transform: `rotate(${props.angulos[3]}deg)`,
 								height: "inherit",
