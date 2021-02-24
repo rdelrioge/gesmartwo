@@ -1,3 +1,69 @@
 .cartaReprogramacionIMSSC {
-	color: dimgray;
+	display: grid;
+	grid-auto-flow: row;
+	// grid-gap: 1em;
+	font-size: 0.6em;
+	.header {
+		display: grid;
+		grid-auto-flow: row;
+		text-align: right;
+	}
+	.fecha {
+		display: grid;
+		grid-auto-flow: column;
+		align-items: center;
+		margin-bottom: 1em;
+		.logo {
+			background-image: url("../../assets/images/logoGE.png");
+			padding: 3px;
+			background-repeat: no-repeat;
+			background-position: left;
+			background-size: contain;
+			max-height: 7em;
+			height: 4em;
+		}
+		.ciudad {
+			text-align: end;
+			span {
+				text-transform: capitalize;
+			}
+		}
+	}
+	.cliente {
+		display: grid;
+		h4,
+		p {
+			margin: 0;
+		}
+		span {
+			text-align: end;
+		}
+	}
+	.body {
+		display: block;
+	}
+	.atte {
+		display: grid;
+		p {
+			margin: 0;
+		}
+
+		h4 {
+			margin-bottom: 5em;
+		}
+		.firma {
+			border-top: 1px solid black;
+			width: 14em;
+		}
+	}
+}
+
+@media print {
+	.cartaReprogramacionIMSSC {
+		font-size: 1em;
+		display: block !important;
+		break-before: always !important;
+		page-break-before: always !important;
+		page-break-inside: avoid !important;
+	}
 }

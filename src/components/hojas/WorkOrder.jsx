@@ -226,9 +226,7 @@ function WorkOrder(props) {
 				<div className="row1">
 					<div className="logo"></div>
 					<div className="datosge">
-						<p>
-							<b>GE Healthcare</b>
-						</p>
+						<b>GE Healthcare</b>
 						<p>GE SISTEMAS MEDICOS DE MEXICO S.A. DE C.V.</p>
 						<p>Antonio Dovali Jaime No. 70, Torre B Piso 5</p>
 						<p> Col. Santa Fe Del. Alvaro Obregón, C.P. 01210 CDMX</p>

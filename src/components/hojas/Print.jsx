@@ -18,7 +18,7 @@ function Print(props) {
 			{props.data.equipo.cliente === "IMSS" ? (
 				props.data.condiciones === "Reprogramado" ? (
 					<>
-						<CartaReprogramacionIMSS />
+						<CartaReprogramacionIMSS data={props.data} />
 					</>
 				) : (
 					<>
@@ -33,7 +33,6 @@ function Print(props) {
 				<>
 					<OrdenIssste data={props.data} />
 					<div className="saltodepag"></div>
-					<div className="marginTop"></div>
 					{props.data.condiciones === "Reprogramado" ? null : (
 						<FichaTecnica
 							data={props.data}
