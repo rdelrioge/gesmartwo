@@ -136,6 +136,10 @@ function CreateWO(props) {
 		}
 	}, [title]);
 
+	useEffect(() => {
+		console.log(datos);
+	}, [datos]);
+
 	return (
 		<div className={activeStep === 6 ? "home scrollHome " : "home"}>
 			<IconButton

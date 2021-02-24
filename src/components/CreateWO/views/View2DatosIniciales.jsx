@@ -42,6 +42,12 @@ function View2DatosIniciales(props) {
 		}
 	}, [caso, wo, equipo, props]);
 
+	useEffect(() => {
+		if (props.step === 1) {
+			props.onDone(caso, wo, equipo, showAddManual);
+		}
+	}, [props.step]);
+
 	const changeSID = (value) => {
 		setSID(value);
 		if (equipo) {
