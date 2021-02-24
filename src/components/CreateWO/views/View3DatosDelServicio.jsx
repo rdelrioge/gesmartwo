@@ -8,6 +8,8 @@ import MomentUtils from "@date-io/moment";
 import moment from "moment";
 
 function View3DatosDelServicio(props) {
+	const datos = { ...props.data.datos };
+
 	const [tipoDeServicio, setTipoDeServicio] = useState("");
 	const [tipoDeContrato, setTipoDeContrato] = useState("Contrato");
 	const [contrato, setContrato] = useState("");
@@ -16,24 +18,36 @@ function View3DatosDelServicio(props) {
 	const [apto, setApto] = useState(true);
 	const [funcionando, setFuncionando] = useState(true);
 	const [observaciones, setObservaciones] = useState("");
-	const [condiciones, setCondiciones] = useState("Funcionando");
+	const [condiciones, setCondiciones] = useState(
+		props.edit
+			? datos.condiciones
+				? datos.condiciones
+				: "Funcionando"
+			: "Funcionando"
+	);
 	const [reprogramado, setReprogramado] = useState("");
-	const [fechaDeReprogramacion, setFechaDeReprogramacion] = useState(null);
+	const [fechaDeReprogramacion, setFechaDeReprogramacion] = useState(
+		props.edit
+			? datos.fechaDeReprogramacion
+				? datos.fechaDeReprogramacion
+				: null
+			: null
+	);
 
 	useEffect(() => {
 		if (props.edit) {
 			if (props.data) {
-				setTipoDeServicio(props.data.datos.tipoDeServicio);
-				setTipoDeContrato(props.data.datos.tipoDeContrato);
-				setContrato(props.data.datos.equipo.contrato);
-				setSintoma(props.data.datos.sintoma);
-				setDescripcion(props.data.datos.descripcion);
-				setApto(props.data.datos.apto);
-				setFuncionando(props.data.datos.funcionando);
-				setObservaciones(props.data.datos.observaciones);
-				setCondiciones(props.data.datos.condiciones);
-				setReprogramado(props.data.datos.reprogramado);
-				setFechaDeReprogramacion(props.data.datos.fechaDeReprogramacion);
+				setTipoDeServicio(datos.tipoDeServicio);
+				setTipoDeContrato(datos.tipoDeContrato);
+				setContrato(datos.equipo.contrato);
+				setSintoma(datos.sintoma);
+				setDescripcion(datos.descripcion);
+				setApto(datos.apto);
+				setFuncionando(datos.funcionando);
+				setObservaciones(datos.observaciones);
+				setCondiciones(datos.condiciones);
+				setReprogramado(datos.reprogramado);
+				setFechaDeReprogramacion(datos.fechaDeReprogramacion);
 			}
 		}
 	}, []);
@@ -83,14 +97,6 @@ function View3DatosDelServicio(props) {
 			setFechaDeReprogramacion(null);
 		}
 	}, [condiciones]);
-
-	// useEffect(() => {
-	// 	if (reprogramado === "FechaTentativa") {
-	// 		setFechaDeReprogramacion("");
-	// 	} else {
-	// 		setFechaDeReprogramacion("");
-	// 	}
-	// }, [reprogramado]);
 
 	useEffect(() => {
 		if (props.flag) {
