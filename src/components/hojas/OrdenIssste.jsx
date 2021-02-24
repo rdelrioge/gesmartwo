@@ -596,8 +596,7 @@ function OrdenIssste(props) {
 				<span className="centerText borderL borderR borderB">
 					NOTAS ACLARATORIAS AL REVERSO ( TURNAR COPIA ORIGINAL AL RESIDENTE )
 				</span>
-				<br />
-				<br />
+				<div className="pagebreak"></div>
 				<div className="row6">
 					<div className="row6col row6L borderL">
 						<div className="grayed borderT borderB borderR">GENERALIDADES</div>

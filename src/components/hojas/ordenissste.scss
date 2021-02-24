@@ -273,15 +273,24 @@
 }
 @media print {
 	.ordenissste {
-		font-size: 2.6vw;
+		font-size: 7.5pt;
+		padding-top: 2px;
+		display: block !important;
+		break-after: always !important;
+		page-break-after: always !important;
+		page-break-inside: avoid !important;
 		.rows {
-			margin-top: 0;
+			margin-top: 1em;
+			.pagebreak {
+				display: block !important;
+				break-after: always !important;
+				page-break-after: always !important;
+				page-break-inside: avoid !important;
+			}
 			.row6 {
-				font-size: 0.65em;
+				// font-size: 0.65em;
+				font-size: 5pt;
 			}
 		}
-	}
-	@page {
-		margin-bottom: 1cm;
 	}
 }
