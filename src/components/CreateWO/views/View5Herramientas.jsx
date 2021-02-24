@@ -80,7 +80,7 @@ function View5Herramientas(props) {
 						label="Sig. Calibracion"
 						value={calibracion}
 						onChange={(e) => {
-							setCalibracion(e);
+							setCalibracion(e.startOf("day").valueOf());
 						}}
 					/>
 				</MuiPickersUtilsProvider>
