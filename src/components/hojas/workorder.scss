@@ -178,7 +178,7 @@
 			}
 			.row3R {
 				display: grid;
-				grid-template-rows: repeat(6, 1fr) 4fr repeat(6, 1fr);
+				grid-template-rows: 1fr 4fr 1fr 4fr repeat(6, 1fr);
 				border: 1px solid black;
 				border-right: none;
 				span,
@@ -190,14 +190,24 @@
 					background-color: lightgray;
 					text-align: center;
 				}
-				.row3R-r {
+				.row3R-tds {
 					display: grid;
-					grid-template-columns: 2fr 3fr;
-					*:first-child {
-						text-align: center;
-					}
-					*:last-child {
-						padding-left: 0.2em;
+					grid-auto-flow: row;
+					.row3R-r {
+						display: grid;
+						grid-template-columns: 2fr 3fr;
+						*:first-child {
+							display: flex;
+							width: 100%;
+							align-items: center;
+							justify-content: center;
+						}
+						*:last-child {
+							padding-left: 0.2em;
+							display: flex;
+							width: 100%;
+							align-items: center;
+						}
 					}
 				}
 				.sintoma {

@@ -378,21 +378,25 @@ function WorkOrder(props) {
 					</div>
 					<div className="row3R">
 						<b className="rowtitle">Servicio</b>
-						<div className="row3R-r">
-							<span>Tipo de servicio:</span>
-							<b>{data.tipoDeServicio}</b>
-						</div>
-						<div className="row3R-r">
-							<span>Tipo de trabajo:</span>
-							<b>{data.tipoDeContrato}</b>
-						</div>
-						<div className="row3R-r">
-							<span>Contrato No.</span>
-							<span>{data.equipo.contrato}</span>
-						</div>
-						<div className="row3R-r">
-							<span>GON de Instalación:</span>
-							<span></span>
+						<div className="row3R-tds">
+							<div className="row3R-r">
+								<span>Tipo de servicio:</span>
+								<b>{data.tipoDeServicio}</b>
+							</div>
+							<div className="row3R-r">
+								<span>Tipo de trabajo:</span>
+								<b>{data.tipoDeContrato}</b>
+							</div>
+							<div className="row3R-r">
+								<span>Contrato No.</span>
+								<span>{data.equipo.contrato}</span>
+							</div>
+							{data.tipoDeServicio === "Instalación" ? (
+								<div className="row3R-r">
+									<span>GON de Instalación:</span>
+									<span></span>
+								</div>
+							) : null}
 						</div>
 						<b className="rowtitle">SINTOMA</b>
 						<b className="sintoma">{data.sintoma}</b>
