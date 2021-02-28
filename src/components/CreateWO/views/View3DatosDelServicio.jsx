@@ -13,6 +13,7 @@ function View3DatosDelServicio(props) {
 	const [tipoDeServicio, setTipoDeServicio] = useState("");
 	const [tipoDeContrato, setTipoDeContrato] = useState("Contrato");
 	const [contrato, setContrato] = useState("");
+	const [GonDeInstalacion, setGonDeInstalacion] = useState("");
 	const [sintoma, setSintoma] = useState("");
 	const [descripcion, setDescripcion] = useState("");
 	const [apto, setApto] = useState(true);
@@ -40,6 +41,7 @@ function View3DatosDelServicio(props) {
 				setTipoDeServicio(datos.tipoDeServicio);
 				setTipoDeContrato(datos.tipoDeContrato);
 				setContrato(datos.equipo.contrato);
+				setGonDeInstalacion(datos.gonDeInstalacion);
 				setSintoma(datos.sintoma);
 				setDescripcion(datos.descripcion);
 				setApto(datos.apto);
@@ -51,6 +53,15 @@ function View3DatosDelServicio(props) {
 			}
 		}
 	}, []);
+
+	useEffect(() => {
+		console.log("flag");
+		props.flagManual
+			? contrato === ""
+				? setContrato("")
+				: console.log(contrato)
+			: setContrato(props.equipo?.contrato);
+	}, [props.flag, props.equipo]);
 
 	useEffect(() => {
 		if (props.step === 1) {
@@ -104,6 +115,7 @@ function View3DatosDelServicio(props) {
 				tipoDeServicio,
 				tipoDeContrato,
 				contrato,
+				GonDeInstalacion,
 				sintoma,
 				descripcion,
 				apto,
@@ -186,7 +198,7 @@ function View3DatosDelServicio(props) {
 					</Select>
 				</FormControl>
 			</div>
-			{props.flagManual ? (
+			{props.flagManual && tipoDeServicio !== "INS (Instalación)" ? (
 				<div className="item3">
 					<FormControl size="small" fullWidth variant="outlined">
 						<InputLabel htmlFor="selectTipoDeContrato">
@@ -210,7 +222,9 @@ function View3DatosDelServicio(props) {
 					</FormControl>
 				</div>
 			) : null}
-			{props.flagManual && tipoDeContrato === "Contrato" ? (
+			{props.flagManual &&
+			tipoDeContrato === "Contrato" &&
+			tipoDeServicio !== "INS (Instalación)" ? (
 				<div className="item3">
 					<TextField
 						label="No. de Contrato"
@@ -221,6 +235,16 @@ function View3DatosDelServicio(props) {
 						onChange={(e) => setContrato(e.target.value)}
 					/>
 				</div>
+			) : null}
+			{tipoDeServicio === "INS (Instalación)" ? (
+				<TextField
+					label="Gon de Instalación"
+					fullWidth
+					variant="outlined"
+					size="small"
+					value={GonDeInstalacion}
+					onChange={(e) => setGonDeInstalacion(e.target.value)}
+				/>
 			) : null}
 			<div className="item3">
 				{tipoDeServicio === "PM (Mantenimiento Preventivo)" ? (

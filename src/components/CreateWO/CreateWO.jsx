@@ -185,6 +185,7 @@ function CreateWO(props) {
 								tipoDeServicio,
 								tipoDeContrato,
 								contrato,
+								gonDeInstalacion,
 								sintoma,
 								descripcion,
 								apto,
@@ -194,6 +195,8 @@ function CreateWO(props) {
 								reprogramado,
 								fechaDeReprogramacion
 							) => {
+								// equipo.cliente === ""
+								// 	?
 								setDatos({
 									...datos,
 									tipoDeServicio,
@@ -203,6 +206,7 @@ function CreateWO(props) {
 										contrato,
 									},
 									sintoma,
+									gonDeInstalacion,
 									descripcion,
 									apto,
 									funcionando,
@@ -211,6 +215,20 @@ function CreateWO(props) {
 									reprogramado,
 									fechaDeReprogramacion,
 								});
+								// 		: setDatos({
+								// 				...datos,
+								// 				tipoDeServicio,
+								// 				tipoDeContrato,
+								// 				gonDeInstalacion,
+								// 				sintoma,
+								// 				descripcion,
+								// 				apto,
+								// 				funcionando,
+								// 				observaciones,
+								// 				condiciones,
+								// 				reprogramado,
+								// 				fechaDeReprogramacion,
+								// 		  });
 							}}
 						/>
 					</div>

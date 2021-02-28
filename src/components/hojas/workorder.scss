@@ -178,7 +178,7 @@
 			}
 			.row3R {
 				display: grid;
-				grid-template-rows: 1fr 4fr 1fr 4fr repeat(6, 1fr);
+				grid-template-rows: 1fr auto 1fr 4fr repeat(6, 1fr);
 				border: 1px solid black;
 				border-right: none;
 				span,
