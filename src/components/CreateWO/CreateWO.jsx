@@ -109,20 +109,6 @@ function CreateWO(props) {
 
 		if (activeStep === 6) {
 			setFlagFinish(true);
-			let datosActuales = {
-				datos,
-				angulos,
-				nextDisabled,
-				flagAddFotos,
-				flagAddCapacitacion,
-				flagManual,
-			};
-			console.log(datosActuales);
-			localdb.datosRecientes.put({
-				id: 1,
-				name: "reciente",
-				value: datosActuales,
-			});
 		} else {
 			setFlagFinish(false);
 			setTitle(tituloOriginal);
@@ -138,6 +124,23 @@ function CreateWO(props) {
 
 	useEffect(() => {
 		console.log(datos);
+		if (flagFinish) {
+			let datosActuales = {
+				datos,
+				angulos,
+				nextDisabled,
+				flagAddFotos,
+				flagAddCapacitacion,
+				flagManual,
+			};
+			console.log("Guardando en cache");
+			console.log(datosActuales);
+			localdb.datosRecientes.put({
+				id: 1,
+				name: "reciente",
+				value: datosActuales,
+			});
+		}
 	}, [datos]);
 
 	return (
