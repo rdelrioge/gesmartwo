@@ -5,8 +5,8 @@ import { IconButton } from "@material-ui/core";
 import { localdb } from "../../../index";
 
 function AddEvidencia(props) {
-	const fotos = { ...props.data.datos.fotos };
-	const angulos = { ...props.data.datos.angulos };
+	const fotos = { ...props.data?.datos.fotos };
+	const angulos = { ...props.data?.datos.angulos };
 
 	const cliente = props.cliente;
 	const [fotoAntes1, setFotoAntes1] = useState("");

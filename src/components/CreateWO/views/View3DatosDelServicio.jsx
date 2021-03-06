@@ -8,7 +8,7 @@ import MomentUtils from "@date-io/moment";
 import moment from "moment";
 
 function View3DatosDelServicio(props) {
-	const datos = { ...props.data.datos };
+	const datos = { ...props.data?.datos };
 
 	const [tipoDeServicio, setTipoDeServicio] = useState("");
 	const [tipoDeContrato, setTipoDeContrato] = useState("Contrato");
