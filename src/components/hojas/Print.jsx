@@ -6,6 +6,7 @@ import Capacitacion from "./Capacitacion";
 import Evidencia from "./Evidencia";
 import OrdenIssste from "./OrdenIssste";
 import FichaTecnica from "./FichaTecnica";
+import CartaReprogramacionIMSS from "./CartaReprogramacionIMSS";
 
 function Print(props) {
 	console.log(props);
@@ -15,17 +16,30 @@ function Print(props) {
 			<WorkOrder data={props.data} />
 			<div className="saltodepag"></div>
 			{props.data.equipo.cliente === "IMSS" ? (
-				<>
-					<Evidencia data={props.data} angulos={props.angulos} />
-					<div className="saltodepag"></div>
-					<Capacitacion data={props.data} />
-				</>
+				props.data.condiciones === "Reprogramado" ? (
+					<>
+						<CartaReprogramacionIMSS data={props.data} />
+					</>
+				) : (
+					<>
+						<Evidencia data={props.data} angulos={props.angulos} />
+						<div className="saltodepag"></div>
+						{props.flagAddCapacitacion ? (
+							<Capacitacion data={props.data} />
+						) : null}
+					</>
+				)
 			) : props.data.equipo.cliente === "ISSSTE" ? (
 				<>
 					<OrdenIssste data={props.data} />
 					<div className="saltodepag"></div>
-					<div className="marginTop"></div>
-					<FichaTecnica data={props.data} angulos={props.angulos} />
+					{props.data.condiciones === "Reprogramado" ? null : (
+						<FichaTecnica
+							data={props.data}
+							angulos={props.angulos}
+							edit={props.editFlag}
+						/>
+					)}
 				</>
 			) : props.flagAddFotos ? (
 				<Evidencia data={props.data} angulos={props.angulos} />

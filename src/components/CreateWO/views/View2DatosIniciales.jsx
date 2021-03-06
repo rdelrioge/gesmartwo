@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Button, TextField } from "@material-ui/core";
 
 import AddManual from "./AddManual";
-import { db } from "../../index";
+import { db } from "../../../index";
 
 function View2DatosIniciales(props) {
 	const [sid, setSID] = useState("");
@@ -16,7 +16,22 @@ function View2DatosIniciales(props) {
 	const [editar, setEditar] = useState(false);
 
 	useEffect(() => {
-		if (props.step === 1) {
+		console.log(props);
+		if (props.edit) {
+			if (props.data) {
+				setSID(props.data.datos.equipo.sid);
+				setCaso(props.data.datos.case);
+				setWO(props.data.datos.wo);
+				setEquipo(props.data.datos.equipo);
+				setShowAddManual(props.data.flagManual);
+				setHideInfo(false);
+				setEditar(true);
+			}
+		}
+	}, []);
+
+	useEffect(() => {
+		if (props.step === 0) {
 			if (caso !== "" && wo !== "" && equipo) {
 				equipo.hospital !== ""
 					? props.handleNext(false)
@@ -26,6 +41,12 @@ function View2DatosIniciales(props) {
 			}
 		}
 	}, [caso, wo, equipo, props]);
+
+	useEffect(() => {
+		if (props.step === 1) {
+			props.onDone(caso, wo, equipo, showAddManual);
+		}
+	}, [props.step]);
 
 	const changeSID = (value) => {
 		setSID(value);
@@ -79,7 +100,6 @@ function View2DatosIniciales(props) {
 		if (flag) {
 			setEquipo(eq);
 			setHideInfo(false);
-			console.log(equipo);
 			props.onDone(caso, wo, eq, showAddManual);
 		}
 		setOpenAddManualDrawer(false);
@@ -91,11 +111,13 @@ function View2DatosIniciales(props) {
 			<TextField
 				label="Case"
 				fullWidth
+				required
 				variant="outlined"
-				type="tel"
+				type="text"
 				size="small"
 				inputProps={{
 					maxLength: 8,
+					inputMode: "numeric",
 				}}
 				value={caso}
 				onChange={(e) => setCaso(e.target.value)}
@@ -103,17 +125,19 @@ function View2DatosIniciales(props) {
 			<TextField
 				label="Work Order"
 				fullWidth
+				required
 				variant="outlined"
-				type="tel"
+				type="text"
 				inputProps={{
 					maxLength: 11,
+					inputMode: "numeric",
 				}}
 				size="small"
 				value={wo}
 				onFocus={() => {
 					wo === "" ? setWO("WO-") : console.log();
 				}}
-				onChange={(e) => setWO(e.target.value.toUpperCase())}
+				onChange={(e) => setWO(e.target.value.toUpperCase().trim())}
 			/>
 			<TextField
 				label="SID"
@@ -125,7 +149,7 @@ function View2DatosIniciales(props) {
 					maxLength: 20,
 				}}
 				type="text"
-				onChange={(ev) => changeSID(ev.target.value.toUpperCase())}
+				onChange={(ev) => changeSID(ev.target.value.toUpperCase().trim())}
 				value={sid}
 			/>
 			<div className="searchAddBtns">
@@ -202,14 +226,15 @@ function View2DatosIniciales(props) {
 							<b>Serie: </b>
 							{equipo.serie}
 						</p>
-						<p>
-							<b>Contrato: </b>
-							{equipo.contrato}
-						</p>
+						{showAddManual ? null : (
+							<p>
+								<b>Contrato: </b>
+								{equipo.contrato}
+							</p>
+						)}
 					</>
-				) : (
-					<div className="nada"></div>
-				)}
+				) : // <div className="nada"></div>
+				null}
 			</div>
 		</>
 	);

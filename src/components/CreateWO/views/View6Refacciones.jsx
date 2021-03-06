@@ -11,10 +11,21 @@ function View6Refacciones(props) {
 	const [disableAddBtnR, SetDisableAddBtnR] = useState(true);
 
 	useEffect(() => {
+		if (props.edit) {
+			if (props.data) {
+				setRefacciones(props.data.datos.refacciones);
+			}
+		}
+	}, []);
+
+	useEffect(() => {
 		if (props.flag) {
 			props.onDone(refacciones);
 		}
-	}, [props.flag]);
+		if (props.step === 4) {
+			props.handleNext(false);
+		}
+	}, [props.flag, props.step]);
 
 	useEffect(() => {
 		if (
@@ -96,7 +107,7 @@ function View6Refacciones(props) {
 				</div>
 			</div>
 			<div className="refAgregadas">
-				{refacciones.length > 0 ? (
+				{refacciones && refacciones.length > 0 ? (
 					<>
 						<ul className="ulref">
 							<li>Cant.</li>

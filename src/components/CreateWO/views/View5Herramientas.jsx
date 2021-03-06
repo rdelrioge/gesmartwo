@@ -16,10 +16,23 @@ function View5Herramientas(props) {
 	const [disableAddBtnH, SetDisableAddBtnH] = useState(true);
 
 	useEffect(() => {
+		if (props.edit) {
+			if (props.data) {
+				setHerramientas(props.data.datos.herramientas);
+			} else {
+				setHerramienta([]);
+			}
+		}
+	}, []);
+
+	useEffect(() => {
 		if (props.flag) {
 			props.onDone(herramientas);
 		}
-	}, [props.flag]);
+		if (props.step === 3) {
+			props.handleNext(false);
+		}
+	}, [props.flag, props.step]);
 
 	useEffect(() => {
 		if (barcode !== "" && herramienta !== "" && calibracion !== null) {
@@ -67,7 +80,7 @@ function View5Herramientas(props) {
 						label="Sig. Calibracion"
 						value={calibracion}
 						onChange={(e) => {
-							setCalibracion(e);
+							setCalibracion(e.startOf("day").valueOf());
 						}}
 					/>
 				</MuiPickersUtilsProvider>
@@ -100,7 +113,7 @@ function View5Herramientas(props) {
 				</div>
 			</div>
 			<div className="herrAgregadas">
-				{herramientas.length > 0 ? (
+				{herramientas && herramientas.length > 0 ? (
 					<>
 						<ul className="ulherr">
 							<li>Sig. Calibración</li>

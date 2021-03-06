@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./fichatecnica.scss";
 
 function FichaTecnica(props) {
@@ -85,7 +85,7 @@ function FichaTecnica(props) {
 						<img
 							className="cuadro"
 							alt="foto"
-							src={data.datosISSSTE && data.datosISSSTE.fotoNormal}
+							src={data.datosISSSTE ? data.datosISSSTE.fotoNormal : ""}
 							style={{
 								transform: `rotate(${props.angulos[0]}deg)`,
 								height: "inherit",
@@ -95,7 +95,7 @@ function FichaTecnica(props) {
 						<img
 							className="cuadro"
 							alt="foto"
-							src={data.datosISSSTE && data.datosISSSTE.fotoSerie}
+							src={data.datosISSSTE ? data.datosISSSTE.fotoSerie : ""}
 							style={{
 								transform: `rotate(${props.angulos[1]}deg)`,
 								height: "inherit",
@@ -109,7 +109,7 @@ function FichaTecnica(props) {
 						<img
 							className="cuadro"
 							alt="foto"
-							src={data.datosISSSTE && data.datosISSSTE.fotoInventario}
+							src={data.datosISSSTE ? data.datosISSSTE.fotoInventario : ""}
 							style={{
 								transform: `rotate(${props.angulos[2]}deg)`,
 								height: "inherit",
@@ -119,7 +119,7 @@ function FichaTecnica(props) {
 						<img
 							className="cuadro"
 							alt="foto"
-							src={data.datosISSSTE && data.datosISSSTE.fotoPanoramica}
+							src={data.datosISSSTE ? data.datosISSSTE.fotoPanoramica : ""}
 							style={{
 								transform: `rotate(${props.angulos[3]}deg)`,
 								height: "inherit",

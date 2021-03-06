@@ -192,15 +192,16 @@
 
 @media print {
 	.capacitacion {
-		font-size: 2.6vw;
+		font-size: 7.5pt;
 		margin-top: 1em;
+		display: block !important;
+		break-before: always !important;
+		page-break-before: always !important;
+		page-break-inside: avoid !important;
 		.rows {
 			.row3 {
 				line-height: 2.8vw;
 			}
 		}
 	}
-	//   @page {
-	//     margin: 6cm;
-	//   }
 }

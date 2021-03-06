@@ -2,11 +2,10 @@
 
 .layoutC {
 	height: 100vh;
-	// overflow: hidden;
 	.nav-bar {
 		width: 100vw;
 		display: flex;
-		background-color: #000000;
+		background-color: #202020;
 		.logo {
 			background-image: url("../../assets/images/icons/icon-384x384.png");
 			background-repeat: no-repeat;
@@ -31,11 +30,10 @@
 }
 
 @media print {
-	.layoutC {
-		.nav-bar,
-		.revHeader {
-			display: none !important;
-			height: 0px;
-		}
+	.nav-bar,
+	.revHeader,
+	.version {
+		display: none !important;
+		height: 0px;
 	}
 }

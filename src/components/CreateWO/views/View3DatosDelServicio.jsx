@@ -2,27 +2,80 @@ import React, { useState, useEffect } from "react";
 
 import { TextField, InputLabel, FormControl, Select } from "@material-ui/core";
 
+import { MuiPickersUtilsProvider, DatePicker, Day } from "@material-ui/pickers";
+import MomentUtils from "@date-io/moment";
+
+import moment from "moment";
+
 function View3DatosDelServicio(props) {
+	const datos = { ...props.data?.datos };
+
 	const [tipoDeServicio, setTipoDeServicio] = useState("");
 	const [tipoDeContrato, setTipoDeContrato] = useState("Contrato");
 	const [contrato, setContrato] = useState("");
+	const [GonDeInstalacion, setGonDeInstalacion] = useState("");
 	const [sintoma, setSintoma] = useState("");
 	const [descripcion, setDescripcion] = useState("");
 	const [apto, setApto] = useState(true);
 	const [funcionando, setFuncionando] = useState(true);
 	const [observaciones, setObservaciones] = useState("");
-	const [condiciones, setCondiciones] = useState("Funcionando");
+	const [condiciones, setCondiciones] = useState(
+		props.edit
+			? datos.condiciones
+				? datos.condiciones
+				: "Funcionando"
+			: "Funcionando"
+	);
+	const [reprogramado, setReprogramado] = useState("");
+	const [fechaDeReprogramacion, setFechaDeReprogramacion] = useState(
+		props.edit
+			? datos.fechaDeReprogramacion
+				? datos.fechaDeReprogramacion
+				: null
+			: null
+	);
 
 	useEffect(() => {
-		if (props.step === 2) {
+		if (props.edit) {
+			if (props.data) {
+				setTipoDeServicio(datos.tipoDeServicio);
+				setTipoDeContrato(datos.tipoDeContrato);
+				setContrato(datos.equipo.contrato);
+				setGonDeInstalacion(datos.gonDeInstalacion);
+				setSintoma(datos.sintoma);
+				setDescripcion(datos.descripcion);
+				setApto(datos.apto);
+				setFuncionando(datos.funcionando);
+				setObservaciones(datos.observaciones);
+				setCondiciones(datos.condiciones);
+				setReprogramado(datos.reprogramado);
+				setFechaDeReprogramacion(datos.fechaDeReprogramacion);
+			}
+		}
+	}, []);
+
+	useEffect(() => {
+		console.log("flag");
+		props.flagManual
+			? contrato === ""
+				? setContrato("")
+				: console.log(contrato)
+			: setContrato(props.equipo?.contrato);
+	}, [props.flag, props.equipo]);
+
+	useEffect(() => {
+		if (props.step === 1) {
 			if (
 				tipoDeServicio !== "" &&
 				tipoDeContrato !== "" &&
 				sintoma !== "" &&
-				descripcion !== "" &&
-				condiciones !== ""
+				descripcion !== ""
 			) {
-				props.handleNext(false);
+				if (condiciones === "Reprogramado" && fechaDeReprogramacion === null) {
+					props.handleNext(true);
+				} else {
+					props.handleNext(false);
+				}
 			} else {
 				props.handleNext(true);
 			}
@@ -34,21 +87,43 @@ function View3DatosDelServicio(props) {
 		sintoma,
 		descripcion,
 		condiciones,
+		fechaDeReprogramacion,
 	]);
 
 	useEffect(() => {
-		console.log(props);
+		if (condiciones !== "Funcionando") {
+			setApto(false);
+			setFuncionando(false);
+			setDescripcion("");
+			if (condiciones === "Reprogramado") {
+				setDescripcion(
+					"El equipo no se encontró disponible para realizar el servicio debido a"
+				);
+				setReprogramado("FechaTentativa");
+			}
+		} else {
+			setApto(true);
+			setFuncionando(true);
+			setReprogramado("");
+			setFechaDeReprogramacion(null);
+		}
+	}, [condiciones]);
+
+	useEffect(() => {
 		if (props.flag) {
 			props.onDone(
 				tipoDeServicio,
 				tipoDeContrato,
 				contrato,
+				GonDeInstalacion,
 				sintoma,
 				descripcion,
 				apto,
 				funcionando,
 				observaciones,
-				condiciones
+				condiciones,
+				reprogramado,
+				fechaDeReprogramacion
 			);
 		}
 	}, [props.flag]);
@@ -66,11 +141,41 @@ function View3DatosDelServicio(props) {
 		}
 	};
 
+	const renderDay = (date, selectedDate, dayInCurrentMonth) => {
+		return (
+			<div
+				style={date.day() === 1 ? { borderLeft: "1px solid lightgray" } : null}>
+				{date.day() === 1 && <div className={"week"}>{date.week()}</div>}
+				<Day
+					disabled={
+						date.day() === 0 ||
+						date.day() === 6 ||
+						date.isSame(moment(), "day") ||
+						date.isBefore(moment(), "day")
+					}
+					current={date.isSame(moment(), "day")}
+					hidden={!dayInCurrentMonth}
+					selected={date.isSame(selectedDate, "day")}>
+					{date.date()}
+				</Day>
+			</div>
+		);
+	};
+
+	function disableWeekends(date) {
+		return (
+			date.day() === 0 ||
+			date.day() === 6 ||
+			date.isSame(moment(), "day") ||
+			date.isBefore(moment(), "day")
+		);
+	}
+
 	return (
 		<>
 			<h3>Datos del Servicio</h3>
 			<div className="item3">
-				<FormControl size="small" fullWidth variant="outlined">
+				<FormControl size="small" fullWidth required variant="outlined">
 					<InputLabel htmlFor="selectTipoDeServ">Tipo de servicio</InputLabel>
 					<Select
 						native
@@ -93,7 +198,7 @@ function View3DatosDelServicio(props) {
 					</Select>
 				</FormControl>
 			</div>
-			{props.flagManual ? (
+			{props.flagManual && tipoDeServicio !== "INS (Instalación)" ? (
 				<div className="item3">
 					<FormControl size="small" fullWidth variant="outlined">
 						<InputLabel htmlFor="selectTipoDeContrato">
@@ -117,7 +222,9 @@ function View3DatosDelServicio(props) {
 					</FormControl>
 				</div>
 			) : null}
-			{props.flagManual && tipoDeContrato === "Contrato" ? (
+			{props.flagManual &&
+			tipoDeContrato === "Contrato" &&
+			tipoDeServicio !== "INS (Instalación)" ? (
 				<div className="item3">
 					<TextField
 						label="No. de Contrato"
@@ -129,9 +236,19 @@ function View3DatosDelServicio(props) {
 					/>
 				</div>
 			) : null}
+			{tipoDeServicio === "INS (Instalación)" ? (
+				<TextField
+					label="Gon de Instalación"
+					fullWidth
+					variant="outlined"
+					size="small"
+					value={GonDeInstalacion}
+					onChange={(e) => setGonDeInstalacion(e.target.value)}
+				/>
+			) : null}
 			<div className="item3">
 				{tipoDeServicio === "PM (Mantenimiento Preventivo)" ? (
-					<FormControl size="small" fullWidth variant="outlined">
+					<FormControl size="small" fullWidth required variant="outlined">
 						<InputLabel htmlFor="numeroPM">Síntoma</InputLabel>
 						<Select
 							native
@@ -157,6 +274,7 @@ function View3DatosDelServicio(props) {
 						label="Síntoma"
 						fullWidth
 						multiline
+						required
 						rows={3}
 						variant="outlined"
 						helperText={`${sintoma.split(" ").length - 1}/52`}
@@ -165,6 +283,7 @@ function View3DatosDelServicio(props) {
 								sintoma.split(" ").length === 53 ? sintoma.length : 800,
 						}}
 						onChange={(e) => setSintoma(e.target.value)}
+						value={sintoma}
 					/>
 				)}
 			</div>
@@ -173,6 +292,7 @@ function View3DatosDelServicio(props) {
 					label="Descripción del servicio"
 					fullWidth
 					multiline
+					required
 					rows={4}
 					value={descripcion}
 					helperText={`${descripcion.split(" ").length - 1}/52`}
@@ -244,6 +364,54 @@ function View3DatosDelServicio(props) {
 					</Select>
 				</FormControl>
 			</div>
+			{condiciones === "Reprogramado" ? (
+				<div className="item3">
+					<FormControl size="small" fullWidth variant="outlined">
+						<InputLabel htmlFor="selectReprogramación">
+							Reprogramado para:
+						</InputLabel>
+						<Select
+							native
+							value={reprogramado}
+							onChange={(e) => setReprogramado(e.target.value)}
+							label="Reprogramado para:"
+							inputProps={{
+								name: "reprogramado",
+								id: "selectReprogramación",
+							}}>
+							<option value={"ProximoMes"}>Próximo Mes</option>
+							<option value={"FechaTentativa"}>Fecha Tentativa</option>
+						</Select>
+					</FormControl>
+				</div>
+			) : null}
+			{condiciones === "Reprogramado" && reprogramado === "FechaTentativa" ? (
+				<>
+					<MuiPickersUtilsProvider utils={MomentUtils}>
+						<DatePicker
+							margin="dense"
+							inputVariant="outlined"
+							autoOk
+							disableToolbar
+							okLabel=""
+							cancelLabel=""
+							shouldDisableDate={disableWeekends}
+							disablePast
+							DialogProps={{
+								className: "weekPicker",
+							}}
+							renderDay={renderDay}
+							format="DD/MM/YY"
+							id="reprogDate"
+							label="fecha tentativa"
+							value={fechaDeReprogramacion}
+							onChange={(e) => {
+								setFechaDeReprogramacion(e.startOf("day").valueOf());
+							}}
+						/>
+					</MuiPickersUtilsProvider>
+				</>
+			) : null}
 		</>
 	);
 }

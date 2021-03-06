@@ -1,7 +1,7 @@
 import React from "react";
-import Home from "../Home";
 
 import "./layout.scss";
+import SSO from "./SSO";
 
 function Layout() {
 	return (
@@ -10,7 +10,7 @@ function Layout() {
 				<div className="logo"></div>
 				<a href="/">Smart WO</a>
 			</div>
-			<Home />
+			<SSO />
 		</div>
 	);
 }

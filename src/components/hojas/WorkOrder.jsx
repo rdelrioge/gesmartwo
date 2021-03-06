@@ -15,6 +15,7 @@ function WorkOrder(props) {
 	const [herramientas, setHerramientas] = useState(props.data.herramientas);
 	const [refacciones, setRefacciones] = useState(props.data.refacciones);
 	const [shortTDS, setShortTDS] = useState("");
+	const [fechaReprogramado, setFechaReprogamado] = useState("");
 
 	const calcularFolio = () => {
 		let y = moment(data.tiempos[0][1]).format("YY");
@@ -83,62 +84,72 @@ function WorkOrder(props) {
 	};
 
 	const displayHerramientas = () => {
-		let arrTemp = [...data.herramientas];
-		switch (data.herramientas.length) {
-			case 0:
-				arrTemp.push([]);
-				arrTemp.push([]);
-				arrTemp.push([]);
-				arrTemp.push([]);
-				setHerramientas(arrTemp);
-				break;
-			case 1:
-				arrTemp.push([]);
-				arrTemp.push([]);
-				arrTemp.push([]);
-				setHerramientas(arrTemp);
-				break;
-			case 2:
-				arrTemp.push([]);
-				arrTemp.push([]);
-				setHerramientas(arrTemp);
-				break;
-			case 3:
-				arrTemp.push([]);
-				setHerramientas(arrTemp);
-				break;
-			case 4:
-				setHerramientas(arrTemp);
-				break;
-			default:
-				break;
+		if (data.herramientas) {
+			let arrTemp = [...data.herramientas];
+			switch (data.herramientas.length) {
+				case 0:
+					arrTemp.push([]);
+					arrTemp.push([]);
+					arrTemp.push([]);
+					arrTemp.push([]);
+					setHerramientas(arrTemp);
+					break;
+				case 1:
+					arrTemp.push([]);
+					arrTemp.push([]);
+					arrTemp.push([]);
+					setHerramientas(arrTemp);
+					break;
+				case 2:
+					arrTemp.push([]);
+					arrTemp.push([]);
+					setHerramientas(arrTemp);
+					break;
+				case 3:
+					arrTemp.push([]);
+					setHerramientas(arrTemp);
+					break;
+				case 4:
+					setHerramientas(arrTemp);
+					break;
+				default:
+					break;
+			}
+		} else {
+			let arrTemp = [[], [], [], []];
+			setHerramientas(arrTemp);
 		}
 	};
 
 	const displayRefacciones = () => {
-		let arrTemp = [...data.refacciones];
+		if (data.refacciones) {
+			let arrTemp = [...data.refacciones];
 
-		switch (data.refacciones.length) {
-			case 0:
-				arrTemp.push([]);
-				arrTemp.push([]);
-				arrTemp.push([]);
-				setRefacciones(arrTemp);
-				break;
-			case 1:
-				arrTemp.push([]);
-				arrTemp.push([]);
-				setRefacciones(arrTemp);
-				break;
-			case 2:
-				arrTemp.push([]);
-				setRefacciones(arrTemp);
-				break;
-			case 3:
-				setRefacciones(arrTemp);
-				break;
-			default:
-				break;
+			switch (data.refacciones.length) {
+				case 0:
+					arrTemp.push([]);
+					arrTemp.push([]);
+					arrTemp.push([]);
+					setRefacciones(arrTemp);
+					break;
+				case 1:
+					arrTemp.push([]);
+					arrTemp.push([]);
+					setRefacciones(arrTemp);
+					break;
+				case 2:
+					arrTemp.push([]);
+					setRefacciones(arrTemp);
+					break;
+				case 3:
+					setRefacciones(arrTemp);
+					break;
+				default:
+					break;
+			}
+		} else {
+			let arrTemp = [[], [], []];
+			setRefacciones(arrTemp);
 		}
 	};
 
@@ -173,6 +184,32 @@ function WorkOrder(props) {
 		}
 	};
 
+	const displayReprogramacion = () => {
+		switch (data.reprogramado) {
+			case "Indefinidamente":
+				setFechaReprogamado(
+					"cuando el usuario defina disponibilidad del equipo"
+				);
+				break;
+			case "ProximoMes":
+				setFechaReprogamado(
+					`en ${moment().add(1, "months").format("MMMM-YYYY")}`
+				);
+				break;
+			case "FechaTentativa":
+				if (data.equipo.cliente === "IMSS") {
+					setFechaReprogamado(`en la semana 
+					${moment(data.fechaDeReprogramacion).week()}`);
+				} else {
+					setFechaReprogamado(`el 
+						${moment(data.fechaDeReprogramacion).format("DD-MMM-YYYY")}`);
+				}
+				break;
+			default:
+				break;
+		}
+	};
+
 	useEffect(() => {
 		calcularFinDeServicio();
 		calcularFolio();
@@ -180,6 +217,7 @@ function WorkOrder(props) {
 		displayHerramientas();
 		displayRefacciones();
 		compressTipoDeServicio();
+		displayReprogramacion();
 	}, []);
 
 	return (
@@ -188,16 +226,28 @@ function WorkOrder(props) {
 				<div className="row1">
 					<div className="logo"></div>
 					<div className="datosge">
-						<p>
-							<b>GE Healthcare</b>
-						</p>
+						<b>GE Healthcare</b>
 						<p>GE SISTEMAS MEDICOS DE MEXICO S.A. DE C.V.</p>
 						<p>Antonio Dovali Jaime No. 70, Torre B Piso 5</p>
 						<p> Col. Santa Fe Del. Alvaro Obregón, C.P. 01210 CDMX</p>
 						<p>Atención a Clientes Servicio 01 800 904 3400</p>
 					</div>
 					<div className="folios">
-						<p>Hoja de servicio</p>
+						<div className="tituloHojaContainer">
+							{data.equipo.consecutivo && data.equipo.consecutivo !== "" ? (
+								<>
+									<div className="consecutivo">
+										<span className="consecutivoTitle">Consecutivo: </span>
+										<span className="noDeConsecutivo">
+											{data.equipo.consecutivo}
+										</span>
+									</div>
+								</>
+							) : (
+								<span></span>
+							)}
+							<span className="tituloHoja"> Hoja de servicio</span>
+						</div>
 						<div className="foliosAbajo">
 							<div className="numerosFolios">
 								<div>
@@ -214,14 +264,14 @@ function WorkOrder(props) {
 								</div>
 							</div>
 							<div className="qrcode">
-								<QRCode
+								{/* <QRCode
 									value={`${data.wo} ${data.case} ${shortTDS} ${data.equipo.cliente} ${data.equipo.sid} ${finDelServicio}`}
 									bgColor={"#ffffff"}
 									fgColor={"#000000"}
 									level={"L"}
 									includeMargin={false}
 									renderAs={"svg"}
-								/>
+								/> */}
 							</div>
 						</div>
 					</div>
@@ -240,10 +290,12 @@ function WorkOrder(props) {
 									: data.equipo.ciudad}
 							</span>
 						</div>
-						<div>
-							<span>Delegación:</span>
-							<span>{data.equipo.delegacion}</span>
-						</div>
+						{data.equipo.cliente === "ISSSTE" ? null : (
+							<div>
+								<span>Delegación:</span>
+								<span>{data.equipo.delegacion}</span>
+							</div>
+						)}
 						<div>
 							<span>Dependencia:</span>
 							<span>
@@ -326,21 +378,30 @@ function WorkOrder(props) {
 					</div>
 					<div className="row3R">
 						<b className="rowtitle">Servicio</b>
-						<div className="row3R-r">
-							<span>Tipo de servicio:</span>
-							<b>{data.tipoDeServicio}</b>
-						</div>
-						<div className="row3R-r">
-							<span>Tipo de trabajo:</span>
-							<b>{data.tipoDeContrato}</b>
-						</div>
-						<div className="row3R-r">
-							<span>Contrato No.</span>
-							<span>{data.equipo.contrato}</span>
-						</div>
-						<div className="row3R-r">
-							<span>GON de Instalación:</span>
-							<span></span>
+						<div className="row3R-tds">
+							<div className="row3R-r">
+								<span>Tipo de servicio:</span>
+								<b>{data.tipoDeServicio}</b>
+							</div>
+							{data.tipoDeServicio !== "INS (Instalación)" ? (
+								<div className="row3R-r">
+									<span>Tipo de trabajo:</span>
+									<b>{data.tipoDeContrato}</b>
+								</div>
+							) : null}
+							{data.tipoDeContrato === "Contrato" &&
+							data.tipoDeServicio !== "INS (Instalación)" ? (
+								<div className="row3R-r">
+									<span>Contrato No.</span>
+									<span>{data.equipo.contrato}</span>
+								</div>
+							) : null}
+							{data.tipoDeServicio === "INS (Instalación)" ? (
+								<div className="row3R-r">
+									<span>GON de Instalación:</span>
+									<span>{data.gonDeInstalacion}</span>
+								</div>
+							) : null}
 						</div>
 						<b className="rowtitle">SINTOMA</b>
 						<b className="sintoma">{data.sintoma}</b>
@@ -388,7 +449,13 @@ function WorkOrder(props) {
 					<b className="reprogTitle">Reprogramación del servicio:</b>
 					<b className="reprog">
 						{data.condiciones === "Reprogramado"
-							? "En vista de la imposibilidad de realización del mantenimiento preventivo en el periodo designado por el manual, y tomando en consideración la solicitud del cliente, el mantenimiento previsto originalmente para el día:_____________, ahora será llevado a cabo el día:____________."
+							? `En vista de la imposibilidad de realización del mantenimiento preventivo en el periodo designado por el manual, y tomando en consideración la solicitud del cliente, el mantenimiento previsto originalmente para el día ${moment().format(
+									"DD-MMM-YYYY"
+							  )} ${
+									data.equipo.cliente === "IMSS"
+										? `(semana ${moment().week()})`
+										: ""
+							  } , ahora será llevado a cabo ${fechaReprogramado} `
 							: "N/A"}
 					</b>
 					<div className="condiciones">

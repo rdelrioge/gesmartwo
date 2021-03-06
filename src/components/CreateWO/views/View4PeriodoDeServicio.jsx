@@ -14,14 +14,22 @@ import MomentUtils from "@date-io/moment";
 function View4PeriodoDeServicio(props) {
 	const [tiempos, setTiempos] = useState([]);
 	const [tipoDeTrabajo, setTipoDeTrabajo] = useState("");
-	const [startDate, setStartDate] = useState(null);
+	const [startDate, setStartDate] = useState(moment());
 	const [startTime, setStartTime] = useState(null);
-	const [endDate, setEndDate] = useState(null);
+	const [endDate, setEndDate] = useState(moment());
 	const [endTime, setEndTime] = useState(null);
 	const [disableAddBtn, SetDisableAddBtn] = useState(true);
 
 	useEffect(() => {
-		if (props.step === 3) {
+		if (props.edit) {
+			if (props.datos) {
+				setTiempos(props.datos.tiempos);
+			}
+		}
+	}, []);
+
+	useEffect(() => {
+		if (props.step === 2) {
 			tiempos.length > 0 ? props.handleNext(false) : props.handleNext(true);
 		}
 	}, [tiempos, props]);
@@ -52,12 +60,12 @@ function View4PeriodoDeServicio(props) {
 				alert("Revisa que las horas sean correctas");
 			} else {
 				let arrTemp = [...tiempos];
-				arrTemp.push([tipoDeTrabajo, startDate, startTime, endDate, endTime]);
+				arrTemp.push([tipoDeTrabajo, sdts, stts, edts, etts]);
 				setTiempos(arrTemp);
 				setTipoDeTrabajo("");
-				setStartDate(null);
+				setStartDate(moment());
 				setStartTime(null);
-				setEndDate(null);
+				setEndDate(moment());
 				setEndTime(null);
 				props.onDone(arrTemp);
 			}
@@ -94,10 +102,14 @@ function View4PeriodoDeServicio(props) {
 							<option value={"En espera"}>En Espera</option>
 							<option value={"Administración"}>Administración</option>
 							{props.tps === "PM (Mantenimiento Preventivo)" ? (
-								<option value={"Preventivo"}>Preventivo</option>
+								props.datos.condiciones === "Funcionando" ||
+								props.datos.condiciones === "Parcialmente funcionando" ? (
+									<option value={"Preventivo"}>Preventivo</option>
+								) : null
 							) : (
 								<>
-									<option value={"Reparacion"}>Reparacion</option>
+									<option value={"Diagnóstico"}>Diagnóstico</option>
+									<option value={"Reparación"}>Reparacion</option>
 									<option value={"Instalación"}>Instalación</option>
 									<option value={"Solución de problemas"}>
 										Solución de problemas
@@ -118,7 +130,7 @@ function View4PeriodoDeServicio(props) {
 									</option>
 									<option
 										value={"Rcarga de helio / mantenimiento de Cryogenos"}>
-										Rcarga de helio / mantenimiento de Cryogenos
+										Recarga de helio / mantenimiento de Cryogenos
 									</option>
 									<option value={"OJT en entrenamiento de trabajo"}>
 										OJT en entrenamiento de trabajo

@@ -55,10 +55,11 @@
 				// border: 1px solid black;
 				display: grid;
 				.cuadro {
-					height: 20em;
-					width: 34.8vw;
-					// margin: auto;
+					// height: 10em !important;
+					// width: 10em !important;
+					margin: 0;
 					// padding: 4px;
+					width: 100%;
 				}
 			}
 			span {
@@ -66,7 +67,7 @@
 			}
 		}
 		.firmas {
-			margin-top: 10em;
+			margin-top: 8em;
 		}
 	}
 
@@ -106,16 +107,23 @@
 }
 @media print {
 	.fichatecnica {
-		font-size: 2.2vw;
-		margin-bottom: 0 !important;
+		// font-size: 2.2vw;
+		font-size: 6pt;
+		display: block !important;
+		break-before: always !important;
+		page-break-before: always !important;
+		page-break-inside: avoid !important;
 		.rows {
 			margin-top: 0;
 		}
 		img {
-			width: 169pt !important;
+			width: 171pt !important;
 			height: 110pt !important;
 			// margin: auto;
 			margin-top: 0 !important;
+		}
+		.firmas {
+			margin-top: 60pt !important;
 		}
 	}
 }

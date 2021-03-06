@@ -4,7 +4,7 @@ import React from "react";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 import variables from "./index.scss";
-import Home from "./components/Home";
+import Home from "./components/CreateWO/CreateWO";
 import Reader from "./components/Reader";
 import Layout from "./components/Layout/Layout";
 
@@ -23,6 +23,7 @@ const theme = createMuiTheme({
 	palette: {
 		primary: { main: variables.primary, contrastText: "#ffffff" },
 		secondary: { main: variables.secondary },
+		grised: { main: variables.grised },
 	},
 	typography: {
 		useNextVariants: true,

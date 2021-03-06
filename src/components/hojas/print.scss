@@ -10,19 +10,9 @@
 			"Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
 			"Helvetica Neue", sans-serif !important;
 		.saltodepag {
-			margin-top: 20em !important;
+			// height: 10pt;
 			border-bottom: none !important;
-		}
-		.marginTop {
-			margin-top: 300pt !important;
+			display: none !important;
 		}
 	}
-	@page {
-		margin: 0 !important;
-		size: auto;
-	}
-	// body {
-	// 	padding-top: 5cm !important;
-	// 	padding-bottom: 5cm !important;
-	// }
 }

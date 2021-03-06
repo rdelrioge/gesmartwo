@@ -24,7 +24,6 @@ function AddManual(props) {
 
 	useEffect(() => {
 		setSID(props.sid);
-		console.log(props);
 	}, [props.sid]);
 
 	const handleClose = (ev, flag) => {
