@@ -1,0 +1,21 @@
+.notLogged {
+	justify-content: flex-end;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	height: calc(100vh - 93px);
+	// background-image: url("../../assets/images/userBG.gif");
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: top;
+	background-color: #202020;
+	color: white;
+	padding-bottom: 4em;
+	.txtFldSSO {
+		border-bottom: 1px solid #295a84;
+		* {
+			text-align: center;
+			color: whitesmoke;
+		}
+	}
+}

@@ -27,6 +27,15 @@
 			background-clip: text;
 		}
 	}
+	.version {
+		font-size: 0.8em;
+		display: grid;
+		height: 47px;
+		color: white;
+		align-items: center;
+		text-align: center;
+		background-color: #202020;
+	}
 }
 
 @media print {

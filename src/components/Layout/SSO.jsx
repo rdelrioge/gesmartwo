@@ -1,22 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "./sso.scss";
-import {
-	Button,
-	TextField,
-	IconButton,
-	Menu,
-	MenuItem,
-	Slide,
-	Dialog,
-} from "@material-ui/core";
+import { Button, Menu, MenuItem, Slide, Dialog } from "@material-ui/core";
 
-import { db } from "../../index";
 import { localdb } from "../../index";
 import CreateWO from "../CreateWO/CreateWO";
 
 function SSO(props) {
-	const [sso, setSSO] = useState("");
 	const [inge, setInge] = useState(null);
 	const [animation, setAnimation] = useState(false);
 	const [animation2, setAnimation2] = useState(false);
@@ -26,13 +16,17 @@ function SSO(props) {
 	const [editWO, setEditWO] = useState(false);
 	const [cacheData, setCacheData] = useState(null);
 
+	const history = useHistory();
+
 	useEffect(() => {
 		const loggedInUser = localStorage.getItem("user");
-		console.log(loggedInUser);
 		if (loggedInUser) {
+			console.log(loggedInUser);
 			const foundUser = JSON.parse(loggedInUser);
 			setInge(foundUser);
-			setSSO(foundUser.sso);
+		} else {
+			console.log("No user found");
+			history.push("/login");
 		}
 	}, []);
 
@@ -64,49 +58,10 @@ function SSO(props) {
 		}
 	}, [inge]);
 
-	const changeSSO = (value) => {
-		setSSO(value);
-		if (value && value.length === 9) {
-			validateSSO(value);
-		}
-		if (inge) {
-			setInge(null);
-		}
-	};
-	const validateSSO = (value) => {
-		db.collection("users")
-			.where("sso", "==", value)
-			.get()
-			.then((data) => {
-				if (data.empty) {
-					alert("No existe el usuario");
-				} else {
-					data.forEach((user) => {
-						let us = { ...user.data(), uid: user.id };
-						console.log(us);
-						setInge(us);
-						// store the user in localStorage
-						localStorage.setItem("user", JSON.stringify(us));
-					});
-				}
-			})
-			.catch((err) => {
-				console.log("Error: " + err);
-			});
-	};
-
-	const handleClick = (event) => {
-		setAnchorEl(event.currentTarget);
-	};
-
-	const handleClose = () => {
-		setAnchorEl(null);
-	};
-
 	const handleLogout = () => {
-		setSSO("");
 		setInge(null);
 		localStorage.removeItem("user");
+		history.push("/login");
 	};
 
 	return (
@@ -152,8 +107,10 @@ function SSO(props) {
 											horizontal: "center",
 										}}
 										open={Boolean(anchorEl)}
-										onClose={handleClose}>
-										<MenuItem className="ssoC_menuItem" onClick={handleClose}>
+										onClose={() => setAnchorEl(null)}>
+										<MenuItem
+											className="ssoC_menuItem"
+											onClick={() => setAnchorEl(null)}>
 											<Link to="/settings">
 												<i className="material-icons">settings</i>Settings
 											</Link>
@@ -216,24 +173,7 @@ function SSO(props) {
 						/>
 					</Dialog>
 				</div>
-			) : (
-				<div className="notLogged">
-					<h3>Ingresa tu SSO</h3>
-					<TextField
-						label=""
-						color="secondary"
-						variant="outlined"
-						type="tel"
-						className="txtFldSSO"
-						inputProps={{
-							maxLength: 9,
-						}}
-						onChange={(ev) => changeSSO(ev.target.value)}
-						value={sso}
-					/>
-				</div>
-			)}
-			<b className="version">Version 2.0.6</b>
+			) : null}
 		</div>
 	);
 }
