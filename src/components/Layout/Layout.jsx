@@ -1,7 +1,9 @@
 import React from "react";
+import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 
 import "./layout.scss";
 import SSO from "./SSO";
+import Settings from "./Settings";
 
 function Layout() {
 	return (
@@ -10,7 +12,14 @@ function Layout() {
 				<div className="logo"></div>
 				<a href="/">Smart WO</a>
 			</div>
-			<SSO />
+			<BrowserRouter>
+				<Switch>
+					<Route exact path="/" component={SSO} />
+					<Route path="/settings" component={Settings} />
+					<Route path="*" render={() => <Redirect to="/" />} />
+				</Switch>
+			</BrowserRouter>
+			{/* <SSO /> */}
 		</div>
 	);
 }

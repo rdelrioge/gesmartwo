@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./sso.scss";
 import {
 	Button,
 	TextField,
 	IconButton,
+	Menu,
+	MenuItem,
 	Slide,
 	Dialog,
 } from "@material-ui/core";
@@ -19,6 +22,7 @@ function SSO(props) {
 	const [animation2, setAnimation2] = useState(false);
 	const [animation3, setAnimation3] = useState(false);
 	const [openNew, setOpenNew] = useState(false);
+	const [anchorEl, setAnchorEl] = useState(null);
 	const [editWO, setEditWO] = useState(false);
 	const [cacheData, setCacheData] = useState(null);
 
@@ -91,6 +95,14 @@ function SSO(props) {
 			});
 	};
 
+	const handleClick = (event) => {
+		setAnchorEl(event.currentTarget);
+	};
+
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
+
 	const handleLogout = () => {
 		setSSO("");
 		setInge(null);
@@ -104,19 +116,58 @@ function SSO(props) {
 					{openNew ? null : (
 						// Se esconden porque en Iphone no funciona el scroll si toca los botones y z-index no lo soluciona
 						<>
-							<div className="ingeData">
-								<p className={animation ? "animation" : undefined}>
-									{inge.nombre}
-								</p>
-								<p className={animation ? "animation" : undefined}>
-									{inge.sso}
-								</p>
-								<div className={animation ? "animation" : undefined}>
-									<IconButton
-										className="logoutIcon material-icons"
-										onClick={handleLogout}>
-										power_settings_new
-									</IconButton>
+							<div className="ssoSup">
+								<div className="ingData">
+									<p className={animation ? "animation" : undefined}>
+										{inge.nombre}
+									</p>
+									<p className={animation ? "animation" : undefined}>
+										{inge.sso}
+									</p>
+								</div>
+								<div>
+									<Button
+										aria-controls="simple-menu"
+										aria-haspopup="true"
+										className={animation ? "animation menuBtn" : undefined}
+										onClick={(ev) => setAnchorEl(ev.currentTarget)}>
+										{Boolean(anchorEl) ? (
+											<i className="material-icons">close</i>
+										) : (
+											<i className="material-icons">menu</i>
+										)}
+									</Button>
+									<Menu
+										id="simple-menu"
+										anchorEl={anchorEl}
+										keepMounted
+										elevation={0}
+										getContentAnchorEl={null}
+										anchorOrigin={{
+											vertical: "bottom",
+											horizontal: "center",
+										}}
+										transformOrigin={{
+											vertical: "top",
+											horizontal: "center",
+										}}
+										open={Boolean(anchorEl)}
+										onClose={handleClose}>
+										<MenuItem className="ssoC_menuItem" onClick={handleClose}>
+											<Link to="/settings">
+												<i className="material-icons">settings</i>Settings
+											</Link>
+										</MenuItem>
+										<MenuItem
+											className="ssoC_menuItem"
+											onClick={() => {
+												setAnchorEl(null);
+												handleLogout();
+											}}>
+											<i className="material-icons">power_settings_new</i>
+											Logout
+										</MenuItem>
+									</Menu>
 								</div>
 							</div>
 							<div className="tasks">
