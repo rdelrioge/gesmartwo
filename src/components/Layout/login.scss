@@ -3,14 +3,15 @@
 	align-items: center;
 	display: flex;
 	flex-direction: column;
-	height: calc(100vh - 93px);
-	// background-image: url("../../assets/images/userBG.gif");
-	background-size: contain;
+	height: 101vh;
+	background-image: url("../../assets/images/homeBG2.gif");
+	background-size: cover;
 	background-repeat: no-repeat;
-	background-position: top;
 	background-color: #202020;
 	color: white;
-	padding-bottom: 4em;
+	padding-bottom: 7em;
+	margin: -3em 0;
+	overflow: hidden;
 	.txtFldSSO {
 		border-bottom: 1px solid #295a84;
 		* {
