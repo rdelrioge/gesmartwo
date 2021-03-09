@@ -1,8 +1,11 @@
 import React from "react";
+import moment from "moment";
 
 import "./checklistCT.scss";
 
-function CheckListCT() {
+function CheckListCT(props) {
+	const data = { ...props.data };
+
 	let enrango = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 	let gantrysino = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 	let sistemasino = [1, 2, 3, 4, 5, 6, 7, 8];
@@ -21,9 +24,13 @@ function CheckListCT() {
 				<div className="row2">
 					<div className="row2-1">
 						<p>Cliente:</p>
-						<span className="line"></span>
+						<span className="line">{data.equipo.hospital}</span>
 						<p>Fecha:</p>
-						<span className="line"></span>
+						<span className="line">
+							{moment(data.tiempos[data.tiempos.length - 1][3]).format(
+								"DD - MMM - YYYY"
+							)}
+						</span>
 					</div>
 					<div className="row2-2">
 						<p>Equipo:</p>
@@ -31,15 +38,15 @@ function CheckListCT() {
 						<span></span>
 						<span></span>
 						<p>Modelo:</p>
-						<span className="line"></span>
+						<span className="line">{data.equipo.modelo}</span>
 						<p>Case:</p>
-						<span className="line"></span>
+						<span className="line">{data.case}</span>
 						<p>SID:</p>
-						<span className="line"></span>
+						<span className="line">{data.equipo.sid}</span>
 						<p>Mantenimiento:</p>
 						<span className="line">Trimestral</span>
 						<p>Serie:</p>
-						<span className="line"></span>
+						<span className="line">{data.equipo.serie}</span>
 						<p>Ubicación:</p>
 						<span className="line"></span>
 					</div>

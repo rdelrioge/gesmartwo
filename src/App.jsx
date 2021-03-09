@@ -11,9 +11,9 @@ import Layout from "./components/Layout/Layout";
 function App() {
 	return (
 		<MuiThemeProvider theme={theme}>
-			{/* <Layout /> */}
+			<Layout />
 			{/* <Reader /> */}
-			<ChecklistCT />
+			{/* <ChecklistCT /> */}
 		</MuiThemeProvider>
 	);
 }

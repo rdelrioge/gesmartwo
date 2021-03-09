@@ -1,5 +1,5 @@
 .chkCTC {
-	font-size: 0.5em;
+	font-size: 1.3vw;
 	padding: 0 2em;
 	.line {
 		border-bottom: 1px solid black;
@@ -25,6 +25,7 @@
 		display: grid;
 		grid-auto-flow: row;
 		row-gap: 1em;
+		margin-top: 1em;
 		.row1 {
 			display: grid;
 			grid-template-columns: 1fr 8fr;
@@ -36,11 +37,11 @@
 				background-position: left;
 				background-size: contain;
 				max-height: 7em;
-				height: 4em;
+				height: 7em;
 			}
 			h1 {
 				text-transform: uppercase;
-				margin-top: 0;
+				// margin: 0;
 			}
 		}
 		.row2 {
@@ -170,6 +171,10 @@
 }
 @media print {
 	.chkCTC {
-		font-size: 0.5em !important;
+		font-size: 6.3pt;
+		display: block !important;
+		break-after: always !important;
+		page-break-after: always !important;
+		page-break-inside: avoid !important;
 	}
 }
