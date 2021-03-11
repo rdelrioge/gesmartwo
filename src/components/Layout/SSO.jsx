@@ -111,8 +111,8 @@ function SSO(props) {
 										<MenuItem
 											className="ssoC_menuItem"
 											onClick={() => setAnchorEl(null)}>
-											<Link to="/settings">
-												<i className="material-icons">settings</i>Settings
+											<Link to="/tools">
+												<i className="material-icons">settings</i>Herramientas
 											</Link>
 										</MenuItem>
 										<MenuItem

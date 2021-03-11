@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import "./layout.scss";
 import SSO from "./SSO";
 import Login from "./Login";
-import Settings from "./Settings";
+import Herramientas from "./Herramientas";
 
 function Layout() {
 	return (
@@ -17,7 +17,7 @@ function Layout() {
 				<Switch>
 					<Route exact path="/" component={SSO} />
 					<Route exact path="/login" component={Login} />
-					<Route path="/settings" component={Settings} />
+					<Route path="/tools" component={Herramientas} />
 					<Route path="*" render={() => <Redirect to="/" />} />
 				</Switch>
 			</BrowserRouter>

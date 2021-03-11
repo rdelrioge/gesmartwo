@@ -51,6 +51,7 @@
 				margin-top: 0.5em;
 				width: 100%;
 				opacity: 0;
+				text-align: center;
 			}
 		}
 		.tasks {
@@ -102,9 +103,19 @@
 	// height: 1em !important;
 	min-height: 2.4em !important;
 	color: gray !important;
+	justify-content: left !important;
+
 	i {
 		font-size: 1.4em !important;
 		margin-right: 10px;
+	}
+	a {
+		margin: 0;
+		display: contents;
+		color: gray;
+	}
+	a:visited {
+		color: gray;
 	}
 }
 @media print {
