@@ -6,33 +6,52 @@
 		grid-template-rows: 1fr 2fr;
 		row-gap: 1em;
 		height: 100%;
-		.ingeData {
+		.ssoSup::before {
+			transform: rotate(90deg);
+			content: "";
+			position: absolute;
+			width: 200%;
+			height: 210%;
+			top: -50%;
+			left: -50%;
+			z-index: -1;
+			background-image: url("../../assets/images/homeBG2.gif");
+		}
+		.ssoSup {
+			background-image: url("../../assets/images/homeBG2.gif");
 			// background-image: url("../../assets/images/userBG2.gif");
 			background-size: cover;
 			// opacity: 0.2;
-			background-color: #202020;
-			p {
-				color: white;
-				font-weight: bold;
-				font-size: larger;
-				margin-left: 1em;
-				opacity: 0;
-			}
-			div {
-				opacity: 0;
+			// transform: rotate(45deg);
+			//background-color: #202020;
+			position: relative;
+			overflow: hidden;
+			display: grid;
+			grid-template-columns: 3fr 1fr;
+			.ingData {
+				p {
+					color: white;
+					font-weight: bold;
+					font-size: larger;
+					margin-left: 1em;
+					opacity: 0;
+				}
+				.animation {
+					opacity: 1;
+					transition: all 1s ease-in-out;
+				}
 			}
 			.animation {
-				opacity: 1;
+				opacity: 1 !important;
 				transition: all 1s ease-in-out;
 			}
-
-			.logoutIcon {
+			.menuBtn {
 				color: white;
-				position: absolute;
-				left: 0;
-				bottom: -6px;
-				direction: rtl;
 				font-size: 2em;
+				margin-top: 0.5em;
+				width: 100%;
+				opacity: 0;
+				text-align: center;
 			}
 		}
 		.tasks {
@@ -63,36 +82,6 @@
 			}
 		}
 	}
-	.notLogged {
-		justify-content: flex-end;
-		align-items: center;
-		display: flex;
-		flex-direction: column;
-		height: 100%;
-		// background-image: url("../../assets/images/userBG.gif");
-		background-size: contain;
-		background-repeat: no-repeat;
-		background-position: top;
-		background-color: #202020;
-		color: white;
-		padding-bottom: 4em;
-		.txtFldSSO {
-			border-bottom: 1px solid #295a84;
-			* {
-				text-align: center;
-				color: whitesmoke;
-			}
-		}
-	}
-	.version {
-		font-size: 0.8em;
-		display: grid;
-		height: 47px;
-		color: white;
-		align-items: center;
-		text-align: center;
-		background-color: #202020;
-	}
 }
 
 .drawerNewWO {
@@ -108,6 +97,27 @@
 	}
 }
 
+.ssoC_menuItem {
+	font-size: 0.8em !important;
+	padding: 0 1em !important;
+	// height: 1em !important;
+	min-height: 2.4em !important;
+	color: gray !important;
+	justify-content: left !important;
+
+	i {
+		font-size: 1.4em !important;
+		margin-right: 10px;
+	}
+	a {
+		margin: 0;
+		display: contents;
+		color: gray;
+	}
+	a:visited {
+		color: gray;
+	}
+}
 @media print {
 	.drawerNewWO {
 		width: 100% !important;

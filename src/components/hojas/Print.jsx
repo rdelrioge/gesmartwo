@@ -7,9 +7,23 @@ import Evidencia from "./Evidencia";
 import OrdenIssste from "./OrdenIssste";
 import FichaTecnica from "./FichaTecnica";
 import CartaReprogramacionIMSS from "./CartaReprogramacionIMSS";
+import CheckListCT from "./CheckLists/CheckListCT";
 
 function Print(props) {
 	console.log(props);
+
+	const switchPM = () => {
+		let tipo = null;
+		switch (props.data.equipo.equipo) {
+			case "TOMOGRAFO":
+				tipo = <CheckListCT data={props.data} />;
+				break;
+
+			default:
+				break;
+		}
+		return tipo;
+	};
 
 	return (
 		<div className="printable">
@@ -44,6 +58,9 @@ function Print(props) {
 			) : props.flagAddFotos ? (
 				<Evidencia data={props.data} angulos={props.angulos} />
 			) : null}
+			{props.data.tipoDeServicio === "PM (Mantenimiento Preventivo)"
+				? switchPM()
+				: null}
 		</div>
 	);
 }

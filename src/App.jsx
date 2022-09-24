@@ -4,16 +4,16 @@ import React from "react";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 import variables from "./index.scss";
-import Home from "./components/CreateWO/CreateWO";
 import Reader from "./components/Reader";
+import ChecklistCT from "./components/hojas/CheckLists/CheckListCT";
 import Layout from "./components/Layout/Layout";
 
 function App() {
 	return (
 		<MuiThemeProvider theme={theme}>
-			{/* <Home /> */}
 			<Layout />
 			{/* <Reader /> */}
+			{/* <ChecklistCT /> */}
 		</MuiThemeProvider>
 	);
 }

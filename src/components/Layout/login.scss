@@ -1,0 +1,22 @@
+.notLogged {
+	justify-content: flex-end;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	height: 101vh;
+	background-image: url("../../assets/images/homeBG2.gif");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-color: #202020;
+	color: white;
+	padding-bottom: 7em;
+	margin: -3em 0;
+	overflow: hidden;
+	.txtFldSSO {
+		border-bottom: 1px solid #295a84;
+		* {
+			text-align: center;
+			color: whitesmoke;
+		}
+	}
+}

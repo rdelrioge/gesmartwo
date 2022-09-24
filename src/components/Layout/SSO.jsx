@@ -1,34 +1,32 @@
 import React, { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 import "./sso.scss";
-import {
-	Button,
-	TextField,
-	IconButton,
-	Slide,
-	Dialog,
-} from "@material-ui/core";
+import { Button, Menu, MenuItem, Slide, Dialog } from "@material-ui/core";
 
-import { db } from "../../index";
 import { localdb } from "../../index";
 import CreateWO from "../CreateWO/CreateWO";
 
 function SSO(props) {
-	const [sso, setSSO] = useState("");
 	const [inge, setInge] = useState(null);
 	const [animation, setAnimation] = useState(false);
 	const [animation2, setAnimation2] = useState(false);
 	const [animation3, setAnimation3] = useState(false);
 	const [openNew, setOpenNew] = useState(false);
+	const [anchorEl, setAnchorEl] = useState(null);
 	const [editWO, setEditWO] = useState(false);
 	const [cacheData, setCacheData] = useState(null);
 
+	const history = useHistory();
+
 	useEffect(() => {
 		const loggedInUser = localStorage.getItem("user");
-		console.log(loggedInUser);
 		if (loggedInUser) {
+			console.log(loggedInUser);
 			const foundUser = JSON.parse(loggedInUser);
 			setInge(foundUser);
-			setSSO(foundUser.sso);
+		} else {
+			console.log("No user found");
+			history.push("/login");
 		}
 	}, []);
 
@@ -60,41 +58,10 @@ function SSO(props) {
 		}
 	}, [inge]);
 
-	const changeSSO = (value) => {
-		setSSO(value);
-		if (value && value.length === 9) {
-			validateSSO(value);
-		}
-		if (inge) {
-			setInge(null);
-		}
-	};
-	const validateSSO = (value) => {
-		db.collection("users")
-			.where("sso", "==", value)
-			.get()
-			.then((data) => {
-				if (data.empty) {
-					alert("No existe el usuario");
-				} else {
-					data.forEach((user) => {
-						let us = { ...user.data(), uid: user.id };
-						console.log(us);
-						setInge(us);
-						// store the user in localStorage
-						localStorage.setItem("user", JSON.stringify(us));
-					});
-				}
-			})
-			.catch((err) => {
-				console.log("Error: " + err);
-			});
-	};
-
 	const handleLogout = () => {
-		setSSO("");
 		setInge(null);
 		localStorage.removeItem("user");
+		history.push("/login");
 	};
 
 	return (
@@ -104,19 +71,60 @@ function SSO(props) {
 					{openNew ? null : (
 						// Se esconden porque en Iphone no funciona el scroll si toca los botones y z-index no lo soluciona
 						<>
-							<div className="ingeData">
-								<p className={animation ? "animation" : undefined}>
-									{inge.nombre}
-								</p>
-								<p className={animation ? "animation" : undefined}>
-									{inge.sso}
-								</p>
-								<div className={animation ? "animation" : undefined}>
-									<IconButton
-										className="logoutIcon material-icons"
-										onClick={handleLogout}>
-										power_settings_new
-									</IconButton>
+							<div className="ssoSup">
+								<div className="ingData">
+									<p className={animation ? "animation" : undefined}>
+										{inge.nombre}
+									</p>
+									<p className={animation ? "animation" : undefined}>
+										{inge.sso}
+									</p>
+								</div>
+								<div>
+									<Button
+										aria-controls="simple-menu"
+										aria-haspopup="true"
+										className={animation ? "animation menuBtn" : undefined}
+										onClick={(ev) => setAnchorEl(ev.currentTarget)}>
+										{Boolean(anchorEl) ? (
+											<i className="material-icons">close</i>
+										) : (
+											<i className="material-icons">menu</i>
+										)}
+									</Button>
+									<Menu
+										id="simple-menu"
+										anchorEl={anchorEl}
+										keepMounted
+										elevation={0}
+										getContentAnchorEl={null}
+										anchorOrigin={{
+											vertical: "bottom",
+											horizontal: "center",
+										}}
+										transformOrigin={{
+											vertical: "top",
+											horizontal: "center",
+										}}
+										open={Boolean(anchorEl)}
+										onClose={() => setAnchorEl(null)}>
+										<MenuItem
+											className="ssoC_menuItem"
+											onClick={() => setAnchorEl(null)}>
+											<Link to="/tools">
+												<i className="material-icons">settings</i>Herramientas
+											</Link>
+										</MenuItem>
+										<MenuItem
+											className="ssoC_menuItem"
+											onClick={() => {
+												setAnchorEl(null);
+												handleLogout();
+											}}>
+											<i className="material-icons">power_settings_new</i>
+											Logout
+										</MenuItem>
+									</Menu>
 								</div>
 							</div>
 							<div className="tasks">
@@ -165,24 +173,7 @@ function SSO(props) {
 						/>
 					</Dialog>
 				</div>
-			) : (
-				<div className="notLogged">
-					<h3>Ingresa tu SSO</h3>
-					<TextField
-						label=""
-						color="secondary"
-						variant="outlined"
-						type="tel"
-						className="txtFldSSO"
-						inputProps={{
-							maxLength: 9,
-						}}
-						onChange={(ev) => changeSSO(ev.target.value)}
-						value={sso}
-					/>
-				</div>
-			)}
-			<b className="version">Version 2.0.6</b>
+			) : null}
 		</div>
 	);
 }
