@@ -183,8 +183,8 @@
 				border-right: none;
 				span,
 				b {
-					border-bottom: 1px solid;
-					border-right: 1px solid;
+					border-bottom: 1px solid black;
+					border-right: 1px solid black;
 				}
 				.rowtitle {
 					background-color: lightgray;
@@ -196,6 +196,9 @@
 					.row3R-r {
 						display: grid;
 						grid-template-columns: 2fr 3fr;
+						.tipods {
+							color: #2fa8d1;
+						}
 						*:first-child {
 							display: flex;
 							width: 100%;
@@ -299,6 +302,9 @@
 				b:first-child {
 					background-color: #44546a;
 					color: white;
+				}
+				.conds {
+					color: #2fa8d1;
 				}
 			}
 		}
