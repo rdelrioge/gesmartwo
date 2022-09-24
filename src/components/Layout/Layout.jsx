@@ -21,7 +21,7 @@ function Layout() {
 					<Route path="*" render={() => <Redirect to="/" />} />
 				</Switch>
 			</BrowserRouter>
-			<b className="version">Version 2.0.6</b>
+			<b className="version">Version 2.0.7</b>
 		</div>
 	);
 }

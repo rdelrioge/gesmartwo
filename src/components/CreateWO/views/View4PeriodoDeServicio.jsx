@@ -266,7 +266,7 @@ function View4PeriodoDeServicio(props) {
 				</div>
 			</div>
 			<div className="tiemposagregados">
-				{tiempos.length > 0 ? (
+				{tiempos?.length > 0 ? (
 					<>
 						<ul className="ultime">
 							<li>Tipo de trabajo</li>

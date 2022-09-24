@@ -18,7 +18,11 @@ function Herramientas() {
 
 	const tools = [
 		{ descripcion: "Multimetro fluke", serie: "123", proxCal: "09/09/2021" },
-		{ descripcion: "Torquimetro URREA", serie: "456", proxCal: "04/15/2021" },
+		{
+			descripcion: "Torquimetro URREA de 5 N-m a 100 N-m",
+			serie: "456",
+			proxCal: "04/15/2021",
+		},
 		{
 			descripcion: "Torquimetro WESTWARD",
 			serie: "789",

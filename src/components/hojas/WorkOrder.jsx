@@ -381,7 +381,7 @@ function WorkOrder(props) {
 						<div className="row3R-tds">
 							<div className="row3R-r">
 								<span>Tipo de servicio:</span>
-								<b>{data.tipoDeServicio}</b>
+								<b className="tipods">{data.tipoDeServicio}</b>
 							</div>
 							{data.tipoDeServicio !== "INS (Instalación)" ? (
 								<div className="row3R-r">
@@ -460,7 +460,7 @@ function WorkOrder(props) {
 					</b>
 					<div className="condiciones">
 						<b>Condiciones en las que se deja el equipo:</b>
-						<b>{data.condiciones}</b>
+						<b className="conds">{data.condiciones}</b>
 					</div>
 				</div>
 				<div
