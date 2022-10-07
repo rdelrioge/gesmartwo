@@ -1,0 +1,128 @@
+.nivelesC{
+    margin:  5% 35% 5% 5%;
+    .mainGrid{
+        padding: 4em 8em;
+        background-color: white;
+        display: grid;
+        grid-template-rows: auto auto auto auto auto auto auto;
+        b{
+            background-color: #ccc0d9;
+            display: grid;
+            align-items: center;
+        }
+        p{
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+        .row1{
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            border: 2px solid dimgray;
+            text-align: center;
+            margin-bottom: 2em;
+            .title{
+                margin: auto;
+                padding: 0 3em;
+            }
+            .row1L{
+                border-top: 2px solid dimgray;
+                border-right: 1px solid dimgray;
+                border-bottom: 2px solid dimgray;
+                border-left: 2px solid dimgray;
+            }
+            .row1R{
+                display: grid;
+                grid-template-rows: 1fr 1fr;
+                .row1RSup{
+                    display: grid;
+                    grid-template-rows: 1fr 1fr;
+                    border-top: 2px solid dimgray;
+                    border-right: 2px solid dimgray;
+                    border-bottom: 1px solid dimgray;
+                    border-left: 1px solid dimgray;
+                    padding: 10px;
+                    p{
+                        font-weight: bold;
+                    }
+                    :first-child{
+                        font-size: 1.3em;
+                    }
+                }
+                .row1RInf{
+                    display: grid;
+                    grid-template-columns: auto auto auto auto;
+                    border-right: 1px solid dimgray;
+                    border-bottom: 1px solid dimgray;
+                    .row1RInfCell{
+                        border: 1px solid dimgray;
+                        display: grid;
+                        // justify-content: center;
+                        align-content: center;
+                    }
+                    .r12cells{
+                        display: grid;
+                        grid-template-rows: 1fr 1fr;
+                        align-items: center;
+                        :first-child{
+                            border-bottom: 2px solid dimgray;
+                        }
+                        p{
+                            margin: 0;
+                            height: 100%;
+                            display: grid;
+                            align-content: center;
+                        }
+                    }
+                }
+            }
+        }
+        .row2{
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            text-align: center;
+            border: 2px solid dimgray;
+            .row2L{
+                display: grid;
+                grid-template-rows: 3fr 1fr;
+                .row2LSup{
+                    display: grid;
+                    grid-template-columns: 1fr 3fr;
+                    border-bottom: 2px solid dimgray;
+                    p{
+                        display: grid;
+                        align-items: center;
+                    }
+                }
+                .row2LInf{
+
+                    display: grid;
+                    grid-template-columns: 1fr 2fr;
+                }
+            }
+            .row2R{
+                display: grid;
+                grid-template-rows: 2fr 1fr 1fr;
+                p{
+                    font-weight: bold;
+                    font-size: 1.3em;
+                    background-color: #ccc0d9;
+                    margin: 0;
+                    padding: 8px;
+                    border-bottom: 2px solid dimgray;
+                    border-left: 2px solid dimgray;
+                }
+                .row2RInf{
+                    display: grid;
+                    grid-template-columns: 1fr 3fr;
+                    border-bottom: 2px solid dimgray;
+                    b{
+                        border-left: 2px solid dimgray;
+                        border-right: 2px solid dimgray;
+                        
+                    }
+                }
+            }
+        }
+    }
+}
